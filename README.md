@@ -56,13 +56,9 @@
 
 ### Built With
 
-* [![Next][Next.js]][Next-url]
-* [![React][React.js]][React-url]
-* [![Vue][Vue.js]][Vue-url]
-* [![Angular][Angular.io]][Angular-url]
-* [![Svelte][Svelte.dev]][Svelte-url]
-* [![Laravel][Laravel.com]][Laravel-url]
-* [![Bootstrap][Bootstrap.com]][Bootstrap-url]
-* [![JQuery][JQuery.com]][JQuery-url]
+* <img src="https://edent.github.io/SuperTinyIcons/images/svg/java.svg" width="125" title="Java" />
+* <img src="https://edent.github.io/SuperTinyIcons/images/svg/kotlin.svg" width="125" title="Kotlin" />
+* <img src="https://edent.github.io/SuperTinyIcons/images/svg/php.svg" width="125" title="PHP" />
+* <img src="https://edent.github.io/SuperTinyIcons/images/svg/php.svg" width="125" title="PHP" />
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
