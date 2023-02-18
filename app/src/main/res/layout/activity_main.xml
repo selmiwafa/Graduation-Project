@@ -10,9 +10,8 @@
         android:id="@+id/imageview"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:src="@color/colorAccent"
-        tools:layout_editor_absoluteX="0dp"
-        tools:layout_editor_absoluteY="0dp" />
+        android:scaleType="centerCrop"
+        android:src="@drawable/signin_page_background"/>
 
 
     <LinearLayout
@@ -24,8 +23,7 @@
         android:padding="45dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        >
+        app:layout_constraintTop_toTopOf="parent">
 
         <LinearLayout
             android:layout_width="wrap_content"
@@ -35,12 +33,14 @@
             <ImageView
                 android:layout_width="24dp"
                 android:layout_height="24dp"
-                android:src="@drawable/backarrow" />
+                android:src="@drawable/backarrow"
+                app:tint="#191919" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Back"
+                android:textColor="#191919"
                 android:textSize="20sp"
                 android:textStyle="bold" />
 
@@ -51,8 +51,13 @@
         android:id="@+id/optRoundCardView"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        app:optRoundCardBackgroundColor="#353758"
+        app:optRoundCardLeftTopCorner="true"
+        app:optRoundCardRightTopCorner="true"
+        app:optRoundCardLeftBottomCorner="false"
+        app:optRoundCardRightBottomCorner="false"
+        app:optRoundCardCornerRadius="50dp"
         app:optRoundCardElevation="0dp"
+        app:optRoundCardBackgroundColor="#353758"
         app:layout_constraintBottom_toBottomOf="@+id/imageview"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -66,59 +71,116 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:orientation="vertical"
-                android:layout_marginTop="80dp">
+                android:layout_marginTop="80dp"
+                android:orientation="vertical">
 
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:text="Welcome Back"
+                    android:textAlignment="center"
                     android:textColor="#9394b8"
                     android:textSize="17sp"
-                    android:textStyle="bold"
-                    android:textAlignment="center"
-                    android:text="Welcome Back"/>
+                    android:textStyle="bold" />
 
                 <EditText
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:padding="15dp"
+                    android:layout_marginStart="30dp"
+                    android:layout_marginTop="30dp"
+
+                    android:layout_marginEnd="30dp"
+                    android:background="@android:color/transparent"
                     android:hint="Username"
-
-                    android:textStyle="bold"
+                    android:padding="15dp"
                     android:textColor="@android:color/white"
-                    android:layout_marginTop="30dp"
-                    android:background="@android:color/transparent"
                     android:textColorHint="@android:color/white"
-                    android:layout_marginStart="30dp"
-                    android:layout_marginEnd="30dp"/>
+                    android:textStyle="bold" />
 
                 <RelativeLayout
                     android:layout_width="match_parent"
                     android:layout_height="1dp"
-                    android:background="#5A5A5A"
                     android:layout_marginStart="40dp"
-                    android:layout_marginEnd="40dp"/>
+                    android:layout_marginEnd="40dp"
+                    android:background="#5A5A5A" />
 
                 <EditText
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:padding="15dp"
-                    android:hint="Password"
-                    android:textStyle="bold"
-                    android:textColor="@android:color/white"
-                    android:layout_marginTop="30dp"
-                    android:background="@android:color/transparent"
-                    android:textColorHint="@android:color/white"
                     android:layout_marginStart="30dp"
-                    android:layout_marginEnd="30dp"/>
+                    android:layout_marginTop="30dp"
+                    android:layout_marginEnd="30dp"
+                    android:background="@android:color/transparent"
+                    android:hint="Password"
+                    android:padding="15dp"
+                    android:textColor="@android:color/white"
+                    android:textColorHint="@android:color/white"
+                    android:textStyle="bold" />
 
                 <RelativeLayout
                     android:layout_width="match_parent"
                     android:layout_height="1dp"
-                    android:background="#5A5A5A"
                     android:layout_marginStart="40dp"
-                    android:layout_marginEnd="40dp"/>
+                    android:layout_marginEnd="40dp"
+                    android:background="#5A5A5A" />
 
+                <Button
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:layout_marginStart="30dp"
+                    android:layout_marginTop="40dp"
+                    android:layout_marginEnd="30dp"
+                    android:background="@drawable/button_login_background"
+                    android:text="Log in"
+                    android:textAllCaps="false"
+                    android:textColor="@android:color/white"
+                    android:textSize="20sp"
+                    android:textStyle="bold" />
+
+                <Button
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:layout_marginStart="30dp"
+                    android:layout_marginTop="40dp"
+                    android:layout_marginEnd="30dp"
+                    android:background="@drawable/button_another_account_background"
+                    android:elevation="0dp"
+                    android:text="Another account"
+                    android:textAllCaps="false"
+                    android:textColor="@android:color/white"
+                    android:textSize="20sp"
+                    android:textStyle="bold" />
+
+                <com.github.captain_miao.optroundcardview.OptRoundCardView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginTop="60dp"
+                    app:optRoundCardCornerRadius="30dp"
+                    app:optRoundCardLeftBottomCorner="false"
+                    app:optRoundCardLeftTopCorner="true"
+                    app:optRoundCardRightBottomCorner="false"
+                    app:optRoundCardRightTopCorner="true">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:gravity="center">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:clickable="true"
+                            android:focusable="true"
+                            android:foreground="?android:attr/selectableItemBackground"
+                            android:onClick="OpenSignupPage"
+                            android:padding="15dp"
+                            android:text="Sign up"
+                            android:textColor="#191919"
+                            android:textSize="25sp"
+                            android:textStyle="bold" />
+
+                    </LinearLayout>
+                </com.github.captain_miao.optroundcardview.OptRoundCardView>
             </LinearLayout>
 
         </androidx.core.widget.NestedScrollView>
@@ -133,8 +195,8 @@
         android:layout_height="100dp"
         android:layout_marginStart="8dp"
         android:layout_marginBottom="8dp"
-        android:src="@color/colorPrimary"
-        android:elevaation="0dp"
+        android:src="@drawable/user_image"
+        android:elevation="0dp"
         app:layout_constraintBottom_toTopOf="@+id/optRoundCardView"
         app:layout_constraintEnd_toEndOf="@+id/imageview"
         app:layout_constraintStart_toStartOf="@+id/imageview"
