@@ -1,7 +1,7 @@
 
 <a name="readme-top"></a>
 
-[LinkedIn](www.linkedin.com/in/wafaselmi01)
+[LinkedIn || Wafa Selmi](www.linkedin.com/in/wafaselmi01)
 
 
 
@@ -9,7 +9,7 @@
 <br />
 <div align="center">
   <a href="https://github.com/github_username/repo_name">
-    <img src="Images/HealthBuddy.png" alt="Logo" width="400" height="100">
+    <img src="Images/HealthBuddy.png" alt="Logo" width="300" height="300">
   </a>
 
 <h3 align="center">HealthBuddy</h3>
@@ -47,7 +47,7 @@
 <!-- ABOUT THE PROJECT -->
 ## About The Project
 
-[![Product Name Screen Shot][product-screenshot]](https://example.com)
+
 
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
