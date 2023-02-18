@@ -56,6 +56,6 @@
 
 ### Built With
 
-<img src="https://edent.github.io/SuperTinyIcons/images/svg/java.svg" width="125" title="Java" /> <img src="https://edent.github.io/SuperTinyIcons/images/svg/kotlin.svg" width="125" title="Kotlin" /> <img src="https://edent.github.io/SuperTinyIcons/images/svg/php.svg" width="125" title="PHP" /> <img src="https://edent.github.io/SuperTinyIcons/images/svg/php.svg" width="125" title="PHP" />
+<img src="https://edent.github.io/SuperTinyIcons/images/svg/java.svg" width="125" title="Java" /> <img src="https://edent.github.io/SuperTinyIcons/images/svg/kotlin.svg" width="125" title="Kotlin" /> <img src="https://edent.github.io/SuperTinyIcons/images/svg/php.svg" width="125" title="PHP" />
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
