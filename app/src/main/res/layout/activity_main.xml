@@ -28,7 +28,8 @@
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:padding="15dp">
+            android:padding="15dp"
+            android:id="@+id/back">
 
             <ImageView
                 android:layout_width="24dp"
@@ -57,7 +58,7 @@
         app:optRoundCardRightBottomCorner="false"
         app:optRoundCardCornerRadius="50dp"
         app:optRoundCardElevation="0dp"
-        app:optRoundCardBackgroundColor="#353758"
+        app:optRoundCardBackgroundColor="#006D77"
         app:layout_constraintBottom_toBottomOf="@+id/imageview"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -79,9 +80,10 @@
                     android:layout_height="wrap_content"
                     android:text="Welcome Back"
                     android:textAlignment="center"
-                    android:textColor="#9394b8"
+                    android:textColor="#83C5BE"
                     android:textSize="17sp"
                     android:textStyle="bold" />
+
 
                 <EditText
                     android:layout_width="match_parent"
@@ -93,8 +95,8 @@
                     android:background="@android:color/transparent"
                     android:hint="Username"
                     android:padding="15dp"
-                    android:textColor="@android:color/white"
-                    android:textColorHint="@android:color/white"
+                    android:textColor="#EDF6F9"
+                    android:textColorHint="#EDF6F9"
                     android:textStyle="bold" />
 
                 <RelativeLayout
