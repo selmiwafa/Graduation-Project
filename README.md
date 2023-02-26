@@ -1,8 +1,7 @@
 
 <a name="readme-top"></a>
 
-[LinkedIn || Wafa Selmi](www.linkedin.com/in/wafaselmi01)
-
+<a href="www.linkedin.com/in/wafaselmi01"><button type="button"><i class="fa-brands fa-linkedin"></i> LinkedIn | Wafa Selmi</button></a>
 
 
 <!-- LOGO -->
