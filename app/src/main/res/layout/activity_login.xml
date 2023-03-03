@@ -4,20 +4,21 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MainActivity">
+    tools:context=".LogIn.LoginActivity">
 
     <ImageView
         android:id="@+id/imageview"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:scaleType="centerCrop"
-        android:src="@drawable/signin_page_background"/>
+        android:src="@drawable/signin_page_background"
+        tools:ignore="ContentDescription" />
 
 
     <LinearLayout
         android:id="@+id/linearLayout"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="300dp"
         android:gravity="center_vertical"
         android:orientation="horizontal"
         android:padding="45dp"
@@ -25,27 +26,12 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:padding="15dp"
-            android:id="@+id/back">
-
-            <ImageView
-                android:layout_width="24dp"
-                android:layout_height="24dp"
-                android:src="@drawable/backarrow"
-                app:tint="#191919" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Back"
-                android:textColor="#191919"
-                android:textSize="20sp"
-                android:textStyle="bold" />
-
-        </LinearLayout>
+        <ImageView
+            android:id="@+id/imageView"
+            android:layout_width="176dp"
+            android:layout_height="176dp"
+            android:layout_weight="1"
+            android:src="@drawable/healthbuddy" />
     </LinearLayout>
 
     <com.github.captain_miao.optroundcardview.OptRoundCardView
@@ -78,7 +64,7 @@
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Welcome Back"
+                    android:text="@string/welcome_back"
                     android:textAlignment="center"
                     android:textColor="#83C5BE"
                     android:textSize="17sp"
@@ -92,12 +78,15 @@
                     android:layout_marginTop="30dp"
 
                     android:layout_marginEnd="30dp"
+                    android:autofillHints=""
                     android:background="@android:color/transparent"
-                    android:hint="Username"
+                    android:hint="@string/username"
+                    android:inputType="text"
                     android:padding="15dp"
                     android:textColor="#EDF6F9"
                     android:textColorHint="#EDF6F9"
-                    android:textStyle="bold" />
+                    android:textStyle="bold"
+                    tools:ignore="VisualLintTextFieldSize" />
 
                 <RelativeLayout
                     android:layout_width="match_parent"
@@ -112,12 +101,15 @@
                     android:layout_marginStart="30dp"
                     android:layout_marginTop="30dp"
                     android:layout_marginEnd="30dp"
+                    android:autofillHints=""
                     android:background="@android:color/transparent"
-                    android:hint="Password"
+                    android:hint="@string/password"
+                    android:inputType="textPassword"
                     android:padding="15dp"
                     android:textColor="@android:color/white"
                     android:textColorHint="@android:color/white"
-                    android:textStyle="bold" />
+                    android:textStyle="bold"
+                    tools:ignore="VisualLintTextFieldSize" />
 
                 <RelativeLayout
                     android:layout_width="match_parent"
@@ -133,11 +125,26 @@
                     android:layout_marginTop="40dp"
                     android:layout_marginEnd="30dp"
                     android:background="@drawable/button_login_background"
-                    android:text="Log in"
+                    android:text="@string/log_in"
                     android:textAllCaps="false"
-                    android:textColor="@android:color/white"
+                    android:textColor="#455A64"
                     android:textSize="20sp"
-                    android:textStyle="bold" />
+                    android:textStyle="bold"
+                    tools:ignore="VisualLintButtonSize" />
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:foreground="?android:attr/selectableItemBackground"
+                    android:gravity="center"
+                    android:text="@string/forget_password"
+                    android:paddingTop="15dp"
+                    android:layout_gravity="center"
+                    android:textColor="#edf6f9"
+                    android:textSize="15sp"
+                    android:textStyle="bold"
+                    tools:ignore="TextSizeCheck" />
 
                 <Button
                     android:layout_width="match_parent"
@@ -145,44 +152,27 @@
                     android:layout_marginStart="30dp"
                     android:layout_marginTop="40dp"
                     android:layout_marginEnd="30dp"
-                    android:background="@drawable/button_another_account_background"
+                    android:background="@drawable/button_add_account_background"
                     android:elevation="0dp"
-                    android:text="Another account"
+                    android:text="@string/new_account"
                     android:textAllCaps="false"
-                    android:textColor="@android:color/white"
+                    android:textColor="#455A64"
                     android:textSize="20sp"
-                    android:textStyle="bold" />
+                    android:textStyle="bold"
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:foreground="?android:attr/selectableItemBackground"
+                    android:onClick="OpenSignupPage"
+                    tools:ignore="VisualLintButtonSize" />
 
-                <com.github.captain_miao.optroundcardview.OptRoundCardView
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_marginTop="60dp"
-                    app:optRoundCardCornerRadius="30dp"
-                    app:optRoundCardLeftBottomCorner="false"
-                    app:optRoundCardLeftTopCorner="true"
-                    app:optRoundCardRightBottomCorner="false"
-                    app:optRoundCardRightTopCorner="true">
+                <RelativeLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="100dp"
+                    android:layout_marginStart="40dp"
+                    android:layout_marginEnd="40dp"
+                    android:background="#5A5A5A" />
 
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:gravity="center">
 
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:clickable="true"
-                            android:focusable="true"
-                            android:foreground="?android:attr/selectableItemBackground"
-                            android:onClick="OpenSignupPage"
-                            android:padding="15dp"
-                            android:text="Sign up"
-                            android:textColor="#191919"
-                            android:textSize="25sp"
-                            android:textStyle="bold" />
-
-                    </LinearLayout>
-                </com.github.captain_miao.optroundcardview.OptRoundCardView>
             </LinearLayout>
 
         </androidx.core.widget.NestedScrollView>

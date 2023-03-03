@@ -1,3 +1,20 @@
 <resources>
-    <string name="app_name">pfe</string>
+    <string name="app_name">HealthBuddy</string>
+    <string name="forget_password">Password forgotten?</string>
+    <string name="sign_in">Sign in</string>
+    <string name="full_name">Full name</string>
+    <string name="e_mail">E-mail</string>
+    <string name="date_de_naissance">Date de naissance</string>
+    <string name="password">Password</string>
+    <string name="confirm_password">Confirm password</string>
+    <string name="create_naccount">Create\naccount</string>
+    <string name="bg">BG</string>
+    <string name="log_in">Log in</string>
+    <string name="new_account">No account? Make one</string>
+    <string name="username">Username</string>
+    <string name="welcome_back">Welcome Back</string>
+    <string name="back">Back</string>
+    <string name="sign_up">Sign up</string>
+    <string name="adress">Adress</string>
+    <string name="log_existing">Already have an account? Login</string>
 </resources>

@@ -3,21 +3,25 @@
 
     <application
         android:allowBackup="true"
-        android:icon="@mipmap/ic_launcher"
+        android:icon="@mipmap/healthbuddy"
         android:label="@string/app_name"
-        android:roundIcon="@mipmap/ic_launcher_round"
+        android:roundIcon="@mipmap/healthbuddy_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+
         <activity
-            android:name=".SignupActivity"
-            android:exported="false" />
-        <activity android:name=".MainActivity">
+            android:name=".SignUp.SignupActivity"
+            android:exported="false"
+            android:windowSoftInputMode="stateVisible|adjustResize"/>
+
+        <activity android:name=".LogIn.LoginActivity"
+            android:windowSoftInputMode="adjustPan|adjustResize">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
     </application>
 
 </manifest>
