@@ -1,4 +1,4 @@
-package com.example.pfe.SignUp;
+package com.example.pfe;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -8,21 +8,21 @@ import android.os.Bundle;
 import android.view.View;
 import android.view.WindowManager;
 
-import com.example.pfe.LogIn.LoginActivity;
-import com.example.pfe.R;
-
-public class SignupActivity extends AppCompatActivity {
+public class LoginActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS, WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS);
         getWindow().setStatusBarColor(Color.TRANSPARENT);
-        setContentView(R.layout.activity_signup);
+        setContentView(R.layout.activity_login);
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE);
     }
 
-    public void OpenLoginPage(View view) {
-        startActivity(new Intent( SignupActivity.this, LoginActivity.class));
+    public void OpenSignupPage(View view) {
+        startActivity(new Intent( LoginActivity.this, SignupActivity.class));
+    }
+    public void OpenForgetPage(View view) {
+        startActivity(new Intent( LoginActivity.this, ForgetActivity.class));
     }
 }

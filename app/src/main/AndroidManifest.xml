@@ -10,12 +10,17 @@
         android:theme="@style/AppTheme">
 
         <activity
-            android:name=".SignUp.SignupActivity"
+            android:name=".SignupActivity"
             android:exported="false"
-            android:windowSoftInputMode="stateVisible|adjustResize"/>
+            android:windowSoftInputMode="adjustResize"/>
 
-        <activity android:name=".LogIn.LoginActivity"
-            android:windowSoftInputMode="adjustPan|adjustResize">
+        <activity
+            android:name=".ForgetActivity"
+            android:exported="false"/>
+
+        <activity android:name=".LoginActivity"
+            android:windowSoftInputMode="adjustResize"
+            android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />

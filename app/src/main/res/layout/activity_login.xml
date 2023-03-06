@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".LogIn.LoginActivity">
+    tools:context=".LoginActivity">
 
     <ImageView
         android:id="@+id/imageview"
@@ -28,10 +28,11 @@
 
         <ImageView
             android:id="@+id/imageView"
-            android:layout_width="176dp"
+            android:layout_width="0dp"
             android:layout_height="176dp"
             android:layout_weight="1"
-            android:src="@drawable/healthbuddy" />
+            android:src="@drawable/healthbuddy"
+            tools:ignore="ContentDescription,ImageContrastCheck" />
     </LinearLayout>
 
     <com.github.captain_miao.optroundcardview.OptRoundCardView
@@ -58,18 +59,8 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_marginTop="80dp"
+                android:layout_marginTop="40dp"
                 android:orientation="vertical">
-
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="@string/welcome_back"
-                    android:textAlignment="center"
-                    android:textColor="#83C5BE"
-                    android:textSize="17sp"
-                    android:textStyle="bold" />
-
 
                 <EditText
                     android:layout_width="match_parent"
@@ -80,7 +71,7 @@
                     android:layout_marginEnd="30dp"
                     android:autofillHints=""
                     android:background="@android:color/transparent"
-                    android:hint="@string/username"
+                    android:hint="@string/login_mail"
                     android:inputType="text"
                     android:padding="15dp"
                     android:textColor="#EDF6F9"
@@ -131,20 +122,24 @@
                     android:textSize="20sp"
                     android:textStyle="bold"
                     tools:ignore="VisualLintButtonSize" />
+
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_gravity="center"
                     android:clickable="true"
                     android:focusable="true"
                     android:foreground="?android:attr/selectableItemBackground"
                     android:gravity="center"
-                    android:text="@string/forget_password"
+                    android:minHeight="48dp"
+                    android:onClick="OpenForgetPage"
                     android:paddingTop="15dp"
-                    android:layout_gravity="center"
+                    android:text="@string/forget_password"
                     android:textColor="#edf6f9"
                     android:textSize="15sp"
                     android:textStyle="bold"
                     tools:ignore="TextSizeCheck" />
+
 
                 <Button
                     android:layout_width="match_parent"
