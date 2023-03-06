@@ -1,9 +1,6 @@
 
 <a name="readme-top"></a>
 
-[LinkedIn || Wafa Selmi](www.linkedin.com/in/wafaselmi01)
-
-
 
 <!-- LOGO -->
 <br />
