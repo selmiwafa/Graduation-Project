@@ -16,6 +16,8 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import java.util.Calendar;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class SignupActivity extends AppCompatActivity {
 
@@ -28,7 +30,6 @@ public class SignupActivity extends AppCompatActivity {
     private Button btnSignin;
     DatePickerDialog.OnDateSetListener setListener;
 
-    //SQLiteHelper sqliteHelper = new SQLiteHelper((Context) this);
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -76,10 +77,7 @@ public class SignupActivity extends AppCompatActivity {
         if (name.isEmpty() || email.isEmpty() || birthdate.isEmpty() || password.isEmpty() || confirmPassword.isEmpty() || adress.isEmpty()) {
             Toast.makeText(this, "All fields required!", Toast.LENGTH_SHORT).show();
         }
-        else if (isValidEmail(email)) {
-            Toast.makeText(this, "Invalid e-mail format!", Toast.LENGTH_SHORT).show();
-        }
-        else if (isValidEmail(email)) {
+        else if (!isValidEmail(email)) {
             Toast.makeText(this, "Invalid e-mail format!", Toast.LENGTH_SHORT).show();
         }
     }
@@ -94,18 +92,8 @@ public class SignupActivity extends AppCompatActivity {
         btnSignin = findViewById(R.id.btnSignin);
     }
 
-        public static boolean isValidEmail(CharSequence target) {
-            return (!TextUtils.isEmpty(target) && Patterns.EMAIL_ADDRESS.matcher(target).matches());
-        }
-
-
-    private void clearEditText(){
-        edName.setText("");
-        edAdress.setText("");
-        edBirthdate.setText("");
-        edEmail.setText("");
-        edPassword.setText("");
-        edConfirmPassword.setText("");
+    public boolean isValidEmail(String str) {
+        return Patterns.EMAIL_ADDRESS.matcher(str).matches();
     }
 
     public void OpenLoginPage(View view) {
