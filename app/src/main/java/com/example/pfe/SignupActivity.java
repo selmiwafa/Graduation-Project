@@ -7,7 +7,6 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
-import android.text.TextUtils;
 import android.util.Patterns;
 import android.view.View;
 import android.view.WindowManager;
@@ -16,8 +15,6 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import java.util.Calendar;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 public class SignupActivity extends AppCompatActivity {
 
@@ -62,7 +59,6 @@ public class SignupActivity extends AppCompatActivity {
                 edBirthdate.setText("");
             }
         };
-
         btnSignin.setOnClickListener(v -> addUser());
     }
 
@@ -74,12 +70,21 @@ public class SignupActivity extends AppCompatActivity {
         String confirmPassword = edConfirmPassword.getText().toString();
         String adress = edAdress.getText().toString();
 
+        confirmPassword(password, confirmPassword);
+
         if (name.isEmpty() || email.isEmpty() || birthdate.isEmpty() || password.isEmpty() || confirmPassword.isEmpty() || adress.isEmpty()) {
-            Toast.makeText(this, "All fields required!", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "All fields required!", Toast.LENGTH_LONG).show();
         }
         else if (!isValidEmail(email)) {
-            Toast.makeText(this, "Invalid e-mail format!", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "Invalid e-mail format!", Toast.LENGTH_LONG).show();
         }
+        else if (password.length()<8) {
+            Toast.makeText(this, "Password must be at least 8 characters!", Toast.LENGTH_LONG).show();
+        }
+        else if (confirmPassword(password, confirmPassword)) {
+            Toast.makeText(this, "Confirm Password doesn't match password!!", Toast.LENGTH_LONG).show();
+        }
+
     }
 
     private void initView() {
@@ -95,6 +100,11 @@ public class SignupActivity extends AppCompatActivity {
     public boolean isValidEmail(String str) {
         return Patterns.EMAIL_ADDRESS.matcher(str).matches();
     }
+
+    public boolean confirmPassword(String password, String confirm){
+        return !confirm.matches(password);
+    }
+
 
     public void OpenLoginPage(View view) {
         startActivity(new Intent( SignupActivity.this, LoginActivity.class));
