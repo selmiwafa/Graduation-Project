@@ -6,7 +6,7 @@ android {
     buildToolsVersion "30.0.3"
     defaultConfig {
         applicationId "com.example.pfe"
-        minSdkVersion 26
+        minSdk 28
         targetSdkVersion 33
         versionCode 1
         versionName "1.0"
@@ -42,6 +42,9 @@ dependencies {
     }
     dependencies {
         implementation 'com.github.captain-miao:optroundcardview:1.0.0'
+
+        implementation 'com.squareup.retrofit2:retrofit:2.4.0'
+        implementation 'com.squareup.retrofit2:converter-gson:2.4.0'
 
     }
 

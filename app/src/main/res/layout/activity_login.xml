@@ -121,7 +121,10 @@
                     android:textColor="#455A64"
                     android:textSize="20sp"
                     android:textStyle="bold"
-                    tools:ignore="VisualLintButtonSize" />
+                    tools:ignore="VisualLintButtonSize"
+                    android:onClick="OpenHomePage"
+                    android:clickable="true"
+                    android:focusable="true"/>
 
                 <TextView
                     android:layout_width="match_parent"

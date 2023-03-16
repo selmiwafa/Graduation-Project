@@ -4,13 +4,7 @@ data class User(
     val email: String,
     val name: String,
     val adress: String,
-    val password: String,
-    val confirmPassword: String,
     val birthdate: String,
+    val password: String
     )
 
-{
-    companion object {
-
-    }
-}
