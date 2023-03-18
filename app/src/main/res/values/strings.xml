@@ -1,0 +1,25 @@
+<resources>
+    <string name="app_name">HealthBuddy</string>
+    <string name="forget_password">Password forgotten?</string>
+    <string name="sign_in">Sign in</string>
+    <string name="full_name">Full name</string>
+    <string name="e_mail">E-mail</string>
+    <string name="birthdate">Birthdate</string>
+    <string name="password">Password</string>
+    <string name="confirm_password">Confirm password</string>
+    <string name="create_naccount">Create\naccount</string>
+    <string name="bg">BG</string>
+    <string name="log_in">Log in</string>
+    <string name="new_account">No account? Make one</string>
+    <string name="login_mail">E-mail</string>
+    <string name="welcome_back">Welcome</string>
+    <string name="back">Back</string>
+    <string name="sign_up">Sign up</string>
+    <string name="adress">Adress</string>
+    <string name="log_existing">Already have an account? Login</string>
+    <string name="recover_password">Recover password</string>
+    <string name="send_e_mail">Send e-mail</string>
+    <string name="menu">menu</string>
+    <string name="user_image">User Image</string>
+    <string name="logo">Logo</string>
+</resources>
