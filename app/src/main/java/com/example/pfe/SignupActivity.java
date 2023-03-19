@@ -1,6 +1,7 @@
 package com.example.pfe;
 
 
+import android.annotation.SuppressLint;
 import android.app.DatePickerDialog;
 import android.app.ProgressDialog;
 import android.content.Intent;
@@ -9,7 +10,6 @@ import android.graphics.drawable.ColorDrawable;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Patterns;
-import android.view.View;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
@@ -43,13 +43,6 @@ public class SignupActivity extends AppCompatActivity {
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS, WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS);
         getWindow().setStatusBarColor(Color.TRANSPARENT);
         setContentView(R.layout.activity_signup);
-       btnSignin.setOnClickListener(new View.OnClickListener() {
-           @Override
-           public void onClick(View v) {
-               new Add().execute();
-           }
-       });
-
 
         this.initView();
         edBirthdate.setOnClickListener(v -> {
@@ -78,7 +71,7 @@ public class SignupActivity extends AppCompatActivity {
         btnSignin.setOnClickListener(v -> addUser());
     }
 
-    private void addUser() {
+    void addUser() {
         String name = edName.getText().toString();
         String email = edEmail.getText().toString();
         String birthdate= edBirthdate.getText().toString();
@@ -89,19 +82,75 @@ public class SignupActivity extends AppCompatActivity {
         confirmPassword(password, confirmPassword);
 
         if (name.isEmpty() || email.isEmpty() || birthdate.isEmpty() || password.isEmpty() || confirmPassword.isEmpty() || adress.isEmpty()) {
-            Toast.makeText(this, "All fields required!", Toast.LENGTH_LONG).show();
+            Toast.makeText(getApplicationContext().getApplicationContext(), "All fields required!", Toast.LENGTH_LONG).show();
         }
         else if (!isValidEmail(email)) {
-            Toast.makeText(this, "Invalid e-mail format!", Toast.LENGTH_LONG).show();
+            Toast.makeText(getApplicationContext().getApplicationContext(), "Invalid e-mail format!", Toast.LENGTH_LONG).show();
         }
         else if (password.length()<8) {
-            Toast.makeText(this, "Password must be at least 8 characters!", Toast.LENGTH_LONG).show();
+            Toast.makeText(getApplicationContext().getApplicationContext(), "Password must be at least 8 characters!", Toast.LENGTH_LONG).show();
         }
         else if (confirmPassword(password, confirmPassword)) {
-            Toast.makeText(this, "Confirm Password doesn't match password!!", Toast.LENGTH_LONG).show();
+            Toast.makeText(getApplicationContext().getApplicationContext(), "Confirm Password doesn't match password!!", Toast.LENGTH_LONG).show();
+        }
+        else {
+            new Add().execute();
+        }
+    }
+
+    @SuppressLint("StaticFieldLeak")
+    class Add extends AsyncTask<String,String,String>
+    {
+
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+            dialog=new ProgressDialog(SignupActivity.this);
+            dialog.setMessage("Please wait");
+            dialog.show();
+
+
         }
 
+        @Override
+        protected String doInBackground(String... strings)
+        {
 
+            HashMap<String,String> map= new HashMap<>();
+            map.put("email",edEmail.getText().toString());
+            map.put("name",edName.getText().toString());
+            map.put("birthdate",edBirthdate.getText().toString());
+            map.put("password",edPassword.getText().toString());
+            map.put("adress",edAdress.getText().toString());
+
+            JSONObject object =parser.makeHttpRequest("http://10.0.2.2/user/add.php","GET",map);
+            try {
+                success=object.getInt("success");
+            } catch (JSONException e) {
+                throw new RuntimeException(e);
+            }
+            return null;
+
+        }
+
+        @Override
+        protected void onPostExecute(String s)
+        {
+            super.onPostExecute(s);
+            dialog.cancel();
+
+            if(success==1)
+            {
+                Toast.makeText(SignupActivity.this,"Sign up successfull",Toast.LENGTH_LONG).show();
+                OpenLoginPage();
+
+            }
+            else
+            {
+                Toast.makeText(SignupActivity.this,"Error signing up!",Toast.LENGTH_LONG).show();
+            }
+        }
     }
 
     private void initView() {
@@ -124,60 +173,9 @@ public class SignupActivity extends AppCompatActivity {
     }
 
 
-    public void OpenLoginPage(View view) {
+    public void OpenLoginPage() {
         startActivity(new Intent( SignupActivity.this, LoginActivity.class));
     }
-    public void OpenHomePage(View view) {
-        startActivity(new Intent( SignupActivity.this, HomepageActivity.class));
-    }
 
-    class Add extends AsyncTask<String,String,String>
-    {
-        @Override
-        protected void onPreExecute() {
-            super.onPreExecute();
-            dialog=new ProgressDialog(SignupActivity.this);
-            dialog.setMessage("Please wait");
-            dialog.show();
 
-        }
-
-        @Override
-        protected String doInBackground(String... strings)
-        {
-            HashMap<String,String> map=new HashMap<String,String>();
-            map.put("email",edEmail.getText().toString());
-            map.put("name",edName.getText().toString());
-            map.put("birthdate",edBirthdate.getText().toString());
-            map.put("password",edPassword.getText().toString());
-            map.put("confirmPass",edConfirmPass.getText().toString());
-            map.put("adress",edAdress.getText().toString());
-
-            JSONObject object =parser.makeHttpRequest("http://10.0.0.2/user/add.php","GET",map);
-            try {
-                success=object.getInt("success");
-            } catch (JSONException e) {
-                throw new RuntimeException(e);
-            }
-            return null;
-
-        }
-
-        @Override
-        protected void onPostExecute(String s)
-        {
-            super.onPostExecute(s);
-            dialog.cancel();
-
-            if(success==1)
-            {
-                Toast.makeText(SignupActivity.this,"Added successfully",Toast.LENGTH_LONG).show();
-
-            }
-            else
-            {
-                Toast.makeText(SignupActivity.this,"Error",Toast.LENGTH_LONG).show();
-            }
-        }
-    }
 }

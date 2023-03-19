@@ -1,8 +1,10 @@
 package com.example.pfe;
 
 import android.util.Log;
+
 import org.json.JSONException;
 import org.json.JSONObject;
+
 import java.io.BufferedInputStream;
 import java.io.BufferedReader;
 import java.io.DataOutputStream;
@@ -31,13 +33,12 @@ public class JSONParser {
 
         sbParams = new StringBuilder();
         int i = 0;
-        for (Object email : params.keySet()) {
+        for (Object key : params.keySet()) {
             try {
                 if (i != 0){
                     sbParams.append("&");
                 }
-                sbParams.append(email).append("=")
-                        .append(URLEncoder.encode((String) params.get(email), charset));
+                sbParams.append(key).append("=").append(URLEncoder.encode(String.valueOf(params.get(key)), charset));
 
             } catch (UnsupportedEncodingException e) {
                 e.printStackTrace();
@@ -131,5 +132,3 @@ public class JSONParser {
         return jObj;
     }
 }
-
-
