@@ -2,9 +2,11 @@ package com.example.pfe;
 
 
 import android.app.DatePickerDialog;
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Patterns;
 import android.view.View;
@@ -15,7 +17,11 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.util.Calendar;
+import java.util.HashMap;
 
 public class SignupActivity extends AppCompatActivity {
 
@@ -23,11 +29,13 @@ public class SignupActivity extends AppCompatActivity {
     private EditText edEmail;
     private EditText edBirthdate;
     private EditText edPassword;
-    private EditText edConfirmPassword;
+    private EditText edConfirmPass;
     private EditText edAdress;
     private Button btnSignin;
     DatePickerDialog.OnDateSetListener setListener;
-
+    ProgressDialog dialog;
+    JSONParser parser=new JSONParser();
+    int success;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,6 +43,13 @@ public class SignupActivity extends AppCompatActivity {
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS, WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS);
         getWindow().setStatusBarColor(Color.TRANSPARENT);
         setContentView(R.layout.activity_signup);
+       btnSignin.setOnClickListener(new View.OnClickListener() {
+           @Override
+           public void onClick(View v) {
+               new Add().execute();
+           }
+       });
+
 
         this.initView();
         edBirthdate.setOnClickListener(v -> {
@@ -68,7 +83,7 @@ public class SignupActivity extends AppCompatActivity {
         String email = edEmail.getText().toString();
         String birthdate= edBirthdate.getText().toString();
         String password = edPassword.getText().toString();
-        String confirmPassword = edConfirmPassword.getText().toString();
+        String confirmPassword = edConfirmPass.getText().toString();
         String adress = edAdress.getText().toString();
 
         confirmPassword(password, confirmPassword);
@@ -94,9 +109,10 @@ public class SignupActivity extends AppCompatActivity {
         edEmail = findViewById(R.id.edEmail);
         edBirthdate = findViewById(R.id.edBirthdate);
         edPassword = findViewById(R.id.edPassword);
-        edConfirmPassword = findViewById(R.id.edConfirmPassword);
+        edConfirmPass = findViewById(R.id.edConfirmPass);
         edAdress = findViewById(R.id.edAdress);
         btnSignin = findViewById(R.id.btnSignin);
+
     }
 
     public boolean isValidEmail(String str) {
@@ -113,5 +129,55 @@ public class SignupActivity extends AppCompatActivity {
     }
     public void OpenHomePage(View view) {
         startActivity(new Intent( SignupActivity.this, HomepageActivity.class));
+    }
+
+    class Add extends AsyncTask<String,String,String>
+    {
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+            dialog=new ProgressDialog(SignupActivity.this);
+            dialog.setMessage("Please wait");
+            dialog.show();
+
+        }
+
+        @Override
+        protected String doInBackground(String... strings)
+        {
+            HashMap<String,String> map=new HashMap<String,String>();
+            map.put("email",edEmail.getText().toString());
+            map.put("name",edName.getText().toString());
+            map.put("birthdate",edBirthdate.getText().toString());
+            map.put("password",edPassword.getText().toString());
+            map.put("confirmPass",edConfirmPass.getText().toString());
+            map.put("adress",edAdress.getText().toString());
+
+            JSONObject object =parser.makeHttpRequest("http://10.0.0.2/user/add.php","GET",map);
+            try {
+                success=object.getInt("success");
+            } catch (JSONException e) {
+                throw new RuntimeException(e);
+            }
+            return null;
+
+        }
+
+        @Override
+        protected void onPostExecute(String s)
+        {
+            super.onPostExecute(s);
+            dialog.cancel();
+
+            if(success==1)
+            {
+                Toast.makeText(SignupActivity.this,"Added successfully",Toast.LENGTH_LONG).show();
+
+            }
+            else
+            {
+                Toast.makeText(SignupActivity.this,"Error",Toast.LENGTH_LONG).show();
+            }
+        }
     }
 }
