@@ -63,12 +63,11 @@
                 android:orientation="vertical">
 
                 <EditText
-                    android:id="@+id/email_login"
+                    android:id="@+id/edEmailLogin"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="30dp"
                     android:layout_marginTop="30dp"
-
                     android:layout_marginEnd="30dp"
                     android:autofillHints=""
                     android:background="@android:color/transparent"
@@ -88,6 +87,7 @@
                     android:background="#5A5A5A" />
 
                 <EditText
+                    android:id="@+id/edPasswordLogin"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="30dp"
@@ -123,7 +123,7 @@
                     android:textSize="20sp"
                     android:textStyle="bold"
                     tools:ignore="VisualLintButtonSize"
-                    android:onClick="OpenHomePage"
+                    android:onClick="login"
                     android:clickable="true"
                     android:focusable="true"/>
 

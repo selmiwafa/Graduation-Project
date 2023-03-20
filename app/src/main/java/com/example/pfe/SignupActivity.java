@@ -36,6 +36,7 @@ public class SignupActivity extends AppCompatActivity {
     ProgressDialog dialog;
     JSONParser parser=new JSONParser();
     int success;
+    User user;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -87,7 +88,7 @@ public class SignupActivity extends AppCompatActivity {
         else if (!isValidEmail(email)) {
             Toast.makeText(getApplicationContext().getApplicationContext(), "Invalid e-mail format!", Toast.LENGTH_LONG).show();
         }
-        else if (password.length()<8) {
+        else if (password.length()<5) {
             Toast.makeText(getApplicationContext().getApplicationContext(), "Password must be at least 8 characters!", Toast.LENGTH_LONG).show();
         }
         else if (confirmPassword(password, confirmPassword)) {
