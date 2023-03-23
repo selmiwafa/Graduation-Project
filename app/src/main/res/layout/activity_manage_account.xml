@@ -15,11 +15,26 @@
 
     <androidx.cardview.widget.CardView
         android:layout_width="350dp"
-        android:layout_height="800dp"
+        android:layout_height="750dp"
+        app:cardCornerRadius="30dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <ImageButton
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:src="@drawable/backarrow"
+            android:background="@android:color/transparent"
+        <ImageView
+            android:layout_width="150dp"
+            android:layout_height="80dp"
+            android:src="@drawable/hbtext"
+            android:layout_centerHorizontal="true"/>
 
+    </RelativeLayout>
     </androidx.cardview.widget.CardView>
 </androidx.constraintlayout.widget.ConstraintLayout>
