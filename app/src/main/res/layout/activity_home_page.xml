@@ -40,6 +40,7 @@
             android:layout_marginEnd="15dp"
             android:elevation="0dp"
             android:clickable="true"
+            android:onClick="createUserDialog"
             android:contentDescription="@string/user_image"/>
     </RelativeLayout>
 

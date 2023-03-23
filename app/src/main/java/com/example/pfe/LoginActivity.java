@@ -1,10 +1,12 @@
 package com.example.pfe;
 
 import android.annotation.SuppressLint;
+import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.AsyncTask;
+import android.os.Build;
 import android.os.Bundle;
 import android.util.Patterns;
 import android.view.View;
@@ -26,6 +28,7 @@ public class LoginActivity extends AppCompatActivity {
     ProgressDialog dialog;
     JSONParser parser=new JSONParser();
     int success;
+    String message;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -78,7 +81,8 @@ public class LoginActivity extends AppCompatActivity {
 
             JSONObject object =parser.makeHttpRequest("http://10.0.2.2/user/log.php","GET",map);
             try {
-                success=object.getInt("success");
+                success = object.getInt("success");
+                message = object.getString("message");
                 JSONArray userJson = object.getJSONArray("user");
                 JSONObject jsonObject = userJson.getJSONObject(0);
                 User user = new User(
@@ -89,7 +93,6 @@ public class LoginActivity extends AppCompatActivity {
                         jsonObject.getString("adress")
                 );
                 SharedPrefManager.getInstance(getApplicationContext()).userLogin(user);
-
             } catch (JSONException e) {
                 throw new RuntimeException(e);
             }
@@ -102,17 +105,14 @@ public class LoginActivity extends AppCompatActivity {
         {
             super.onPostExecute(s);
             dialog.cancel();
-
-            if(success==1)
+            if(success == 1)
             {
                 Toast.makeText(LoginActivity.this,"Login successful",Toast.LENGTH_LONG).show();
                 startActivity(new Intent( LoginActivity.this, HomepageActivity.class));
-
-
             }
-            else
-            {
-                Toast.makeText(LoginActivity.this,"Error signing up!",Toast.LENGTH_LONG).show();
+            else {
+                Toast.makeText(LoginActivity.this, message, Toast.LENGTH_LONG).show();
+                restartActivity(LoginActivity.this);
             }
         }
     }
@@ -134,6 +134,13 @@ public class LoginActivity extends AppCompatActivity {
     public void OpenHomePage(View view) {
         startActivity(new Intent( LoginActivity.this, HomepageActivity.class));
     }
-
+    public static void restartActivity(Activity activity){
+        if (Build.VERSION.SDK_INT >= 11) {
+            activity.recreate();
+        } else {
+            activity.finish();
+            activity.startActivity(activity.getIntent());
+        }
+    }
 
 }
