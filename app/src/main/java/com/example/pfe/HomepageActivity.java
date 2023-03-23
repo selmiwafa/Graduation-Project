@@ -5,9 +5,13 @@ import android.os.Bundle;
 import android.view.View;
 import android.view.WindowManager;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 public class HomepageActivity extends AppCompatActivity {
+    private AlertDialog.Builder dialogBuilder;
+    private AlertDialog dialog;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -20,4 +24,16 @@ public class HomepageActivity extends AppCompatActivity {
     public void logout(View view) {
         SharedPrefManager.getInstance(getApplicationContext()).logout();
     }
+    public void CreateUserDialog(){
+        dialogBuilder=new AlertDialog.Builder(this);
+        final View contactPopupView=getLayoutInflater().inflate(R.layout.user_details,null);
+        dialogBuilder.setView(contactPopupView);
+        dialog=dialogBuilder.create();
+        dialog.show();
+
+    }
+    public void cancel(){
+        dialog.dismiss();
+    }
+
 }
