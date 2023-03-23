@@ -22,4 +22,8 @@
     <string name="menu">menu</string>
     <string name="user_image">User Image</string>
     <string name="logo">Logo</string>
+    <string name="username">Youssef</string>
+    <string name="email">youssef@gmail.com</string>
+    <string name="manage">Manage account</string>
+    <string name="logout">LOGOUT</string>
 </resources>
