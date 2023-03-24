@@ -29,7 +29,7 @@
                 android:layout_height="50dp"
                 android:src="@drawable/backarrow"
                 android:background="@android:color/transparent"
-                android:onClick="back"/>
+                android:onClick="backManage"/>
             <ImageView
                 android:id="@+id/logo"
                 android:layout_width="150dp"
@@ -141,7 +141,7 @@
                 android:layout_below="@+id/adress" />
 
             <Button
-                android:id="@+id/update_account_information"
+                android:id="@+id/update_infoBtn"
                 android:layout_width="280dp"
                 android:layout_height="50dp"
                 android:background="@drawable/manage_buttons_bg"

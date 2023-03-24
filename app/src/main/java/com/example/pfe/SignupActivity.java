@@ -61,7 +61,7 @@ public class SignupActivity extends AppCompatActivity {
             month = month+1;
             String date = day+"/"+month+"/"+year;
             edBirthdate.setText(date);
-            int y = Calendar.getInstance().get(Calendar.YEAR);
+            int y = (Calendar.getInstance().get(Calendar.YEAR))-18;
             int m = Calendar.getInstance().get(Calendar.MONTH);
             int d = Calendar.getInstance().get(Calendar.DAY_OF_MONTH);
             if (year>=(y-18) && month>=m && day>=d){
@@ -89,7 +89,7 @@ public class SignupActivity extends AppCompatActivity {
             Toast.makeText(getApplicationContext().getApplicationContext(), "Invalid e-mail format!", Toast.LENGTH_LONG).show();
         }
         else if (password.length()<5) {
-            Toast.makeText(getApplicationContext().getApplicationContext(), "Password must be at least 8 characters!", Toast.LENGTH_LONG).show();
+            Toast.makeText(getApplicationContext().getApplicationContext(), "Password must be at least 5 characters!", Toast.LENGTH_LONG).show();
         }
         else if (confirmPassword(password, confirmPassword)) {
             Toast.makeText(getApplicationContext().getApplicationContext(), "Confirm Password doesn't match password!!", Toast.LENGTH_LONG).show();

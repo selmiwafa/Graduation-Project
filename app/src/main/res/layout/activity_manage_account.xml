@@ -29,7 +29,7 @@
             android:layout_height="50dp"
             android:src="@drawable/backarrow"
             android:background="@android:color/transparent"
-            android:onClick="back"/>
+            android:onClick="backHomepage"/>
         <ImageView
             android:id="@+id/logo"
             android:layout_width="150dp"
@@ -82,7 +82,7 @@
             android:background="@drawable/manage_buttons_bg"
             android:clickable="true"
             android:focusable="true"
-            android:onClick="OpenManageAccount"
+            android:onClick="openPageUpdate"
             android:text="Update my informations"
             android:textAllCaps="false"
             android:textColor="@android:color/black"
