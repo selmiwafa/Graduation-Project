@@ -28,7 +28,8 @@
             android:layout_width="50dp"
             android:layout_height="50dp"
             android:src="@drawable/backarrow"
-            android:background="@android:color/transparent"/>
+            android:background="@android:color/transparent"
+            android:onClick="back"/>
         <ImageView
             android:id="@+id/logo"
             android:layout_width="150dp"
@@ -73,6 +74,42 @@
             android:layout_alignParentStart="true"
             android:layout_alignParentEnd="true"
             tools:ignore="MissingConstraints" />
+
+        <Button
+            android:id="@+id/update_account_information"
+            android:layout_width="280dp"
+            android:layout_height="50dp"
+            android:background="@drawable/manage_buttons_bg"
+            android:clickable="true"
+            android:focusable="true"
+            android:onClick="OpenManageAccount"
+            android:text="Update my informations"
+            android:textAllCaps="false"
+            android:textColor="@android:color/black"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            android:layout_marginTop="90dp"
+            android:layout_below="@+id/detail_email"
+            android:layout_centerHorizontal="true"
+            tools:ignore="MissingConstraints,VisualLintButtonSize" />
+
+        <Button
+            android:id="@+id/delete_account"
+            android:layout_width="280dp"
+            android:layout_height="50dp"
+            android:background="@drawable/manage_buttons_bg"
+            android:clickable="true"
+            android:focusable="true"
+            android:onClick="OpenManageAccount"
+            android:text="Delete Account"
+            android:textAllCaps="false"
+            android:textColor="@android:color/black"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            android:layout_marginTop="20dp"
+            android:layout_below="@+id/update_account_information"
+            android:layout_centerHorizontal="true"
+            tools:ignore="MissingConstraints,VisualLintButtonSize" />
 
     </RelativeLayout>
     </androidx.cardview.widget.CardView>

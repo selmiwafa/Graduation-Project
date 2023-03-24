@@ -83,6 +83,7 @@ public class LoginActivity extends AppCompatActivity {
             try {
                 success = object.getInt("success");
                 message = object.getString("message");
+                while(success == 1){
                 JSONArray userJson = object.getJSONArray("user");
                 JSONObject jsonObject = userJson.getJSONObject(0);
                 User user = new User(
@@ -93,6 +94,8 @@ public class LoginActivity extends AppCompatActivity {
                         jsonObject.getString("adress")
                 );
                 SharedPrefManager.getInstance(getApplicationContext()).userLogin(user);
+                    break;
+                }
             } catch (JSONException e) {
                 throw new RuntimeException(e);
             }

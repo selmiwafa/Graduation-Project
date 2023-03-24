@@ -37,15 +37,13 @@ public class HomepageActivity extends AppCompatActivity {
         final View contactPopupView=getLayoutInflater().inflate(user_details,null);
         dialogBuilder.setView(contactPopupView);
         dialog=dialogBuilder.create();
-        //username = dialog.findViewById(R.id.username);
         dialog.show();
-        //detail_email = dialog.findViewById(R.id.detail_email);
-        //setUserDetails(username, detail_email);
-    }
-    /*public void setUserDetails (TextView username, TextView detail_email){
+        username = dialog.findViewById(R.id.username);
+        detail_email = dialog.findViewById(R.id.detail_email);
         username.setText(String.valueOf(SharedPrefManager.getInstance(getApplicationContext()).getUser().getName()));
         detail_email.setText(String.valueOf(SharedPrefManager.getInstance(getApplicationContext()).getUser().getEmail()));
-    }*/
+    }
+
 
     public void cancel (View view){
         dialog.dismiss();
