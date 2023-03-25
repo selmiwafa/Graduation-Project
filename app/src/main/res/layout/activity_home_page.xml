@@ -27,7 +27,7 @@
         <ImageView
             android:id="@+id/logo"
             android:layout_width="180dp"
-            android:layout_height="30dp"
+            android:layout_height="40dp"
             android:layout_centerHorizontal="true"
             android:layout_marginTop="12dp"
             android:src="@drawable/hbtext"

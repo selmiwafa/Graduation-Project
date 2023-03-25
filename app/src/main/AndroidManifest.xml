@@ -13,7 +13,7 @@
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
         <activity
-            android:name=".AddPatientActivity"
+            android:name=".manage_patients.AddPatientActivity"
             android:exported="false" />
         <activity
             android:name=".manage_account.UpdateInfoActivity"
