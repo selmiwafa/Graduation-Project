@@ -125,7 +125,7 @@ public class SignupActivity extends AppCompatActivity {
             map.put("password",edPassword.getText().toString());
             map.put("adress",edAdress.getText().toString());
 
-            JSONObject object =parser.makeHttpRequest("http://10.0.2.2/user/add.php","GET",map);
+            JSONObject object = parser.makeHttpRequest("http://10.0.2.2/healthbuddy/user/add.php", "GET", map);
             try {
                 success=object.getInt("success");
             } catch (JSONException e) {

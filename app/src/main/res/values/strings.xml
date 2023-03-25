@@ -28,4 +28,5 @@
     <string name="logout">LOGOUT</string>
     <string name="open">Open Navigation Bar</string>
     <string name="close">Close Navigation Bar</string>
+
 </resources>

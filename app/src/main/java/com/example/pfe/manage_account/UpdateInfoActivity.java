@@ -113,7 +113,7 @@ public class UpdateInfoActivity extends AppCompatActivity {
             map.put("password",edPassword.getText().toString());
             map.put("adress",edAdress.getText().toString());
 
-            JSONObject object =parser.makeHttpRequest("http://10.0.2.2/user/update.php","GET",map);
+            JSONObject object = parser.makeHttpRequest("http://10.0.2.2/healthbuddy/user/update.php", "GET", map);
             try {
                 success=object.getInt("success");
                 JSONArray userJson = object.getJSONArray("user");

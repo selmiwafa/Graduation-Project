@@ -5,12 +5,10 @@ import static com.example.pfe.R.layout.user_details;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.TextView;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
@@ -20,10 +18,10 @@ import androidx.drawerlayout.widget.DrawerLayout;
 
 import com.google.android.material.navigation.NavigationView;
 
-public class HomepageActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
+public class HomepageActivity extends AppCompatActivity {
     private AlertDialog.Builder dialogBuilder;
     private AlertDialog dialog;
-    TextView username, detail_email;
+    TextView username, username2, detail_email, detail_email2;
     DrawerLayout drawerLayout;
     NavigationView navigationView;
     Toolbar toolbar;
@@ -49,7 +47,8 @@ public class HomepageActivity extends AppCompatActivity implements NavigationVie
         drawerLayout.addDrawerListener(toggle);
         toggle.syncState();
 
-        navigationView.setNavigationItemSelectedListener(this);
+
+        //navigationView.setNavigationItemSelectedListener(this);
 
     }
 
@@ -72,22 +71,34 @@ public class HomepageActivity extends AppCompatActivity implements NavigationVie
 
     public void createUserDialog(View view) {
         dialogBuilder = new AlertDialog.Builder(this);
-        final View contactPopupView=getLayoutInflater().inflate(user_details,null);
+        final View contactPopupView = getLayoutInflater().inflate(user_details, null);
         dialogBuilder.setView(contactPopupView);
-        dialog=dialogBuilder.create();
+        dialog = dialogBuilder.create();
         dialog.show();
         username = dialog.findViewById(R.id.username);
         detail_email = dialog.findViewById(R.id.detail_email);
-        username.setText(String.valueOf(SharedPrefManager.getInstance(getApplicationContext()).getUser().getName()));
-        detail_email.setText(String.valueOf(SharedPrefManager.getInstance(getApplicationContext()).getUser().getEmail()));
+        showInfo(username, detail_email);
+
     }
 
     public void cancel(View view) {
         dialog.dismiss();
     }
 
+    public void showInfo(TextView username, TextView email) {
+        username.setText(String.valueOf(SharedPrefManager.getInstance(getApplicationContext()).getUser().getName()));
+        email.setText(String.valueOf(SharedPrefManager.getInstance(getApplicationContext()).getUser().getEmail()));
+    }
+    /*
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.add_patient: {
+                startActivity(new Intent(HomepageActivity.this, AddPatientActivity.class));
+            }
+            drawerLayout.closeDrawer(GravityCompat.START);
+            break;
+        }
         return true;
-    }
+    }*/
 }

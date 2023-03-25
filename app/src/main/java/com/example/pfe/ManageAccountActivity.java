@@ -78,7 +78,7 @@ public class ManageAccountActivity extends AppCompatActivity {
         {
             HashMap<String,String> map= new HashMap<>();
             map.put("email",SharedPrefManager.getInstance(getApplicationContext()).getUser().getEmail());
-            JSONObject object =parser.makeHttpRequest("http://10.0.2.2/user/delete.php","GET",map);
+            JSONObject object = parser.makeHttpRequest("http://10.0.2.2/healthbuddy/user/delete.php", "GET", map);
             try {
                 success=object.getInt("success");
                 SharedPrefManager.getInstance(getApplicationContext()).logout();

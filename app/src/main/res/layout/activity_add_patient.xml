@@ -1,0 +1,155 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".manage_patients.AddPatientActivity">
+
+    <ImageView
+        android:id="@+id/imageview"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:scaleType="centerCrop"
+        android:src="@drawable/signin_page_background"
+        android:contentDescription="@string/bg" />
+
+    <androidx.cardview.widget.CardView
+        android:layout_width="350dp"
+        android:layout_height="750dp"
+        app:cardCornerRadius="30dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+
+                <ImageButton
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:src="@drawable/backarrow"
+                    android:background="@android:color/transparent"
+                    android:onClick="backManage" />
+
+                <ImageView
+                    android:id="@+id/logo"
+                    android:layout_width="150dp"
+                    android:layout_height="80dp"
+                    android:src="@drawable/hbtext"
+                    android:layout_centerHorizontal="true" />
+
+                <TextView
+                    android:id="@+id/addPatientText"
+                    android:layout_width="280dp"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/logo"
+                    android:text="Add close patient to manage his/her account with yours"
+                    android:layout_centerHorizontal="true"
+                    android:textSize="25sp"
+                    android:gravity="center"
+                    android:layout_marginTop="20dp" />
+
+                <EditText
+                    android:id="@+id/patient_name"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="30dp"
+                    android:layout_marginTop="50dp"
+                    android:layout_marginEnd="30dp"
+                    android:autofillHints=""
+                    android:background="@android:color/transparent"
+                    android:hint="Patient's name"
+                    android:drawableEnd="@drawable/user"
+                    android:inputType="text"
+                    android:padding="15dp"
+                    android:textColor="@android:color/black"
+                    android:textColorHint="@android:color/black"
+                    android:layout_below="@+id/addPatientText"
+                    android:textStyle="bold"
+                    tools:ignore="VisualLintTextFieldSize" />
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_marginStart="40dp"
+                    android:layout_marginEnd="40dp"
+                    android:background="@android:color/black"
+                    android:layout_below="@+id/patient_name" />
+
+                <Spinner
+                    android:id="@+id/relationship"
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:layout_marginStart="30dp"
+                    android:layout_marginTop="30dp"
+                    android:layout_marginEnd="30dp"
+                    android:padding="15dp"
+                    android:layout_below="@+id/patient_name" />
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_marginTop="1dp"
+                    android:layout_marginStart="40dp"
+                    android:layout_marginEnd="40dp"
+                    android:background="@android:color/black"
+                    android:layout_below="@+id/relationship" />
+
+                <EditText
+                    android:id="@+id/patient_age"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="30dp"
+                    android:layout_marginTop="30dp"
+                    android:layout_marginEnd="30dp"
+                    android:autofillHints=""
+                    android:background="@android:color/transparent"
+                    android:hint="Patient's age"
+                    android:drawableEnd="@drawable/calendar"
+                    android:inputType="text"
+                    android:padding="15dp"
+                    android:layout_below="@+id/relationship"
+                    android:textColor="@android:color/black"
+                    android:textColorHint="@android:color/black"
+                    android:textStyle="bold"
+                    tools:ignore="VisualLintTextFieldSize" />
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_marginStart="40dp"
+                    android:layout_marginEnd="40dp"
+                    android:background="@android:color/black"
+                    android:layout_below="@+id/patient_age" />
+
+                <Button
+                    android:id="@+id/addPatientBtn"
+                    android:layout_width="280dp"
+                    android:layout_height="50dp"
+                    android:background="@drawable/button_login_background"
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:onClick="OpenManageAccount"
+                    android:text="Confirm update"
+                    android:textAllCaps="false"
+                    android:textColor="@android:color/black"
+                    android:textSize="20sp"
+                    android:textStyle="bold"
+                    android:layout_marginTop="70dp"
+                    android:layout_below="@+id/patient_age"
+                    android:layout_centerHorizontal="true"
+                    tools:ignore="MissingConstraints,VisualLintButtonSize" />
+
+
+            </RelativeLayout>
+        </ScrollView>
+    </androidx.cardview.widget.CardView>
+</androidx.constraintlayout.widget.ConstraintLayout>

@@ -79,7 +79,7 @@ public class LoginActivity extends AppCompatActivity {
             map.put("email",edEmailLogin.getText().toString());
             map.put("password",edPasswordLogin.getText().toString());
 
-            JSONObject object =parser.makeHttpRequest("http://10.0.2.2/user/log.php","GET",map);
+            JSONObject object = parser.makeHttpRequest("http://10.0.2.2/healthbuddy/user/log.php", "GET", map);
             try {
                 success = object.getInt("success");
                 message = object.getString("message");
