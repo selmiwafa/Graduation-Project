@@ -100,7 +100,7 @@
             android:background="@drawable/manage_buttons_bg"
             android:clickable="true"
             android:focusable="true"
-            android:onClick="OpenManageAccount"
+            android:onClick="deleteUserDialog"
             android:text="Delete Account"
             android:textAllCaps="false"
             android:textColor="@android:color/black"

@@ -26,4 +26,6 @@
     <string name="email">youssef@gmail.com</string>
     <string name="manage">Manage account</string>
     <string name="logout">LOGOUT</string>
+    <string name="open">Open Navigation Bar</string>
+    <string name="close">Close Navigation Bar</string>
 </resources>

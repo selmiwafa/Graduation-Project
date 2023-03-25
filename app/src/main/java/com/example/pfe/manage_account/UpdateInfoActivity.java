@@ -1,7 +1,5 @@
 package com.example.pfe.manage_account;
 
-import static com.example.pfe.R.layout.delete_dialog;
-
 import android.annotation.SuppressLint;
 import android.app.DatePickerDialog;
 import android.app.ProgressDialog;
@@ -16,7 +14,6 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.pfe.JSONParser;
@@ -39,8 +36,6 @@ public class UpdateInfoActivity extends AppCompatActivity {
     DatePickerDialog.OnDateSetListener setListener;
     JSONParser parser=new JSONParser();
     int success;
-    private AlertDialog.Builder dialogBuilder;
-    private AlertDialog delDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -75,14 +70,6 @@ public class UpdateInfoActivity extends AppCompatActivity {
             }
         };
         btnUpdate.setOnClickListener(v -> updateUser());
-    }
-
-    public void deleteUserDialog(View view) {
-        dialogBuilder=new AlertDialog.Builder(this);
-        final View contactPopupView=getLayoutInflater().inflate(delete_dialog,null);
-        dialogBuilder.setView(contactPopupView);
-        delDialog=dialogBuilder.create();
-        delDialog.show();
     }
 
     void updateUser() {

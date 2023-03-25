@@ -47,7 +47,7 @@ public class SignupActivity extends AppCompatActivity {
 
         this.initView();
         edBirthdate.setOnClickListener(v -> {
-            int y = Calendar.getInstance().get(Calendar.YEAR);
+            int y = Calendar.getInstance().get(Calendar.YEAR)-18;
             int m = Calendar.getInstance().get(Calendar.MONTH);
             int d = Calendar.getInstance().get(Calendar.DAY_OF_MONTH);
             DatePickerDialog datePickerDialog = new DatePickerDialog(
@@ -61,7 +61,7 @@ public class SignupActivity extends AppCompatActivity {
             month = month+1;
             String date = day+"/"+month+"/"+year;
             edBirthdate.setText(date);
-            int y = (Calendar.getInstance().get(Calendar.YEAR))-18;
+            int y = (Calendar.getInstance().get(Calendar.YEAR));
             int m = Calendar.getInstance().get(Calendar.MONTH);
             int d = Calendar.getInstance().get(Calendar.DAY_OF_MONTH);
             if (year>=(y-18) && month>=m && day>=d){
