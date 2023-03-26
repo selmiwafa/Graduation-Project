@@ -58,7 +58,7 @@ public class AddPatientActivity extends AppCompatActivity implements AdapterView
         initView();
         createSpinner();
         createNavbar();
-        btnAddPatient.setOnClickListener(v -> addUser());
+        btnAddPatient.setOnClickListener(v -> addPatient());
 
         // Hide/Show Items
         menu = navigationView.getMenu();
@@ -87,7 +87,7 @@ public class AddPatientActivity extends AppCompatActivity implements AdapterView
         navigationView.setNavigationItemSelectedListener(this);
     }
 
-    void addUser() {
+    void addPatient() {
         String name = edName.getText().toString();
         String age = edAge.getText().toString();
         String relationship = edRelationship.toString();
