@@ -63,6 +63,7 @@ public class AddPatientActivity extends AppCompatActivity implements AdapterView
         // Hide/Show Items
         menu = navigationView.getMenu();
     }
+
     public void createSpinner() {
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this, R.array.relationship, android.R.layout.simple_spinner_item);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
@@ -128,6 +129,7 @@ public class AddPatientActivity extends AppCompatActivity implements AdapterView
         navigationView.setCheckedItem(R.id.home);
         return true;
     }
+
     @Override
     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
         switch (position) {
