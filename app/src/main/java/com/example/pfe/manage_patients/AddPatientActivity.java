@@ -58,7 +58,7 @@ public class AddPatientActivity extends AppCompatActivity implements AdapterView
         initView();
         createSpinner();
         createNavbar();
-        btnAddPatient.setOnClickListener(v -> addUser());
+        btnAddPatient.setOnClickListener(v -> addPatient());
 
         // Hide/Show Items
         menu = navigationView.getMenu();
@@ -87,7 +87,7 @@ public class AddPatientActivity extends AppCompatActivity implements AdapterView
         navigationView.setNavigationItemSelectedListener(this);
     }
 
-    void addUser() {
+    void addPatient() {
         String name = edName.getText().toString();
         String age = edAge.getText().toString();
         String relationship = edRelationship.toString();
@@ -134,9 +134,19 @@ public class AddPatientActivity extends AppCompatActivity implements AdapterView
     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
         switch (position) {
             case 0:
-                relationship = edRelationship.toString();
+                break;
             case 1:
-                relationship = edRelationship.toString();
+                relationship = "Daughter";
+                break;
+            case 2:
+                relationship = "Son";
+                break;
+            case 3:
+                relationship = "Father";
+                break;
+            case 4:
+                relationship = "Mother";
+                break;
         }
     }
 
@@ -162,7 +172,7 @@ public class AddPatientActivity extends AppCompatActivity implements AdapterView
 
             HashMap<String, String> map = new HashMap<>();
             map.put("name", edName.getText().toString());
-            map.put("relationship", edRelationship.toString());
+            map.put("relationship", relationship);
             map.put("age", edAge.getText().toString());
             map.put("user", SharedPrefManager.getInstance(getApplicationContext()).getUser().getEmail());
             JSONObject object = parser.makeHttpRequest("http://10.0.2.2/healthbuddy/patient/addPatient.php", "GET", map);
@@ -182,7 +192,7 @@ public class AddPatientActivity extends AppCompatActivity implements AdapterView
 
             if (success == 1) {
                 Toast.makeText(AddPatientActivity.this, "Patient added successfully", Toast.LENGTH_LONG).show();
-                menu.findItem(R.id.patient1).setVisible(true);
+                //menu.findItem(R.id.patient1).setVisible(true);
             } else {
                 Toast.makeText(AddPatientActivity.this, "Error adding  patient!", Toast.LENGTH_LONG).show();
             }
