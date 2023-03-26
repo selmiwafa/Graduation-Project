@@ -6,6 +6,7 @@ public class User {
     private String birthdate;
     private String password;
     private String adress;
+   //private Patient patient1,patient2;
 
     public User(String email, String name, String birthdate, String password, String adress) {
         this.email=email;
