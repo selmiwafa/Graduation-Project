@@ -23,6 +23,10 @@
                     android:icon="@drawable/user2"
                     android:id="@+id/patient1" />
                 <item
+                    android:title="Patient 2"
+                    android:icon="@drawable/user2"
+                    android:id="@+id/patient2" />
+                <item
                     android:id="@+id/add_patient"
                     android:icon="@drawable/plus"
                     android:title="Add a patient" />

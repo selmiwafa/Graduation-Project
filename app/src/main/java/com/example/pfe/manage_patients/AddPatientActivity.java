@@ -26,10 +26,12 @@ import androidx.drawerlayout.widget.DrawerLayout;
 
 import com.example.pfe.HomepageActivity;
 import com.example.pfe.JSONParser;
+import com.example.pfe.Patient;
 import com.example.pfe.R;
 import com.example.pfe.SharedPrefManager;
 import com.google.android.material.navigation.NavigationView;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -44,8 +46,8 @@ public class AddPatientActivity extends AppCompatActivity implements AdapterView
     Spinner edRelationship;
     ProgressDialog dialog;
     JSONParser parser = new JSONParser();
-    int success;
-    String relationship;
+    int success, number;
+    String relationship, message;
     Menu menu;
 
     @Override
@@ -60,7 +62,6 @@ public class AddPatientActivity extends AppCompatActivity implements AdapterView
         createNavbar();
         btnAddPatient.setOnClickListener(v -> addPatient());
 
-        // Hide/Show Items
         menu = navigationView.getMenu();
     }
 
@@ -177,7 +178,21 @@ public class AddPatientActivity extends AppCompatActivity implements AdapterView
             map.put("user", SharedPrefManager.getInstance(getApplicationContext()).getUser().getEmail());
             JSONObject object = parser.makeHttpRequest("http://10.0.2.2/healthbuddy/patient/addPatient.php", "GET", map);
             try {
+                message = object.getString("message");
                 success = object.getInt("success");
+                number = object.getInt("number");
+                while (success == 1) {
+                    JSONArray userJson = object.getJSONArray("patient");
+                    JSONObject jsonObject = userJson.getJSONObject(0);
+                    Patient patient = new Patient(
+                            jsonObject.getString("name"),
+                            jsonObject.getInt("age"),
+                            jsonObject.getString("relationship")
+                    );
+                    SharedPrefManager.getInstance(getApplicationContext()).getUser().addpatient(patient, number - 1);
+                    SharedPrefManager.getInstance(getApplicationContext()).addPatient(patient);
+                    break;
+                }
             } catch (JSONException e) {
                 throw new RuntimeException(e);
             }
@@ -192,9 +207,15 @@ public class AddPatientActivity extends AppCompatActivity implements AdapterView
 
             if (success == 1) {
                 Toast.makeText(AddPatientActivity.this, "Patient added successfully", Toast.LENGTH_LONG).show();
-                //menu.findItem(R.id.patient1).setVisible(true);
+                if (number == 1) {
+                    menu.findItem(R.id.patient1).setVisible(true);
+                    menu.findItem(R.id.patient1).setTitle(edName.getText().toString());
+                } else {
+                    menu.findItem(R.id.patient2).setVisible(true);
+                    menu.findItem(R.id.patient2).setTitle(edName.getText().toString());
+                }
             } else {
-                Toast.makeText(AddPatientActivity.this, "Error adding  patient!", Toast.LENGTH_LONG).show();
+                Toast.makeText(AddPatientActivity.this, message, Toast.LENGTH_LONG).show();
             }
         }
 
