@@ -1,13 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string-array name="relationship">
-        <item>Mercury</item>
-        <item>Venus</item>
-        <item>Earth</item>
-        <item>Mars</item>
-        <item>Jupiter</item>
-        <item>Saturn</item>
-        <item>Uranus</item>
-        <item>Neptune</item>
+        <item>-- Select relationship --</item>
+        <item>Daughter</item>
+        <item>Son</item>
+        <item>Father</item>
+        <item>Mother</item>
     </string-array>
 </resources>

@@ -101,6 +101,7 @@
                 android:drawableEnd="@drawable/calendar"
                 android:inputType="text"
                 android:padding="15dp"
+                android:cursorVisible="false"
                 android:layout_below="@+id/password"
                 android:textColor="@android:color/black"
                 android:textColorHint="@android:color/black"

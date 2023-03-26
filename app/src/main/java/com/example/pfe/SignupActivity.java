@@ -36,7 +36,6 @@ public class SignupActivity extends AppCompatActivity {
     ProgressDialog dialog;
     JSONParser parser=new JSONParser();
     int success;
-    User user;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -177,6 +176,4 @@ public class SignupActivity extends AppCompatActivity {
     public void OpenLoginPage() {
         startActivity(new Intent( SignupActivity.this, LoginActivity.class));
     }
-
-
 }
