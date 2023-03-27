@@ -1,11 +1,14 @@
 package com.example.pfe;
 
+import java.util.Random;
+
 public class User {
     private String email;
     private String name;
     private String birthdate;
     private String password;
     private String adress;
+    private String code;
     private Patient[] patients;
 
     public User(String email, String name, String birthdate, String password, String adress) {
@@ -14,6 +17,16 @@ public class User {
         this.birthdate = birthdate;
         this.password = password;
         this.adress = adress;
+    }
+
+    public String getCode() {
+        return code;
+    }
+
+    public String setCode() {
+        Random rnd = new Random();
+        int number = rnd.nextInt(999999);
+        return String.format("%06d", number);
     }
 
     public void addpatient(Patient patient, int index) {
@@ -42,4 +55,5 @@ public class User {
     public String getAdress() {
         return this.adress;
     }
+
 }

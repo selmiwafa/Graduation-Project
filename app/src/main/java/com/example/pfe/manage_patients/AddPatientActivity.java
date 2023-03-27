@@ -1,5 +1,7 @@
 package com.example.pfe.manage_patients;
 
+import static com.example.pfe.LoginActivity.restartActivity;
+
 import android.annotation.SuppressLint;
 import android.app.ProgressDialog;
 import android.content.Intent;
@@ -172,9 +174,9 @@ public class AddPatientActivity extends AppCompatActivity implements AdapterView
         protected String doInBackground(String... strings) {
 
             HashMap<String, String> map = new HashMap<>();
-            map.put("name", edName.getText().toString());
+            map.put("patient_name", edName.getText().toString());
             map.put("relationship", relationship);
-            map.put("age", edAge.getText().toString());
+            map.put("patient_age", edAge.getText().toString());
             map.put("user", SharedPrefManager.getInstance(getApplicationContext()).getUser().getEmail());
             JSONObject object = parser.makeHttpRequest("http://10.0.2.2/healthbuddy/patient/addPatient.php", "GET", map);
             try {
@@ -185,8 +187,8 @@ public class AddPatientActivity extends AppCompatActivity implements AdapterView
                     JSONArray userJson = object.getJSONArray("patient");
                     JSONObject jsonObject = userJson.getJSONObject(0);
                     Patient patient = new Patient(
-                            jsonObject.getString("name"),
-                            jsonObject.getInt("age"),
+                            jsonObject.getString("patient_name"),
+                            jsonObject.getInt("patient_age"),
                             jsonObject.getString("relationship")
                     );
                     SharedPrefManager.getInstance(getApplicationContext()).getUser().addpatient(patient, number - 1);
@@ -210,9 +212,11 @@ public class AddPatientActivity extends AppCompatActivity implements AdapterView
                 if (number == 1) {
                     menu.findItem(R.id.patient1).setVisible(true);
                     menu.findItem(R.id.patient1).setTitle(edName.getText().toString());
+                    restartActivity(AddPatientActivity.this);
                 } else {
                     menu.findItem(R.id.patient2).setVisible(true);
                     menu.findItem(R.id.patient2).setTitle(edName.getText().toString());
+                    restartActivity(AddPatientActivity.this);
                 }
             } else {
                 Toast.makeText(AddPatientActivity.this, message, Toast.LENGTH_LONG).show();

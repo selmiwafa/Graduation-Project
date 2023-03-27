@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".VerifyActivity">
+
+    <TextView
+        android:id="@+id/verify"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Verify your account"
+        android:layout_centerHorizontal="true"
+        android:gravity="center"
+        android:layout_marginTop="200dp"
+        android:textSize="30dp"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/text"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Write here the code sent to you by email to verify your account"
+        android:paddingEnd="50dp"
+        android:paddingStart="50dp"
+        android:layout_centerHorizontal="true"
+        android:gravity="center"
+        android:layout_below="@+id/verify"
+        android:layout_marginTop="30dp"
+        android:textSize="20dp" />
+
+    <EditText
+        android:id="@+id/edCode"
+        android:layout_width="290dp"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/text"
+        android:layout_centerHorizontal="true"
+        android:gravity="center"
+        android:hint="Enter code here"
+        android:inputType="number"
+        android:textSize="30dp"
+        android:drawableEnd="@drawable/key"
+        android:layout_marginTop="80dp" />
+
+    <Button
+        android:id="@+id/verifyBtn"
+        android:layout_width="290dp"
+        android:layout_height="50dp"
+        android:background="@drawable/button_signin_background"
+        android:text="Verify"
+        android:textAllCaps="false"
+        android:layout_below="@+id/edCode"
+        android:layout_marginTop="90dp"
+        android:layout_centerHorizontal="true"
+        android:textColor="@android:color/white"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        tools:ignore="VisualLintButtonSize" />
+
+
+</RelativeLayout>
