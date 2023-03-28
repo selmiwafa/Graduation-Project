@@ -138,10 +138,7 @@ public class SignupActivity extends AppCompatActivity {
             } else {
                 Toast.makeText(SignupActivity.this, "Verification mail not sent.", Toast.LENGTH_SHORT).show();
             }
-
-
             return null;
-
         }
 
         @Override
