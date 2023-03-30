@@ -21,7 +21,6 @@ import androidx.drawerlayout.widget.DrawerLayout;
 import com.google.android.material.navigation.NavigationView;
 
 public class HomepageActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
-    private AlertDialog.Builder dialogBuilder;
     private AlertDialog dialog;
     TextView username, detail_email;
     DrawerLayout drawerLayout;
@@ -39,8 +38,6 @@ public class HomepageActivity extends AppCompatActivity implements NavigationVie
         createNavbar();
 
     }
-
-
     public void logout(View view) {
         SharedPrefManager.getInstance(getApplicationContext()).logout();
     }
@@ -64,7 +61,7 @@ public class HomepageActivity extends AppCompatActivity implements NavigationVie
     }
 
     public void createUserDialog(View view) {
-        dialogBuilder = new AlertDialog.Builder(this);
+        AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(this);
         final View contactPopupView = getLayoutInflater().inflate(user_details, null);
         dialogBuilder.setView(contactPopupView);
         dialog = dialogBuilder.create();

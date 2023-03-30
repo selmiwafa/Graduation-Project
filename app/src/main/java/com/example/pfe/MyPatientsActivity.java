@@ -1,13 +1,18 @@
 package com.example.pfe;
 
+import static com.example.pfe.R.layout.user_details;
+
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.view.MenuItem;
+import android.view.View;
 import android.view.WindowManager;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBarDrawerToggle;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.view.GravityCompat;
@@ -15,10 +20,13 @@ import androidx.drawerlayout.widget.DrawerLayout;
 
 import com.google.android.material.navigation.NavigationView;
 
+import java.util.Objects;
+
 public class MyPatientsActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
     DrawerLayout drawerLayout;
     NavigationView navigationView;
     Toolbar toolbar;
+    TextView username, detail_email;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,14 +43,37 @@ public class MyPatientsActivity extends AppCompatActivity implements NavigationV
         navigationView = findViewById(R.id.nav_menu);
         toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        getSupportActionBar().setDisplayShowTitleEnabled(false);
+        Objects.requireNonNull(getSupportActionBar()).setDisplayShowTitleEnabled(false);
         navigationView.bringToFront();
         ActionBarDrawerToggle toggle;
         toggle = new ActionBarDrawerToggle(this, drawerLayout, toolbar, R.string.open, R.string.close);
         drawerLayout.addDrawerListener(toggle);
         toggle.syncState();
-
         navigationView.setNavigationItemSelectedListener(this);
+    }
+
+    public void createUserDialog(View view) {
+        AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(this);
+        final View contactPopupView = getLayoutInflater().inflate(user_details, null);
+        dialogBuilder.setView(contactPopupView);
+        AlertDialog dialog = dialogBuilder.create();
+        dialog.show();
+        username = dialog.findViewById(R.id.username);
+        detail_email = dialog.findViewById(R.id.detail_email);
+        showInfo(username, detail_email);
+    }
+
+    public void logout(View view) {
+        SharedPrefManager.getInstance(getApplicationContext()).logout();
+    }
+
+    public void OpenManageAccount(View view) {
+        startActivity(new Intent(MyPatientsActivity.this, ManageAccountActivity.class));
+    }
+
+    public void showInfo(TextView username, TextView email) {
+        username.setText(String.valueOf(SharedPrefManager.getInstance(getApplicationContext()).getUser().getName()));
+        email.setText(String.valueOf(SharedPrefManager.getInstance(getApplicationContext()).getUser().getEmail()));
     }
 
     @Override
