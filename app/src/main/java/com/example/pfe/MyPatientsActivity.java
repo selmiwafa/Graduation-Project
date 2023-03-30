@@ -2,6 +2,7 @@ package com.example.pfe;
 
 import static com.example.pfe.R.layout.user_details;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
@@ -26,8 +27,9 @@ public class MyPatientsActivity extends AppCompatActivity implements NavigationV
     DrawerLayout drawerLayout;
     NavigationView navigationView;
     Toolbar toolbar;
-    TextView username, detail_email;
+    TextView username, detail_email, patientName;
 
+    @SuppressLint("MissingInflatedId")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -36,8 +38,9 @@ public class MyPatientsActivity extends AppCompatActivity implements NavigationV
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE);
         setContentView(R.layout.activity_my_patients);
         createNavbar();
+        patientName = findViewById(R.id.patientName);
+        patientName.setText(String.valueOf(SharedPrefManager.getInstance(getApplicationContext()).getKeyNumberPatients()));
     }
-
     public void createNavbar() {
         drawerLayout = findViewById(R.id.drawerlayout2);
         navigationView = findViewById(R.id.nav_menu);

@@ -40,8 +40,6 @@ public class SharedPrefManager {
         return mInstance;
     }
 
-    //method to let the user login
-    //this method will store the user data in shared preferences
     public void userLogin(User user) {
         SharedPreferences sharedPreferences = mCtx.getSharedPreferences(SHARED_PREF_NAME, Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPreferences.edit();
@@ -51,6 +49,15 @@ public class SharedPrefManager {
         editor.putString(KEY_PASSWORD, user.getPassword());
         editor.putString(KEY_ADRESS, user.getAdress());
         editor.apply();
+    }
+
+    public Patient getPatient1() {
+        SharedPreferences sharedPreferences = mCtx.getSharedPreferences(SHARED_PREF_NAME, Context.MODE_PRIVATE);
+        return new Patient(
+                sharedPreferences.getString(KEY_P1_NAME, null),
+                sharedPreferences.getInt(KEY_P1_AGE, 0),
+                sharedPreferences.getString(KEY_P1_RELATIONSHIP, null)
+        );
     }
 
     public void addPatient1(Patient patient) {
@@ -79,35 +86,10 @@ public class SharedPrefManager {
         editor.putInt(String.valueOf(KEY_NUMBER_PATIENTS), a);
         editor.apply();
     }
-
     public int getKeyNumberPatients() {
-        return KEY_NUMBER_PATIENTS;
+        SharedPreferences sharedPreferences = mCtx.getSharedPreferences(SHARED_PREF_NAME, Context.MODE_PRIVATE);
+        return sharedPreferences.getInt(String.valueOf(KEY_NUMBER_PATIENTS), 0);
     }
-
-    public static String getKeyP1Name() {
-        return KEY_P1_NAME;
-    }
-
-    public static String getKeyP1Age() {
-        return KEY_P1_AGE;
-    }
-
-    public static String getKeyP1Relationship() {
-        return KEY_P1_RELATIONSHIP;
-    }
-
-    public static String getKeyP2Name() {
-        return KEY_P2_NAME;
-    }
-
-    public static String getKeyP2Age() {
-        return KEY_P2_AGE;
-    }
-
-    public static String getKeyP2Relationship() {
-        return KEY_P2_RELATIONSHIP;
-    }
-
     //this method will checker whether user is already logged in or not
     public boolean isLoggedIn() {
         SharedPreferences sharedPreferences = mCtx.getSharedPreferences(SHARED_PREF_NAME, Context.MODE_PRIVATE);

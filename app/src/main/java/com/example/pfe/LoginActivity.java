@@ -20,6 +20,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 
 public class LoginActivity extends AppCompatActivity {
@@ -104,7 +105,9 @@ public class LoginActivity extends AppCompatActivity {
                                 patientJson.getInt("patient_age"),
                                 patientJson.getString("relationship")
                         );
-                        SharedPrefManager.getInstance(getApplicationContext()).getUser().addUserPatient(patient);
+                        ArrayList<Patient> Patients = new ArrayList<>();
+                        Patients.add(patient);
+                        SharedPrefManager.getInstance(getApplicationContext()).getUser().setArray(Patients);
                         SharedPrefManager.getInstance(getApplicationContext()).addPatient1(patient);
                     } else if (number == 2) {
                         JSONArray patientsJson = object.getJSONArray("patients");
@@ -120,8 +123,10 @@ public class LoginActivity extends AppCompatActivity {
                                 patient2Json.getInt("patient_age"),
                                 patient2Json.getString("relationship")
                         );
-                        SharedPrefManager.getInstance(getApplicationContext()).getUser().addUserPatient(patient1);
-                        SharedPrefManager.getInstance(getApplicationContext()).getUser().addUserPatient(patient2);
+                        ArrayList<Patient> Patients = new ArrayList<>();
+                        Patients.add(patient1);
+                        Patients.add(patient2);
+                        SharedPrefManager.getInstance(getApplicationContext()).getUser().setArray(Patients);
                         SharedPrefManager.getInstance(getApplicationContext()).addPatient1(patient1);
                         SharedPrefManager.getInstance(getApplicationContext()).addPatient2(patient2);
                     }

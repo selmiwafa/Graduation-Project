@@ -3,4 +3,9 @@
     <color name="colorPrimary">#008577</color>
     <color name="colorPrimaryDark">#00574B</color>
     <color name="colorAccent">#D81B60</color>
+    <color name="darkgreen">#006D77</color>
+    <color name="lightgreen">#83C5BE</color>
+    <color name="appwhite">#EDF6F9</color>
+    <color name="pink">#FFDDD2</color>
+    <color name="orange">#E29578</color>
 </resources>

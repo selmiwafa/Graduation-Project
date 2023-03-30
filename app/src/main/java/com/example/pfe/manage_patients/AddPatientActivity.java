@@ -133,7 +133,7 @@ public class AddPatientActivity extends AppCompatActivity implements AdapterView
                             jsonObject.getInt("patient_age"),
                             jsonObject.getString("relationship")
                     );
-                    SharedPrefManager.getInstance(getApplicationContext()).getUser().addUserPatient(patient);
+                    //SharedPrefManager.getInstance(getApplicationContext()).getUser().setArray(Patient);
                     break;
                 }
             } catch (JSONException e) {

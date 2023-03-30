@@ -20,16 +20,8 @@ public class User {
         this.adress = adress;
     }
 
-    public void addUserPatient(Patient patient) {
-        PatientList.add(patient);
-    }
-
-    public Patient getPatient(int a) {
-        return PatientList.get(a);
-    }
-
-    public int getNumberPatients() {
-        return PatientList.size();
+    public void setArray(ArrayList<Patient> Array) {
+        this.PatientList = Array;
     }
 
     public String getCode() {
