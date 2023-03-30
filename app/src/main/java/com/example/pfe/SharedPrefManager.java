@@ -5,8 +5,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 
-import com.google.gson.Gson;
-
 
 public class SharedPrefManager {
 
@@ -17,6 +15,13 @@ public class SharedPrefManager {
     private static final String KEY_BIRTHDATE = "keybirthdate";
     private static final String KEY_ADRESS = "keyadress";
     private static final String KEY_PASSWORD = "keypassword";
+    private static final String KEY_P1_NAME = "keyp1name";
+    private static final String KEY_P1_AGE = "keyp1age";
+    private static final String KEY_P1_RELATIONSHIP = "keyp1relationship";
+
+    private static final String KEY_P2_NAME = "keyp2name";
+    private static final String KEY_P2_AGE = "keyp2age";
+    private static final String KEY_P2_RELATIONSHIP = "keyp2relationship";
     private static final int KEY_NUMBER_PATIENTS = 0;
 
     @SuppressLint("StaticFieldLeak")
@@ -48,21 +53,59 @@ public class SharedPrefManager {
         editor.apply();
     }
 
-    public void addPatient(Patient p) {
+    public void addPatient1(Patient patient) {
         SharedPreferences sharedPreferences = mCtx.getSharedPreferences(SHARED_PREF_NAME, Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPreferences.edit();
-        Gson gson = new Gson();
-        String json = gson.toJson(p);
-        editor.putString("Patient", json);
-        addKeyNumberPatients(1);
+        editor.putString(KEY_P1_NAME, patient.getName());
+        editor.putInt(KEY_P1_AGE, patient.getAge());
+        editor.putString(KEY_P1_RELATIONSHIP, patient.getRelationship());
+        setKeyNumberPatients(1);
         editor.apply();
     }
 
-    public void addKeyNumberPatients(int a) {
+    public void addPatient2(Patient patient) {
         SharedPreferences sharedPreferences = mCtx.getSharedPreferences(SHARED_PREF_NAME, Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPreferences.edit();
-        editor.putInt(String.valueOf(KEY_NUMBER_PATIENTS), Integer.parseInt(String.valueOf(KEY_NUMBER_PATIENTS) + a));
+        editor.putString(KEY_P2_NAME, patient.getName());
+        editor.putInt(KEY_P2_AGE, patient.getAge());
+        editor.putString(KEY_P2_RELATIONSHIP, patient.getRelationship());
+        setKeyNumberPatients(2);
         editor.apply();
+    }
+
+    public void setKeyNumberPatients(int a) {
+        SharedPreferences sharedPreferences = mCtx.getSharedPreferences(SHARED_PREF_NAME, Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putInt(String.valueOf(KEY_NUMBER_PATIENTS), a);
+        editor.apply();
+    }
+
+    public int getKeyNumberPatients() {
+        return KEY_NUMBER_PATIENTS;
+    }
+
+    public static String getKeyP1Name() {
+        return KEY_P1_NAME;
+    }
+
+    public static String getKeyP1Age() {
+        return KEY_P1_AGE;
+    }
+
+    public static String getKeyP1Relationship() {
+        return KEY_P1_RELATIONSHIP;
+    }
+
+    public static String getKeyP2Name() {
+        return KEY_P2_NAME;
+    }
+
+    public static String getKeyP2Age() {
+        return KEY_P2_AGE;
+    }
+
+    public static String getKeyP2Relationship() {
+        return KEY_P2_RELATIONSHIP;
     }
 
     //this method will checker whether user is already logged in or not

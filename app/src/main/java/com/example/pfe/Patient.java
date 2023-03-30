@@ -10,13 +10,10 @@ public class Patient {
         this.relationship = "";
         this.age = 0;
     }
-
     public Patient(String name, int age, String relationship) {
-
         this.name = name;
         this.age = age;
         this.relationship = relationship;
-
     }
 
 

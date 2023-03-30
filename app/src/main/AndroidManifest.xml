@@ -13,6 +13,9 @@
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
         <activity
+            android:name=".MyPatientsActivity"
+            android:exported="false" />
+        <activity
             android:name=".VerifyActivity"
             android:exported="false" />
         <activity

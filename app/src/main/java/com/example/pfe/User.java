@@ -1,5 +1,6 @@
 package com.example.pfe;
 
+import java.util.ArrayList;
 import java.util.Random;
 
 public class User {
@@ -9,7 +10,7 @@ public class User {
     private String password;
     private String adress;
     private String code;
-    private Patient[] patients;
+    private ArrayList<Patient> PatientList = new ArrayList<>();
 
     public User(String email, String name, String birthdate, String password, String adress) {
         this.email = email;
@@ -17,6 +18,18 @@ public class User {
         this.birthdate = birthdate;
         this.password = password;
         this.adress = adress;
+    }
+
+    public void addUserPatient(Patient patient) {
+        PatientList.add(patient);
+    }
+
+    public Patient getPatient(int a) {
+        return PatientList.get(a);
+    }
+
+    public int getNumberPatients() {
+        return PatientList.size();
     }
 
     public String getCode() {
@@ -27,14 +40,6 @@ public class User {
         Random rnd = new Random();
         int number = rnd.nextInt(999999);
         return String.format("%06d", number);
-    }
-
-    public void addpatient(Patient patient, int index) {
-        this.patients[index] = patient;
-    }
-
-    public Patient getpatient(int index) {
-        return this.patients[index];
     }
 
     public String getEmail() {

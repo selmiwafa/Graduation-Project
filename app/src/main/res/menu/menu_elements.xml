@@ -19,23 +19,9 @@
         <menu>
             <group android:checkableBehavior="single">
                 <item
-                    android:title="Patient 1"
+                    android:title="My patients"
                     android:icon="@drawable/user2"
-                    android:id="@+id/patient1"
-                    android:visible="false" />
-                <item
-                    android:title="Patient 2"
-                    android:icon="@drawable/user2"
-                    android:id="@+id/patient2"
-                    android:visible="false" />
-                <item
-                    android:id="@+id/add_patient"
-                    android:icon="@drawable/plus"
-                    android:title="Add a patient" />
-                <item
-                    android:title="Remove a patient"
-                    android:icon="@drawable/minus"
-                    android:id="@+id/remove_patient" />
+                    android:id="@+id/my_patients" />
             </group>
         </menu>
     </item>

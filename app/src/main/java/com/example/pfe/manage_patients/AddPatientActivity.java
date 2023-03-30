@@ -4,12 +4,9 @@ import static com.example.pfe.LoginActivity.restartActivity;
 
 import android.annotation.SuppressLint;
 import android.app.ProgressDialog;
-import android.content.Intent;
 import android.graphics.Color;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.AdapterView;
@@ -19,19 +16,12 @@ import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.Toast;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
-import androidx.core.view.GravityCompat;
-import androidx.drawerlayout.widget.DrawerLayout;
 
-import com.example.pfe.HomepageActivity;
 import com.example.pfe.JSONParser;
 import com.example.pfe.Patient;
 import com.example.pfe.R;
 import com.example.pfe.SharedPrefManager;
-import com.google.android.material.navigation.NavigationView;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -39,10 +29,7 @@ import org.json.JSONObject;
 
 import java.util.HashMap;
 
-public class AddPatientActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener, NavigationView.OnNavigationItemSelectedListener {
-    DrawerLayout drawerLayout;
-    NavigationView navigationView;
-    Toolbar toolbar;
+public class AddPatientActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
     Button btnAddPatient;
     EditText edName, edAge;
     Spinner edRelationship;
@@ -50,7 +37,6 @@ public class AddPatientActivity extends AppCompatActivity implements AdapterView
     JSONParser parser = new JSONParser();
     int success, number;
     String relationship, message;
-    Menu menu;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -61,10 +47,8 @@ public class AddPatientActivity extends AppCompatActivity implements AdapterView
         setContentView(R.layout.activity_add_patient);
         initView();
         createSpinner();
-        createNavbar();
         btnAddPatient.setOnClickListener(v -> addPatient());
 
-        menu = navigationView.getMenu();
     }
 
     public void createSpinner() {
@@ -73,21 +57,6 @@ public class AddPatientActivity extends AppCompatActivity implements AdapterView
         edRelationship.setAdapter(adapter);
         edRelationship.setOnItemSelectedListener(this);
         edRelationship.setPrompt("Relationship");
-    }
-
-    public void createNavbar() {
-        drawerLayout = findViewById(R.id.drawerlayout2);
-        navigationView = findViewById(R.id.nav_menu);
-        toolbar = findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
-        getSupportActionBar().setDisplayShowTitleEnabled(false);
-        navigationView.bringToFront();
-        ActionBarDrawerToggle toggle;
-        toggle = new ActionBarDrawerToggle(this, drawerLayout, toolbar, R.string.open, R.string.close);
-        drawerLayout.addDrawerListener(toggle);
-        toggle.syncState();
-
-        navigationView.setNavigationItemSelectedListener(this);
     }
 
     void addPatient() {
@@ -107,30 +76,6 @@ public class AddPatientActivity extends AppCompatActivity implements AdapterView
         edAge = findViewById(R.id.patient_age);
         edRelationship = findViewById(R.id.relationship);
         btnAddPatient = findViewById(R.id.addPatientBtn);
-    }
-
-    @Override
-    public void onBackPressed() {
-        if (drawerLayout.isDrawerOpen(GravityCompat.START)) {
-            drawerLayout.closeDrawer(GravityCompat.START);
-        } else {
-            super.onBackPressed();
-        }
-    }
-
-    @Override
-    public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-        switch (item.getItemId()) {
-            case (R.id.home):
-                Intent intent = new Intent(AddPatientActivity.this, HomepageActivity.class);
-                startActivity(intent);
-                break;
-            case (R.id.add_patient):
-                break;
-        }
-        drawerLayout.closeDrawer(GravityCompat.START);
-        navigationView.setCheckedItem(R.id.home);
-        return true;
     }
 
     @Override
@@ -160,8 +105,6 @@ public class AddPatientActivity extends AppCompatActivity implements AdapterView
 
     @SuppressLint("StaticFieldLeak")
     class AddPatient extends AsyncTask<String, String, String> {
-
-
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
@@ -182,7 +125,6 @@ public class AddPatientActivity extends AppCompatActivity implements AdapterView
             try {
                 message = object.getString("message");
                 success = object.getInt("success");
-                number = object.getInt("number");
                 while (success == 1) {
                     JSONArray userJson = object.getJSONArray("patient");
                     JSONObject jsonObject = userJson.getJSONObject(0);
@@ -191,8 +133,7 @@ public class AddPatientActivity extends AppCompatActivity implements AdapterView
                             jsonObject.getInt("patient_age"),
                             jsonObject.getString("relationship")
                     );
-                    SharedPrefManager.getInstance(getApplicationContext()).getUser().addpatient(patient, number - 1);
-                    SharedPrefManager.getInstance(getApplicationContext()).addPatient(patient);
+                    SharedPrefManager.getInstance(getApplicationContext()).getUser().addUserPatient(patient);
                     break;
                 }
             } catch (JSONException e) {
@@ -209,15 +150,8 @@ public class AddPatientActivity extends AppCompatActivity implements AdapterView
 
             if (success == 1) {
                 Toast.makeText(AddPatientActivity.this, "Patient added successfully", Toast.LENGTH_LONG).show();
-                if (number == 1) {
-                    menu.findItem(R.id.patient1).setVisible(true);
-                    menu.findItem(R.id.patient1).setTitle(edName.getText().toString());
-                    restartActivity(AddPatientActivity.this);
-                } else {
-                    menu.findItem(R.id.patient2).setVisible(true);
-                    menu.findItem(R.id.patient2).setTitle(edName.getText().toString());
-                    restartActivity(AddPatientActivity.this);
-                }
+                restartActivity(AddPatientActivity.this);
+
             } else {
                 Toast.makeText(AddPatientActivity.this, message, Toast.LENGTH_LONG).show();
             }

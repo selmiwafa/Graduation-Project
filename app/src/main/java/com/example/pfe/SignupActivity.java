@@ -110,33 +110,27 @@ public class SignupActivity extends AppCompatActivity {
             dialog=new ProgressDialog(SignupActivity.this);
             dialog.setMessage("Please wait");
             dialog.show();
-
-
         }
 
         @Override
         protected String doInBackground(String... strings) {
-            SharedPrefManager.getInstance(getApplicationContext()).getUser().setCode();
-            SharedPrefManager.getInstance(getApplicationContext()).getUser().getCode();
-            SendEmail verification = new SendEmail();
-            verify = verification.sendEmail(SharedPrefManager.getInstance(getApplicationContext()).getUser());
-            if (verify) {
+            /*if (!Python.isStarted()) {
+                Python.start(new AndroidPlatform(SignupActivity.this));
+            }
+            Object py = Python.getInstance();*/
 
-                HashMap<String, String> map = new HashMap<>();
-                map.put("email", edEmail.getText().toString());
-                map.put("name", edName.getText().toString());
-                map.put("birthdate", edBirthdate.getText().toString());
-                map.put("password", edPassword.getText().toString());
-                map.put("adress", edAdress.getText().toString());
+            HashMap<String, String> map = new HashMap<>();
+            map.put("email", edEmail.getText().toString());
+            map.put("name", edName.getText().toString());
+            map.put("birthdate", edBirthdate.getText().toString());
+            map.put("password", edPassword.getText().toString());
+            map.put("adress", edAdress.getText().toString());
 
-                JSONObject object = parser.makeHttpRequest("http://10.0.2.2/healthbuddy/user/add.php", "GET", map);
-                try {
-                    success = object.getInt("success");
-                } catch (JSONException e) {
-                    throw new RuntimeException(e);
-                }
-            } else {
-                Toast.makeText(SignupActivity.this, "Verification mail not sent.", Toast.LENGTH_SHORT).show();
+            JSONObject object = parser.makeHttpRequest("http://10.0.2.2/healthbuddy/user/add.php", "GET", map);
+            try {
+                success = object.getInt("success");
+            } catch (JSONException e) {
+                throw new RuntimeException(e);
             }
             return null;
         }
@@ -147,10 +141,10 @@ public class SignupActivity extends AppCompatActivity {
             super.onPostExecute(s);
             dialog.cancel();
 
-            if(success==1)
-            {
+            if(success==1) {
                 Toast.makeText(SignupActivity.this, "Sign up successfull", Toast.LENGTH_LONG).show();
-                startActivity(new Intent(SignupActivity.this, VerifyActivity.class));
+                //startActivity(new Intent(SignupActivity.this, VerifyActivity.class));
+                startActivity(new Intent(SignupActivity.this, LoginActivity.class));
             }
             else
             {
