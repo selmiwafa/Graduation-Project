@@ -25,7 +25,10 @@ public class HomepageActivity extends AppCompatActivity implements NavigationVie
     TextView username, detail_email;
     DrawerLayout drawerLayout;
     NavigationView navigationView;
+    JSONParser parser = new JSONParser();
     Toolbar toolbar;
+    int success, number;
+    String message;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,6 +39,7 @@ public class HomepageActivity extends AppCompatActivity implements NavigationVie
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE);
 
         createNavbar();
+
 
     }
     public void logout(View view) {
@@ -104,4 +108,5 @@ public class HomepageActivity extends AppCompatActivity implements NavigationVie
         navigationView.setCheckedItem(R.id.home);
         return true;
     }
+
 }

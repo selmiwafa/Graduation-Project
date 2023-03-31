@@ -60,6 +60,15 @@ public class SharedPrefManager {
         );
     }
 
+    public Patient getPatient2() {
+        SharedPreferences sharedPreferences = mCtx.getSharedPreferences(SHARED_PREF_NAME, Context.MODE_PRIVATE);
+        return new Patient(
+                sharedPreferences.getString(KEY_P2_AGE, null),
+                sharedPreferences.getInt(KEY_P2_AGE, 0),
+                sharedPreferences.getString(KEY_P2_RELATIONSHIP, null)
+        );
+    }
+
     public void addPatient1(Patient patient) {
         SharedPreferences sharedPreferences = mCtx.getSharedPreferences(SHARED_PREF_NAME, Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPreferences.edit();

@@ -9,6 +9,7 @@ import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.WindowManager;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -27,7 +28,8 @@ public class MyPatientsActivity extends AppCompatActivity implements NavigationV
     DrawerLayout drawerLayout;
     NavigationView navigationView;
     Toolbar toolbar;
-    TextView username, detail_email, patientName;
+    RelativeLayout card1, card2;
+    TextView username, detail_email, patient1, patient2, rel1, rel2, text;
 
     @SuppressLint("MissingInflatedId")
     @Override
@@ -38,8 +40,33 @@ public class MyPatientsActivity extends AppCompatActivity implements NavigationV
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE);
         setContentView(R.layout.activity_my_patients);
         createNavbar();
-        patientName = findViewById(R.id.patientName);
-        patientName.setText(String.valueOf(SharedPrefManager.getInstance(getApplicationContext()).getKeyNumberPatients()));
+        text = findViewById(R.id.text);
+        text.setText(String.valueOf(SharedPrefManager.getInstance(getApplicationContext()).getKeyNumberPatients()));
+
+        card1 = findViewById(R.id.card1);
+        card2 = findViewById(R.id.card2);
+        if (SharedPrefManager.getInstance(getApplicationContext()).getKeyNumberPatients() == 0) {
+            card1.setVisibility(View.INVISIBLE);
+            card2.setVisibility(View.INVISIBLE);
+        } else if (SharedPrefManager.getInstance(getApplicationContext()).getKeyNumberPatients() == 1) {
+            card1.setVisibility(View.VISIBLE);
+            patient1 = findViewById(R.id.pat1);
+            patient1.setText(String.valueOf(SharedPrefManager.getInstance(getApplicationContext()).getPatient1().getName()));
+            rel1 = findViewById(R.id.rel1);
+            rel1.setText(String.valueOf(SharedPrefManager.getInstance(getApplicationContext()).getPatient1().getRelationship()));
+        } else {
+            card1.setVisibility(View.VISIBLE);
+            card2.setVisibility(View.VISIBLE);
+            patient1 = findViewById(R.id.pat1);
+            patient1.setText(String.valueOf(SharedPrefManager.getInstance(getApplicationContext()).getPatient1().getName()));
+            rel1 = findViewById(R.id.rel1);
+            rel1.setText(String.valueOf(SharedPrefManager.getInstance(getApplicationContext()).getPatient1().getRelationship()));
+            rel2 = findViewById(R.id.rel2);
+            rel2.setText(String.valueOf(SharedPrefManager.getInstance(getApplicationContext()).getPatient2().getRelationship()));
+            patient2 = findViewById(R.id.pat2);
+            patient2.setText(String.valueOf(SharedPrefManager.getInstance(getApplicationContext()).getPatient2().getName()));
+        }
+
     }
     public void createNavbar() {
         drawerLayout = findViewById(R.id.drawerlayout2);
@@ -73,7 +100,6 @@ public class MyPatientsActivity extends AppCompatActivity implements NavigationV
     public void OpenManageAccount(View view) {
         startActivity(new Intent(MyPatientsActivity.this, ManageAccountActivity.class));
     }
-
     public void showInfo(TextView username, TextView email) {
         username.setText(String.valueOf(SharedPrefManager.getInstance(getApplicationContext()).getUser().getName()));
         email.setText(String.valueOf(SharedPrefManager.getInstance(getApplicationContext()).getUser().getEmail()));

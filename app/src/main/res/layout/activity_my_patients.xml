@@ -57,7 +57,7 @@
             android:contentDescription="@string/user_image" />
 
         <RelativeLayout
-            android:id="@+id/card1"
+            android:id="@+id/layoutcard1"
             android:layout_width="match_parent"
             android:layout_height="120dp"
             android:layout_below="@id/logo"
@@ -67,10 +67,12 @@
             android:layout_marginBottom="30dp">
 
             <RelativeLayout
+                android:id="@+id/card1"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:textColor="@android:color/black"
-                android:background="@drawable/patients_card_bg">
+                android:background="@drawable/patients_card_bg"
+                android:visibility="invisible">
 
                 <TextView
                     android:id="@+id/pat1"
@@ -83,9 +85,10 @@
                     android:textStyle="bold" />
 
                 <TextView
+                    android:id="@+id/rel1"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="patient name"
+                    android:text="relationship"
                     android:paddingStart="50dp"
                     android:layout_below="@+id/pat1"
                     android:textSize="15sp"
@@ -99,27 +102,40 @@
                     android:layout_centerVertical="true"
                     android:layout_marginEnd="40dp" />
             </RelativeLayout>
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/layoutcard2"
+            android:layout_width="match_parent"
+            android:layout_height="120dp"
+            android:layout_below="@id/layoutcard1"
+            android:layout_marginStart="25dp"
+            android:layout_marginEnd="25dp"
+            android:layout_marginBottom="30dp">
 
             <RelativeLayout
+                android:id="@+id/card2"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:textColor="@android:color/black"
-                android:background="@drawable/patients_card_bg">
+                android:background="@drawable/patients_card_bg"
+                android:visibility="invisible">
 
                 <TextView
                     android:id="@+id/pat2"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Patient 1"
+                    android:text="Patient 2"
                     android:paddingStart="50dp"
                     android:layout_marginTop="28dp"
                     android:textSize="30sp"
                     android:textStyle="bold" />
 
                 <TextView
+                    android:id="@+id/rel2"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="patient name"
+                    android:text="relationship"
                     android:paddingStart="50dp"
                     android:layout_below="@+id/pat2"
                     android:textSize="15sp"
@@ -135,14 +151,32 @@
             </RelativeLayout>
         </RelativeLayout>
 
+        <TextView
+            android:id="@+id/text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="50dp"
+            android:text="Text"
+            android:layout_below="@+id/layoutcard2"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="30dp" />
 
+        <ImageButton
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            android:background="@drawable/circle_bg"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentRight="true"
+            android:layout_marginEnd="40dp"
+            android:src="@drawable/simple_plus"
+            android:layout_marginBottom="90dp" />
     </RelativeLayout>
+
     <com.google.android.material.navigation.NavigationView
         android:layout_width="300dp"
         android:layout_height="match_parent"
         app:menu="@menu/menu_elements"
         android:id="@+id/nav_menu"
         app:headerLayout="@layout/menu_header"
-        android:layout_gravity="start"
-        android:visibility="gone" />
+        android:layout_gravity="start" />
 </androidx.drawerlayout.widget.DrawerLayout>
