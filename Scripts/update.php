@@ -29,6 +29,7 @@ if(isset($_GET["email"]) &&
 
         $response["success"]=1;
         $response["message"]="updated successfully!";
+        array_push($response["user"],$tmp);
         echo json_encode($response);
     }
     else
