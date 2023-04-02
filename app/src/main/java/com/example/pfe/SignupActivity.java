@@ -36,7 +36,8 @@ public class SignupActivity extends AppCompatActivity {
     private EditText edAdress;
     private Button btnSignin;
     boolean verify;
-    String url = "jdbc:mysql://192.168.43.205:3306/healthbuddy";
+   // String url = "jdbc:mysql://192.168.43.205:3306/healthbuddy";
+    String url = "jdbc:mysql://192.168.1.16:3306/healthbuddy";
     String user = "root";
     String password = "";
     DatePickerDialog.OnDateSetListener setListener;
