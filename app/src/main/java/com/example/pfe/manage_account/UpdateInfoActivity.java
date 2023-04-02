@@ -26,6 +26,9 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.SQLException;
 import java.util.Calendar;
 import java.util.HashMap;
 
@@ -34,8 +37,11 @@ public class UpdateInfoActivity extends AppCompatActivity {
     EditText edName, edPassword, edBirthdate, edAdress;
     Button btnUpdate;
     DatePickerDialog.OnDateSetListener setListener;
-    JSONParser parser=new JSONParser();
+    JSONParser parser = new JSONParser();
     int success;
+    String url = "jdbc:mysql://192.168.43.205:3306/healthbuddy";
+    String user = "root";
+    String password = "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -112,10 +118,11 @@ public class UpdateInfoActivity extends AppCompatActivity {
             map.put("birthdate",edBirthdate.getText().toString());
             map.put("password",edPassword.getText().toString());
             map.put("adress",edAdress.getText().toString());
-
-            JSONObject object = parser.makeHttpRequest("http://10.0.2.2/healthbuddy/user/update.php", "GET", map);
             try {
-                success=object.getInt("success");
+                Class.forName("com.mysql.jdbc.Driver");
+                Connection connection = DriverManager.getConnection(url, user, password);
+                JSONObject object = parser.makeHttpRequest("http://192.168.43.205/healthbuddy/user/update.php", "GET", map);
+                success = object.getInt("success");
                 JSONArray userJson = object.getJSONArray("user");
                 JSONObject jsonObject = userJson.getJSONObject(0);
                 User user = new User(
@@ -126,9 +133,16 @@ public class UpdateInfoActivity extends AppCompatActivity {
                         jsonObject.getString("adress")
                 );
                 SharedPrefManager.getInstance(getApplicationContext()).userLogin(user);
-            } catch (JSONException e) {
-                throw new RuntimeException(e);
+                connection.close();
+            } catch (ClassNotFoundException e) {
+                e.printStackTrace();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            } catch (JSONException ex) {
+                throw new RuntimeException(ex);
             }
+
+
             return null;
 
         }

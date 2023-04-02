@@ -20,6 +20,9 @@ import androidx.appcompat.app.AppCompatActivity;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.SQLException;
 import java.util.Calendar;
 import java.util.HashMap;
 
@@ -33,9 +36,12 @@ public class SignupActivity extends AppCompatActivity {
     private EditText edAdress;
     private Button btnSignin;
     boolean verify;
+    String url = "jdbc:mysql://192.168.43.205:3306/healthbuddy";
+    String user = "root";
+    String password = "";
     DatePickerDialog.OnDateSetListener setListener;
     ProgressDialog dialog;
-    JSONParser parser=new JSONParser();
+    JSONParser parser = new JSONParser();
     int success;
 
     @Override
@@ -126,12 +132,20 @@ public class SignupActivity extends AppCompatActivity {
             map.put("password", edPassword.getText().toString());
             map.put("adress", edAdress.getText().toString());
 
-            JSONObject object = parser.makeHttpRequest("http://10.0.2.2/healthbuddy/user/add.php", "GET", map);
             try {
+                Class.forName("com.mysql.jdbc.Driver");
+                Connection connection = DriverManager.getConnection(url, user, password);
+                JSONObject object = parser.makeHttpRequest("http://192.168.43.205/healthbuddy/user/add.php", "GET", map);
                 success = object.getInt("success");
+                connection.close();
+            } catch (ClassNotFoundException e) {
+                e.printStackTrace();
+            } catch (SQLException e) {
+                e.printStackTrace();
             } catch (JSONException e) {
                 throw new RuntimeException(e);
             }
+
             return null;
         }
 

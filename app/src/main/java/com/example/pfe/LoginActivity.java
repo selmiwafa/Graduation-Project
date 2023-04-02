@@ -20,6 +20,9 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -30,6 +33,10 @@ public class LoginActivity extends AppCompatActivity {
     JSONParser parser = new JSONParser();
     int success, number;
     String message;
+
+    String url = "jdbc:mysql://192.168.43.205:3306/healthbuddy";
+    String user = "root";
+    String password = "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -61,13 +68,13 @@ public class LoginActivity extends AppCompatActivity {
             new LoginActivity.Log().execute();
         }
     }
+
     @SuppressLint("StaticFieldLeak")
-    class Log extends AsyncTask<String,String,String>
-    {
+    class Log extends AsyncTask<String, String, String> {
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
-            dialog=new ProgressDialog(LoginActivity.this);
+            dialog = new ProgressDialog(LoginActivity.this);
             dialog.setMessage("Please wait");
             dialog.show();
         }
@@ -79,12 +86,13 @@ public class LoginActivity extends AppCompatActivity {
             HashMap<String,String> map= new HashMap<>();
             map.put("email",edEmailLogin.getText().toString());
             map.put("password",edPasswordLogin.getText().toString());
-
-            JSONObject object = parser.makeHttpRequest("http://10.0.2.2/healthbuddy/user/log.php", "GET", map);
             try {
+                Class.forName("com.mysql.jdbc.Driver");
+                Connection connection = DriverManager.getConnection(url, user, password);
+                JSONObject object = parser.makeHttpRequest("http://192.168.43.205/healthbuddy/user/log.php", "GET", map);
                 success = object.getInt("success");
                 message = object.getString("message");
-                while(success == 1) {
+                while (success == 1) {
                     JSONArray userJson = object.getJSONArray("user");
                     JSONObject jsonObject = userJson.getJSONObject(0);
                     User user = new User(
@@ -132,11 +140,17 @@ public class LoginActivity extends AppCompatActivity {
                     }
                     break;
                 }
-            } catch (JSONException e) {
-                throw new RuntimeException(e);
+                connection.close();
+            } catch (ClassNotFoundException e) {
+                e.printStackTrace();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            } catch (JSONException ex) {
+                throw new RuntimeException(ex);
             }
             return null;
         }
+
 
         @Override
         protected void onPostExecute(String s)
@@ -153,6 +167,7 @@ public class LoginActivity extends AppCompatActivity {
                 restartActivity(LoginActivity.this);
             }
         }
+
     }
 
     private void initView() {

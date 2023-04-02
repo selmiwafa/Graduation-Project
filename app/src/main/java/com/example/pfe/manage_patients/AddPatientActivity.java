@@ -27,6 +27,9 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.SQLException;
 import java.util.HashMap;
 
 public class AddPatientActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
@@ -37,6 +40,9 @@ public class AddPatientActivity extends AppCompatActivity implements AdapterView
     JSONParser parser = new JSONParser();
     int success, number;
     String relationship, message;
+    String url = "jdbc:mysql://192.168.43.205:3306/healthbuddy";
+    String user = "root";
+    String password = "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -121,24 +127,34 @@ public class AddPatientActivity extends AppCompatActivity implements AdapterView
             map.put("relationship", relationship);
             map.put("patient_age", edAge.getText().toString());
             map.put("user", SharedPrefManager.getInstance(getApplicationContext()).getUser().getEmail());
-            JSONObject object = parser.makeHttpRequest("http://10.0.2.2/healthbuddy/patient/addPatient.php", "GET", map);
             try {
-                message = object.getString("message");
-                success = object.getInt("success");
-                while (success == 1) {
-                    JSONArray userJson = object.getJSONArray("patient");
-                    JSONObject jsonObject = userJson.getJSONObject(0);
-                    Patient patient = new Patient(
-                            jsonObject.getString("patient_name"),
-                            jsonObject.getInt("patient_age"),
-                            jsonObject.getString("relationship")
-                    );
-                    //SharedPrefManager.getInstance(getApplicationContext()).getUser().setArray(Patient);
-                    break;
+                Class.forName("com.mysql.jdbc.Driver");
+                Connection connection = DriverManager.getConnection(url, user, password);
+                JSONObject object = parser.makeHttpRequest("http://10.0.2.2/healthbuddy/patient/addPatient.php", "GET", map);
+                try {
+                    message = object.getString("message");
+                    success = object.getInt("success");
+                    while (success == 1) {
+                        JSONArray userJson = object.getJSONArray("patient");
+                        JSONObject jsonObject = userJson.getJSONObject(0);
+                        Patient patient = new Patient(
+                                jsonObject.getString("patient_name"),
+                                jsonObject.getInt("patient_age"),
+                                jsonObject.getString("relationship")
+                        );
+                        //SharedPrefManager.getInstance(getApplicationContext()).getUser().setArray(Patient);
+                        break;
+                    }
+                } catch (JSONException e) {
+                    throw new RuntimeException(e);
                 }
-            } catch (JSONException e) {
-                throw new RuntimeException(e);
+                connection.close();
+            } catch (ClassNotFoundException e) {
+                e.printStackTrace();
+            } catch (SQLException e) {
+                e.printStackTrace();
             }
+
             return null;
 
         }
