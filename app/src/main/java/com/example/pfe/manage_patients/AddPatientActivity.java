@@ -151,7 +151,7 @@ public class AddPatientActivity extends AppCompatActivity implements AdapterView
                         Patients.add(patient);
                         SharedPrefManager.getInstance(getApplicationContext()).getUser().setArray(Patients);
                         SharedPrefManager.getInstance(getApplicationContext()).addPatient1(patient);
-                    } else if (number == 2) {
+                    } else if (number >= 2) {
                         JSONArray patientsJson = object.getJSONArray("patients");
                         JSONObject patient1Json = patientsJson.getJSONObject(0);
                         Patient patient1 = new Patient(
