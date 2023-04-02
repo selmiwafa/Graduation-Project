@@ -1,7 +1,5 @@
 package com.example.pfe.manage_patients;
 
-import static com.example.pfe.LoginActivity.restartActivity;
-
 import android.annotation.SuppressLint;
 import android.app.ProgressDialog;
 import android.content.Intent;
@@ -188,7 +186,7 @@ public class AddPatientActivity extends AppCompatActivity implements AdapterView
 
             if (success == 1) {
                 Toast.makeText(AddPatientActivity.this, "Patient added successfully", Toast.LENGTH_LONG).show();
-                restartActivity(AddPatientActivity.this);
+                startActivity(new Intent(AddPatientActivity.this, MyPatientsActivity.class));
 
             } else {
                 Toast.makeText(AddPatientActivity.this, message, Toast.LENGTH_LONG).show();

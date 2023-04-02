@@ -66,6 +66,7 @@
             android:layout_marginTop="70dp"
             android:layout_marginBottom="30dp">
 
+
             <RelativeLayout
                 android:id="@+id/card1"
                 android:layout_width="match_parent"
@@ -101,7 +102,23 @@
                     android:src="@drawable/patient1"
                     android:layout_centerVertical="true"
                     android:layout_marginEnd="40dp" />
+
+                <RelativeLayout
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:background="@drawable/redcircle_bg"
+                    android:layout_alignParentTop="true"
+                    android:layout_alignParentRight="true">
+
+                    <ImageButton
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:src="@drawable/whitex"
+                        android:background="@android:color/transparent" />
+
+                </RelativeLayout>
             </RelativeLayout>
+
         </RelativeLayout>
 
         <RelativeLayout
@@ -148,7 +165,23 @@
                     android:src="@drawable/patient2"
                     android:layout_centerVertical="true"
                     android:layout_marginEnd="40dp" />
+
+                <RelativeLayout
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:background="@drawable/redcircle_bg"
+                    android:layout_alignParentTop="true"
+                    android:layout_alignParentRight="true">
+
+                    <ImageButton
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:src="@drawable/whitex"
+                        android:background="@android:color/transparent" />
+
+                </RelativeLayout>
             </RelativeLayout>
+
         </RelativeLayout>
 
         <TextView
