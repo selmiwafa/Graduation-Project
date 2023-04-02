@@ -18,6 +18,7 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 
+import com.example.pfe.manageMedicine.BarcodeActivity;
 import com.google.android.material.navigation.NavigationView;
 
 public class HomepageActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
@@ -25,10 +26,7 @@ public class HomepageActivity extends AppCompatActivity implements NavigationVie
     TextView username, detail_email;
     DrawerLayout drawerLayout;
     NavigationView navigationView;
-    JSONParser parser = new JSONParser();
     Toolbar toolbar;
-    int success, number;
-    String message;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -99,6 +97,10 @@ public class HomepageActivity extends AppCompatActivity implements NavigationVie
                 break;
             case (R.id.my_patients):
                 Intent intent = new Intent(HomepageActivity.this, MyPatientsActivity.class);
+                startActivity(intent);
+                break;
+            case (R.id.add_medicine):
+                intent = new Intent(HomepageActivity.this, BarcodeActivity.class);
                 startActivity(intent);
                 break;
         }

@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android">
 
+    <uses-permission android:name="android.permission.CAMERA" />
     <uses-permission android:name="android.permission.INTERNET" />
 
     <application
@@ -13,10 +14,13 @@
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
         <activity
-            android:name=".Patient2Activity"
+            android:name=".manageMedicine.BarcodeActivity"
             android:exported="false" />
         <activity
-            android:name=".Patient1Activity"
+            android:name=".manage_patients.Patient2Activity"
+            android:exported="false" />
+        <activity
+            android:name=".manage_patients.Patient1Activity"
             android:exported="false" />
         <activity
             android:name=".MyPatientsActivity"

@@ -21,6 +21,7 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 
+import com.example.pfe.manageMedicine.BarcodeActivity;
 import com.example.pfe.manage_patients.AddPatientActivity;
 import com.google.android.material.navigation.NavigationView;
 
@@ -139,6 +140,10 @@ public class MyPatientsActivity extends AppCompatActivity implements NavigationV
                 startActivity(intent);
                 break;
             case (R.id.my_patients):
+                break;
+            case (R.id.add_medicine):
+                intent = new Intent(MyPatientsActivity.this, BarcodeActivity.class);
+                startActivity(intent);
                 break;
         }
         drawerLayout.closeDrawer(GravityCompat.START);
