@@ -39,8 +39,6 @@ public class HomepageActivity extends AppCompatActivity implements NavigationVie
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE);
 
         createNavbar();
-
-
     }
     public void logout(View view) {
         SharedPrefManager.getInstance(getApplicationContext()).logout();

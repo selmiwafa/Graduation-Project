@@ -22,6 +22,12 @@
             android:src="@drawable/hbtext"
             android:contentDescription="@string/logo" />
 
+        <ImageButton
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:src="@drawable/backarrow"
+            android:background="@android:color/transparent"
+            android:onClick="backMypatients" />
 
         <TextView
             android:id="@+id/addPatientText"

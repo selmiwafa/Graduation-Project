@@ -9,6 +9,7 @@ import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.WindowManager;
+import android.widget.ImageButton;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -20,17 +21,19 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 
+import com.example.pfe.manage_patients.AddPatientActivity;
 import com.google.android.material.navigation.NavigationView;
 
 import java.util.Objects;
 
 public class MyPatientsActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
     DrawerLayout drawerLayout;
+    private AlertDialog dialog;
     NavigationView navigationView;
     Toolbar toolbar;
     RelativeLayout card1, card2;
     TextView username, detail_email, patient1, patient2, rel1, rel2, text;
-
+    ImageButton addBtn;
     @SuppressLint("MissingInflatedId")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,6 +45,8 @@ public class MyPatientsActivity extends AppCompatActivity implements NavigationV
         createNavbar();
         text = findViewById(R.id.text);
         text.setText(String.valueOf(SharedPrefManager.getInstance(getApplicationContext()).getKeyNumberPatients()));
+        addBtn = findViewById(R.id.addBtn);
+        addBtn.setVisibility(View.VISIBLE);
 
         card1 = findViewById(R.id.card1);
         card2 = findViewById(R.id.card2);
@@ -61,10 +66,12 @@ public class MyPatientsActivity extends AppCompatActivity implements NavigationV
             patient1.setText(String.valueOf(SharedPrefManager.getInstance(getApplicationContext()).getPatient1().getName()));
             rel1 = findViewById(R.id.rel1);
             rel1.setText(String.valueOf(SharedPrefManager.getInstance(getApplicationContext()).getPatient1().getRelationship()));
-            rel2 = findViewById(R.id.rel2);
-            rel2.setText(String.valueOf(SharedPrefManager.getInstance(getApplicationContext()).getPatient2().getRelationship()));
             patient2 = findViewById(R.id.pat2);
             patient2.setText(String.valueOf(SharedPrefManager.getInstance(getApplicationContext()).getPatient2().getName()));
+            rel2 = findViewById(R.id.rel2);
+            rel2.setText(String.valueOf(SharedPrefManager.getInstance(getApplicationContext()).getPatient2().getRelationship()));
+
+            addBtn.setVisibility(View.INVISIBLE);
         }
 
     }
@@ -86,20 +93,30 @@ public class MyPatientsActivity extends AppCompatActivity implements NavigationV
         AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(this);
         final View contactPopupView = getLayoutInflater().inflate(user_details, null);
         dialogBuilder.setView(contactPopupView);
-        AlertDialog dialog = dialogBuilder.create();
+        dialog = dialogBuilder.create();
         dialog.show();
         username = dialog.findViewById(R.id.username);
         detail_email = dialog.findViewById(R.id.detail_email);
         showInfo(username, detail_email);
     }
 
+    public void cancel(View view) {
+        dialog.dismiss();
+    }
+
     public void logout(View view) {
         SharedPrefManager.getInstance(getApplicationContext()).logout();
     }
 
+
     public void OpenManageAccount(View view) {
         startActivity(new Intent(MyPatientsActivity.this, ManageAccountActivity.class));
     }
+
+    public void OpenAddPatient(View view) {
+        startActivity(new Intent(MyPatientsActivity.this, AddPatientActivity.class));
+    }
+
     public void showInfo(TextView username, TextView email) {
         username.setText(String.valueOf(SharedPrefManager.getInstance(getApplicationContext()).getUser().getName()));
         email.setText(String.valueOf(SharedPrefManager.getInstance(getApplicationContext()).getUser().getEmail()));

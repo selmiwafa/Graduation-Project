@@ -162,12 +162,17 @@
             android:layout_marginTop="30dp" />
 
         <ImageButton
+            android:id="@+id/addBtn"
             android:layout_width="80dp"
             android:layout_height="80dp"
             android:background="@drawable/circle_bg"
             android:layout_alignParentBottom="true"
             android:layout_alignParentRight="true"
             android:layout_marginEnd="40dp"
+            android:clickable="true"
+            android:focusable="true"
+            android:focusableInTouchMode="true"
+            android:onClick="OpenAddPatient"
             android:src="@drawable/simple_plus"
             android:layout_marginBottom="90dp" />
     </RelativeLayout>

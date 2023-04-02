@@ -33,7 +33,6 @@ public class LoginActivity extends AppCompatActivity {
     JSONParser parser = new JSONParser();
     int success, number;
     String message;
-
     String url = "jdbc:mysql://192.168.43.205:3306/healthbuddy";
     String user = "root";
     String password = "";
@@ -130,10 +129,6 @@ public class LoginActivity extends AppCompatActivity {
                                 patient2Json.getInt("patient_age"),
                                 patient2Json.getString("relationship")
                         );
-                        ArrayList<Patient> Patients = new ArrayList<>();
-                        Patients.add(patient1);
-                        Patients.add(patient2);
-                        SharedPrefManager.getInstance(getApplicationContext()).getUser().setArray(Patients);
                         SharedPrefManager.getInstance(getApplicationContext()).addPatient1(patient1);
                         SharedPrefManager.getInstance(getApplicationContext()).addPatient2(patient2);
                     }

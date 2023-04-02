@@ -4,6 +4,7 @@ import static com.example.pfe.LoginActivity.restartActivity;
 
 import android.annotation.SuppressLint;
 import android.app.ProgressDialog;
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -19,6 +20,7 @@ import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.pfe.JSONParser;
+import com.example.pfe.MyPatientsActivity;
 import com.example.pfe.Patient;
 import com.example.pfe.R;
 import com.example.pfe.SharedPrefManager;
@@ -30,6 +32,7 @@ import org.json.JSONObject;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.HashMap;
 
 public class AddPatientActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
@@ -130,29 +133,51 @@ public class AddPatientActivity extends AppCompatActivity implements AdapterView
             try {
                 Class.forName("com.mysql.jdbc.Driver");
                 Connection connection = DriverManager.getConnection(url, user, password);
-                JSONObject object = parser.makeHttpRequest("http://10.0.2.2/healthbuddy/patient/addPatient.php", "GET", map);
-                try {
-                    message = object.getString("message");
-                    success = object.getInt("success");
-                    while (success == 1) {
-                        JSONArray userJson = object.getJSONArray("patient");
-                        JSONObject jsonObject = userJson.getJSONObject(0);
+                JSONObject object = parser.makeHttpRequest("http://192.168.43.205/healthbuddy/patient/addPatient.php", "GET", map);
+                message = object.getString("message");
+                success = object.getInt("success");
+                while (success == 1) {
+                    number = object.getInt("number");
+                    SharedPrefManager.getInstance(getApplicationContext()).setKeyNumberPatients(number);
+                    if (number == 1) {
+                        JSONArray patientsJson = object.getJSONArray("patients");
+                        JSONObject patientJson = patientsJson.getJSONObject(0);
                         Patient patient = new Patient(
-                                jsonObject.getString("patient_name"),
-                                jsonObject.getInt("patient_age"),
-                                jsonObject.getString("relationship")
+                                patientJson.getString("patient_name"),
+                                patientJson.getInt("patient_age"),
+                                patientJson.getString("relationship")
                         );
-                        //SharedPrefManager.getInstance(getApplicationContext()).getUser().setArray(Patient);
-                        break;
+                        ArrayList<Patient> Patients = new ArrayList<>();
+                        Patients.add(patient);
+                        SharedPrefManager.getInstance(getApplicationContext()).getUser().setArray(Patients);
+                        SharedPrefManager.getInstance(getApplicationContext()).addPatient1(patient);
+                    } else if (number == 2) {
+                        JSONArray patientsJson = object.getJSONArray("patients");
+                        JSONObject patient1Json = patientsJson.getJSONObject(0);
+                        Patient patient1 = new Patient(
+                                patient1Json.getString("patient_name"),
+                                patient1Json.getInt("patient_age"),
+                                patient1Json.getString("relationship")
+                        );
+                        JSONObject patient2Json = patientsJson.getJSONObject(1);
+                        Patient patient2 = new Patient(
+                                patient2Json.getString("patient_name"),
+                                patient2Json.getInt("patient_age"),
+                                patient2Json.getString("relationship")
+                        );
+                        SharedPrefManager.getInstance(getApplicationContext()).addPatient1(patient1);
+                        SharedPrefManager.getInstance(getApplicationContext()).addPatient2(patient2);
                     }
-                } catch (JSONException e) {
-                    throw new RuntimeException(e);
+
+                    break;
                 }
                 connection.close();
             } catch (ClassNotFoundException e) {
                 e.printStackTrace();
             } catch (SQLException e) {
                 e.printStackTrace();
+            } catch (JSONException e) {
+                throw new RuntimeException(e);
             }
 
             return null;
@@ -172,6 +197,9 @@ public class AddPatientActivity extends AppCompatActivity implements AdapterView
                 Toast.makeText(AddPatientActivity.this, message, Toast.LENGTH_LONG).show();
             }
         }
+    }
 
+    public void backMypatients(View view) {
+        startActivity(new Intent(AddPatientActivity.this, MyPatientsActivity.class));
     }
 }
