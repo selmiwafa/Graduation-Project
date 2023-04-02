@@ -13,6 +13,12 @@
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
         <activity
+            android:name=".Patient2Activity"
+            android:exported="false" />
+        <activity
+            android:name=".Patient1Activity"
+            android:exported="false" />
+        <activity
             android:name=".MyPatientsActivity"
             android:exported="false" />
         <activity

@@ -32,7 +32,6 @@ import org.json.JSONObject;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
-import java.util.ArrayList;
 import java.util.HashMap;
 
 public class AddPatientActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
@@ -138,8 +137,8 @@ public class AddPatientActivity extends AppCompatActivity implements AdapterView
                 success = object.getInt("success");
                 while (success == 1) {
                     number = object.getInt("number");
-                    SharedPrefManager.getInstance(getApplicationContext()).setKeyNumberPatients(number);
                     if (number == 1) {
+                        SharedPrefManager.getInstance(getApplicationContext()).setKeyNumberPatients(1);
                         JSONArray patientsJson = object.getJSONArray("patients");
                         JSONObject patientJson = patientsJson.getJSONObject(0);
                         Patient patient = new Patient(
@@ -147,11 +146,9 @@ public class AddPatientActivity extends AppCompatActivity implements AdapterView
                                 patientJson.getInt("patient_age"),
                                 patientJson.getString("relationship")
                         );
-                        ArrayList<Patient> Patients = new ArrayList<>();
-                        Patients.add(patient);
-                        SharedPrefManager.getInstance(getApplicationContext()).getUser().setArray(Patients);
                         SharedPrefManager.getInstance(getApplicationContext()).addPatient1(patient);
                     } else if (number >= 2) {
+                        SharedPrefManager.getInstance(getApplicationContext()).setKeyNumberPatients(2);
                         JSONArray patientsJson = object.getJSONArray("patients");
                         JSONObject patient1Json = patientsJson.getJSONObject(0);
                         Patient patient1 = new Patient(

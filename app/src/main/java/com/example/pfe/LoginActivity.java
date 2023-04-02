@@ -23,7 +23,6 @@ import org.json.JSONObject;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
-import java.util.ArrayList;
 import java.util.HashMap;
 
 public class LoginActivity extends AppCompatActivity {
@@ -31,7 +30,7 @@ public class LoginActivity extends AppCompatActivity {
     private EditText edPasswordLogin;
     ProgressDialog dialog;
     JSONParser parser = new JSONParser();
-    int success, number;
+    int success, number = 0;
     String message;
     String url = "jdbc:mysql://192.168.43.205:3306/healthbuddy";
     String user = "root";
@@ -102,8 +101,8 @@ public class LoginActivity extends AppCompatActivity {
                     );
                     SharedPrefManager.getInstance(getApplicationContext()).userLogin(user);
                     number = object.getInt("number");
-                    SharedPrefManager.getInstance(getApplicationContext()).setKeyNumberPatients(number);
                     if (number == 1) {
+                        SharedPrefManager.getInstance(getApplicationContext()).setKeyNumberPatients(1);
                         JSONArray patientsJson = object.getJSONArray("patients");
                         JSONObject patientJson = patientsJson.getJSONObject(0);
                         Patient patient = new Patient(
@@ -111,11 +110,9 @@ public class LoginActivity extends AppCompatActivity {
                                 patientJson.getInt("patient_age"),
                                 patientJson.getString("relationship")
                         );
-                        ArrayList<Patient> Patients = new ArrayList<>();
-                        Patients.add(patient);
-                        SharedPrefManager.getInstance(getApplicationContext()).getUser().setArray(Patients);
                         SharedPrefManager.getInstance(getApplicationContext()).addPatient1(patient);
                     } else if (number >= 2) {
+                        SharedPrefManager.getInstance(getApplicationContext()).setKeyNumberPatients(2);
                         JSONArray patientsJson = object.getJSONArray("patients");
                         JSONObject patient1Json = patientsJson.getJSONObject(0);
                         Patient patient1 = new Patient(

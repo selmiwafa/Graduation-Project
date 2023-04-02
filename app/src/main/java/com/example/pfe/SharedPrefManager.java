@@ -75,7 +75,6 @@ public class SharedPrefManager {
         editor.putString(KEY_P1_NAME, patient.getName());
         editor.putInt(KEY_P1_AGE, patient.getAge());
         editor.putString(KEY_P1_RELATIONSHIP, patient.getRelationship());
-        setKeyNumberPatients(1);
         editor.apply();
     }
 
@@ -85,7 +84,6 @@ public class SharedPrefManager {
         editor.putString(KEY_P2_NAME, patient.getName());
         editor.putInt(KEY_P2_AGE, patient.getAge());
         editor.putString(KEY_P2_RELATIONSHIP, patient.getRelationship());
-        setKeyNumberPatients(2);
         editor.apply();
     }
 
