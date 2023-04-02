@@ -1,5 +1,5 @@
 <?php
-$cnx=mysqli_connect("localhost","root","");
+$cnx=mysqli_connect("192.168.43.205","root","");
 if(!$cnx)
 {
     echo "connexion error";

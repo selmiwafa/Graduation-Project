@@ -23,17 +23,18 @@ if(
          $req=mysqli_query($cnx,"insert into patients(patient_name,relationship,patient_age,user) values ('$name','$relationship','$age','$user')");
          if($req)
          {
-            /*
-            $cur=mysqli_fetch_array($req1);
+            $req2=mysqli_query($cnx,"select * from patients where user='$user'");
             $tmp=array();
             $response["patients"]=array();
-            $tmp["patient_name"]=$cur["patient_name"];
-            $tmp["patient_age"]=$cur["patient_age"];
-            $tmp["relationship"]=$cur["relationship"];
-            */
+            while($cur=mysqli_fetch_array($req2)){
+               $tmp["patient_name"]=$cur["patient_name"];
+               $tmp["patient_age"]=$cur["patient_age"];
+               $tmp["relationship"]=$cur["relationship"];
+               array_push($response["patients"],$tmp);
+            }
+            $response["number"]=mysqli_num_rows($req2);
             $response["success"]=1;
             $response["message"]="inserted!";
-            //array_push($response["patients"],$tmp);
             echo json_encode($response);
          }
          else
