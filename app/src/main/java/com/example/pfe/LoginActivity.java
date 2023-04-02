@@ -57,7 +57,6 @@ public class LoginActivity extends AppCompatActivity {
     public void login(View view) {
         String email = edEmailLogin.getText().toString();
         String password = edPasswordLogin.getText().toString();
-
         if (email.isEmpty() || password.isEmpty()) {
             Toast.makeText(getApplicationContext().getApplicationContext(), "All fields required!", Toast.LENGTH_LONG).show();
         }
