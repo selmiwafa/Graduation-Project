@@ -31,13 +31,13 @@
         <menu>
             <group android:checkableBehavior="single">
                 <item
-                    android:title="Add medicine"
-                    android:icon="@drawable/plus"
-                    android:id="@+id/add_medicine" />
+                    android:title="Inventory"
+                    android:icon="@drawable/folder"
+                    android:id="@+id/inventory" />
                 <item
-                    android:id="@+id/remove_medicine"
-                    android:icon="@drawable/plus"
-                    android:title="Remove medicine" />
+                    android:id="@+id/scan"
+                    android:icon="@drawable/camera"
+                    android:title="Scan new medicine" />
             </group>
         </menu>
     </item>

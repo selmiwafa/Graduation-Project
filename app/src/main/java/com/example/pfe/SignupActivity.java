@@ -36,7 +36,7 @@ public class SignupActivity extends AppCompatActivity {
     private EditText edAdress;
     private Button btnSignin;
     boolean verify;
-   // String url = "jdbc:mysql://192.168.43.205:3306/healthbuddy";
+    // String url = "jdbc:mysql://192.168.43.205:3306/healthbuddy";
     String url = "jdbc:mysql://192.168.1.16:3306/healthbuddy";
     String user = "root";
     String password = "";
@@ -54,7 +54,7 @@ public class SignupActivity extends AppCompatActivity {
 
         this.initView();
         edBirthdate.setOnClickListener(v -> {
-            int y = Calendar.getInstance().get(Calendar.YEAR)-18;
+            int y = Calendar.getInstance().get(Calendar.YEAR) - 18;
             int m = Calendar.getInstance().get(Calendar.MONTH);
             int d = Calendar.getInstance().get(Calendar.DAY_OF_MONTH);
             DatePickerDialog datePickerDialog = new DatePickerDialog(
@@ -64,14 +64,14 @@ public class SignupActivity extends AppCompatActivity {
             datePickerDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
             datePickerDialog.show();
         });
-        setListener= (view, year, month, day) -> {
-            month = month+1;
-            String date = day+"/"+month+"/"+year;
+        setListener = (view, year, month, day) -> {
+            month = month + 1;
+            String date = day + "/" + month + "/" + year;
             edBirthdate.setText(date);
             int y = (Calendar.getInstance().get(Calendar.YEAR));
             int m = Calendar.getInstance().get(Calendar.MONTH);
             int d = Calendar.getInstance().get(Calendar.DAY_OF_MONTH);
-            if (year>=(y-18) && month>=m && day>=d){
+            if (year >= (y - 18) && month >= m && day >= d) {
                 Toast.makeText(SignupActivity.this, "User should be older than 18 years old!", Toast.LENGTH_LONG).show();
                 edBirthdate.setText("");
             }
@@ -82,7 +82,7 @@ public class SignupActivity extends AppCompatActivity {
     void addUser() {
         String name = edName.getText().toString();
         String email = edEmail.getText().toString();
-        String birthdate= edBirthdate.getText().toString();
+        String birthdate = edBirthdate.getText().toString();
         String password = edPassword.getText().toString();
         String confirmPassword = edConfirmPass.getText().toString();
         String adress = edAdress.getText().toString();
@@ -91,30 +91,25 @@ public class SignupActivity extends AppCompatActivity {
 
         if (name.isEmpty() || email.isEmpty() || birthdate.isEmpty() || password.isEmpty() || confirmPassword.isEmpty() || adress.isEmpty()) {
             Toast.makeText(getApplicationContext().getApplicationContext(), "All fields required!", Toast.LENGTH_LONG).show();
-        }
-        else if (!isValidEmail(email)) {
+        } else if (!isValidEmail(email)) {
             Toast.makeText(getApplicationContext().getApplicationContext(), "Invalid e-mail format!", Toast.LENGTH_LONG).show();
-        }
-        else if (password.length()<5) {
+        } else if (password.length() < 5) {
             Toast.makeText(getApplicationContext().getApplicationContext(), "Password must be at least 5 characters!", Toast.LENGTH_LONG).show();
-        }
-        else if (confirmPassword(password, confirmPassword)) {
+        } else if (confirmPassword(password, confirmPassword)) {
             Toast.makeText(getApplicationContext().getApplicationContext(), "Confirm Password doesn't match password!!", Toast.LENGTH_LONG).show();
-        }
-        else {
+        } else {
             new Add().execute();
         }
     }
 
     @SuppressLint("StaticFieldLeak")
-    class Add extends AsyncTask<String,String,String>
-    {
+    class Add extends AsyncTask<String, String, String> {
 
 
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
-            dialog=new ProgressDialog(SignupActivity.this);
+            dialog = new ProgressDialog(SignupActivity.this);
             dialog.setMessage("Please wait");
             dialog.show();
         }
@@ -151,19 +146,16 @@ public class SignupActivity extends AppCompatActivity {
         }
 
         @Override
-        protected void onPostExecute(String s)
-        {
+        protected void onPostExecute(String s) {
             super.onPostExecute(s);
             dialog.cancel();
 
-            if(success==1) {
+            if (success == 1) {
                 Toast.makeText(SignupActivity.this, "Sign up successfull", Toast.LENGTH_LONG).show();
                 //startActivity(new Intent(SignupActivity.this, VerifyActivity.class));
                 startActivity(new Intent(SignupActivity.this, LoginActivity.class));
-            }
-            else
-            {
-                Toast.makeText(SignupActivity.this,"Error signing up!",Toast.LENGTH_LONG).show();
+            } else {
+                Toast.makeText(SignupActivity.this, "Error signing up!", Toast.LENGTH_LONG).show();
             }
         }
     }
@@ -183,12 +175,12 @@ public class SignupActivity extends AppCompatActivity {
         return Patterns.EMAIL_ADDRESS.matcher(str).matches();
     }
 
-    public boolean confirmPassword(String password, String confirm){
+    public boolean confirmPassword(String password, String confirm) {
         return !confirm.matches(password);
     }
 
 
     public void OpenLoginPage() {
-        startActivity(new Intent( SignupActivity.this, LoginActivity.class));
+        startActivity(new Intent(SignupActivity.this, LoginActivity.class));
     }
 }

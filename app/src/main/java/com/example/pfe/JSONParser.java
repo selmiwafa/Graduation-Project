@@ -35,7 +35,7 @@ public class JSONParser {
         int i = 0;
         for (Object key : params.keySet()) {
             try {
-                if (i != 0){
+                if (i != 0) {
                     sbParams.append("&");
                 }
                 sbParams.append(key).append("=").append(URLEncoder.encode(String.valueOf(params.get(key)), charset));
@@ -74,8 +74,7 @@ public class JSONParser {
             } catch (IOException e) {
                 e.printStackTrace();
             }
-        }
-        else if(method.equals("GET")){
+        } else if (method.equals("GET")) {
             // request method is GET
 
             if (sbParams.length() != 0) {

@@ -35,6 +35,7 @@ public class MyPatientsActivity extends AppCompatActivity implements NavigationV
     RelativeLayout card1, card2;
     TextView username, detail_email, patient1, patient2, rel1, rel2, text;
     ImageButton addBtn;
+
     @SuppressLint("MissingInflatedId")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -76,6 +77,7 @@ public class MyPatientsActivity extends AppCompatActivity implements NavigationV
         }
 
     }
+
     public void createNavbar() {
         drawerLayout = findViewById(R.id.drawerlayout2);
         navigationView = findViewById(R.id.nav_menu);
@@ -141,7 +143,7 @@ public class MyPatientsActivity extends AppCompatActivity implements NavigationV
                 break;
             case (R.id.my_patients):
                 break;
-            case (R.id.add_medicine):
+            case (R.id.scan):
                 intent = new Intent(MyPatientsActivity.this, BarcodeActivity.class);
                 startActivity(intent);
                 break;

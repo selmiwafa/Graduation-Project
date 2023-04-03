@@ -40,8 +40,8 @@ public class AddPatientActivity extends AppCompatActivity implements AdapterView
     JSONParser parser = new JSONParser();
     int success, number;
     String relationship, message;
-   // String url = "jdbc:mysql://192.168.43.205:3306/healthbuddy";
-   String url = "jdbc:mysql://192.168.1.16:3306/healthbuddy";
+    // String url = "jdbc:mysql://192.168.43.205:3306/healthbuddy";
+    String url = "jdbc:mysql://192.168.1.16:3306/healthbuddy";
     String user = "root";
     String password = "";
 
@@ -131,7 +131,7 @@ public class AddPatientActivity extends AppCompatActivity implements AdapterView
             try {
                 Class.forName("com.mysql.jdbc.Driver");
                 Connection connection = DriverManager.getConnection(url, user, password);
-               // JSONObject object = parser.makeHttpRequest("http://192.168.43.205/healthbuddy/patient/addPatient.php", "GET", map);
+                // JSONObject object = parser.makeHttpRequest("http://192.168.43.205/healthbuddy/patient/addPatient.php", "GET", map);
                 JSONObject object = parser.makeHttpRequest("http://192.168.1.16/healthbuddy/patient/addPatient.php", "GET", map);
                 message = object.getString("message");
                 success = object.getInt("success");

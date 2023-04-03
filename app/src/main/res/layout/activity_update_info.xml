@@ -5,6 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".ManageAccountActivity">
+
     <ImageView
         android:id="@+id/imageview"
         android:layout_width="match_parent"
@@ -21,21 +22,25 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
+
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent">
+
             <ImageButton
                 android:layout_width="50dp"
                 android:layout_height="50dp"
                 android:src="@drawable/backarrow"
                 android:background="@android:color/transparent"
-                android:onClick="backManage"/>
+                android:onClick="backManage" />
+
             <ImageView
                 android:id="@+id/logo"
                 android:layout_width="150dp"
                 android:layout_height="80dp"
                 android:src="@drawable/hbtext"
-                android:layout_centerHorizontal="true"/>
+                android:layout_centerHorizontal="true" />
+
             <EditText
                 android:id="@+id/username"
                 android:layout_width="match_parent"
@@ -53,7 +58,8 @@
                 android:textColorHint="@android:color/black"
                 android:layout_below="@+id/logo"
                 android:textStyle="bold"
-                tools:ignore="VisualLintTextFieldSize"/>
+                tools:ignore="VisualLintTextFieldSize" />
+
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
@@ -79,7 +85,8 @@
                 android:textColorHint="@android:color/black"
                 android:layout_below="@+id/username"
                 android:textStyle="bold"
-                tools:ignore="VisualLintTextFieldSize"/>
+                tools:ignore="VisualLintTextFieldSize" />
+
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
@@ -106,7 +113,8 @@
                 android:textColor="@android:color/black"
                 android:textColorHint="@android:color/black"
                 android:textStyle="bold"
-                tools:ignore="VisualLintTextFieldSize"/>
+                tools:ignore="VisualLintTextFieldSize" />
+
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
@@ -132,7 +140,8 @@
                 android:textColor="@android:color/black"
                 android:textColorHint="@android:color/black"
                 android:textStyle="bold"
-                tools:ignore="VisualLintTextFieldSize"/>
+                tools:ignore="VisualLintTextFieldSize" />
+
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="1dp"

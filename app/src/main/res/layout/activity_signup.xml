@@ -1,287 +1,284 @@
 <?xml version="1.0" encoding="utf-8"?>
-    <androidx.constraintlayout.widget.ConstraintLayout
-        xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:app="http://schemas.android.com/apk/res-auto"
-        xmlns:tools="http://schemas.android.com/tools"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    tools:context=".SignupActivity">
+
+
+    <ImageView
+        android:id="@+id/imageview"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:scaleType="centerCrop"
+        android:src="@drawable/signin_page_background"
+        android:contentDescription="@string/bg" />
+
+    <LinearLayout
+        android:id="@+id/linearLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        tools:context=".SignupActivity">
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:padding="45dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+    </LinearLayout>
 
 
+    <com.github.captain_miao.optroundcardview.OptRoundCardView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/linearLayout"
+        app:optRoundCardLeftTopCorner="true"
+        app:optRoundCardRightTopCorner="true"
+        app:optRoundCardLeftBottomCorner="false"
+        app:optRoundCardRightBottomCorner="false"
+        app:optRoundCardCornerRadius="50dp"
+        app:optRoundCardElevation="0dp">
 
-        <ImageView
-            android:id="@+id/imageview"
+        <androidx.core.widget.NestedScrollView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:scaleType="centerCrop"
-            android:src="@drawable/signin_page_background"
-            android:contentDescription="@string/bg" />
+            android:fillViewport="true">
 
-        <LinearLayout
-            android:id="@+id/linearLayout"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:gravity="center_vertical"
-            android:orientation="horizontal"
-            android:padding="45dp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent">
-
-        </LinearLayout>
-
-
-        <com.github.captain_miao.optroundcardview.OptRoundCardView
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/linearLayout"
-            app:optRoundCardLeftTopCorner="true"
-            app:optRoundCardRightTopCorner="true"
-            app:optRoundCardLeftBottomCorner="false"
-            app:optRoundCardRightBottomCorner="false"
-            app:optRoundCardCornerRadius="50dp"
-            app:optRoundCardElevation="0dp">
-
-            <androidx.core.widget.NestedScrollView
+            <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:fillViewport="true">
+                android:layout_height="wrap_content"
+                android:layout_marginTop="80dp"
+                android:layout_marginBottom="80dp"
+                android:orientation="vertical">
 
-                <LinearLayout
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="30dp"
+                    android:text="@string/create_naccount"
+                    android:textColor="#191919"
+                    android:textSize="25sp"
+                    android:textStyle="bold"
+                    tools:ignore="TextSizeCheck" />
+
+                <EditText
+                    android:id="@+id/edName"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="80dp"
-                    android:layout_marginBottom="80dp"
-                    android:orientation="vertical">
+                    android:layout_marginStart="30dp"
+                    android:layout_marginTop="30dp"
+                    android:layout_marginEnd="30dp"
+                    android:autofillHints=""
+                    android:background="@android:color/transparent"
+                    android:drawableEnd="@drawable/user"
+                    android:drawableTint="#696969"
+                    android:hint="@string/full_name"
+                    android:inputType="text"
+                    android:padding="15dp"
+                    android:textColor="#191919"
+                    android:textColorHint="#696969"
+                    android:textStyle="bold"
+                    tools:ignore="VisualLintTextFieldSize" />
 
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="30dp"
-                        android:text="@string/create_naccount"
-                        android:textColor="#191919"
-                        android:textSize="25sp"
-                        android:textStyle="bold"
-                        tools:ignore="TextSizeCheck" />
+                <RelativeLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="1dp"
+                    android:layout_marginStart="40dp"
+                    android:layout_marginEnd="40dp"
+                    android:background="#696969" />
 
-                    <EditText
-                        android:id="@+id/edName"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="30dp"
-                        android:layout_marginTop="30dp"
-                        android:layout_marginEnd="30dp"
-                        android:autofillHints=""
-                        android:background="@android:color/transparent"
-                        android:drawableEnd="@drawable/user"
-                        android:drawableTint="#696969"
-                        android:hint="@string/full_name"
-                        android:inputType="text"
-                        android:padding="15dp"
-                        android:textColor="#191919"
-                        android:textColorHint="#696969"
-                        android:textStyle="bold"
-                        tools:ignore="VisualLintTextFieldSize" />
+                <EditText
+                    android:id="@+id/edEmail"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="30dp"
+                    android:layout_marginTop="30dp"
+                    android:layout_marginEnd="30dp"
+                    android:autofillHints=""
+                    android:background="@android:color/transparent"
+                    android:drawableEnd="@drawable/atsign"
+                    android:drawableTint="#696969"
+                    android:hint="@string/e_mail"
+                    android:inputType="text"
+                    android:padding="15dp"
+                    android:textColor="#191919"
+                    android:textColorHint="#696969"
+                    android:textStyle="bold"
+                    tools:ignore="VisualLintTextFieldSize" />
 
-                    <RelativeLayout
-                        android:layout_width="wrap_content"
-                        android:layout_height="1dp"
-                        android:layout_marginStart="40dp"
-                        android:layout_marginEnd="40dp"
-                        android:background="#696969" />
+                <RelativeLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="1dp"
+                    android:layout_marginStart="40dp"
+                    android:layout_marginEnd="40dp"
+                    android:background="#696969" />
 
-                    <EditText
-                        android:id="@+id/edEmail"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="30dp"
-                        android:layout_marginTop="30dp"
-                        android:layout_marginEnd="30dp"
-                        android:autofillHints=""
-                        android:background="@android:color/transparent"
-                        android:drawableEnd="@drawable/atsign"
-                        android:drawableTint="#696969"
-                        android:hint="@string/e_mail"
-                        android:inputType="text"
-                        android:padding="15dp"
-                        android:textColor="#191919"
-                        android:textColorHint="#696969"
-                        android:textStyle="bold"
-                        tools:ignore="VisualLintTextFieldSize" />
-
-                    <RelativeLayout
-                        android:layout_width="wrap_content"
-                        android:layout_height="1dp"
-                        android:layout_marginStart="40dp"
-                        android:layout_marginEnd="40dp"
-                        android:background="#696969" />
-
-                    <EditText
-                        android:id="@+id/edBirthdate"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="30dp"
-                        android:layout_marginTop="30dp"
-                        android:layout_marginEnd="30dp"
-                        android:autofillHints=""
-                        android:background="@android:color/transparent"
-                        android:drawableEnd="@drawable/calendar"
-                        android:drawableTint="#696969"
-                        android:hint="@string/birthdate"
-                        android:focusableInTouchMode="true"
-                        android:cursorVisible="false"
-                        android:focusable="false"
-                        android:padding="15dp"
-                        android:textColor="#191919"
-                        android:textColorHint="#696969"
-                        android:textStyle="bold"
-                        tools:ignore="VisualLintTextFieldSize" />
+                <EditText
+                    android:id="@+id/edBirthdate"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="30dp"
+                    android:layout_marginTop="30dp"
+                    android:layout_marginEnd="30dp"
+                    android:autofillHints=""
+                    android:background="@android:color/transparent"
+                    android:drawableEnd="@drawable/calendar"
+                    android:drawableTint="#696969"
+                    android:hint="@string/birthdate"
+                    android:focusableInTouchMode="true"
+                    android:cursorVisible="false"
+                    android:focusable="false"
+                    android:padding="15dp"
+                    android:textColor="#191919"
+                    android:textColorHint="#696969"
+                    android:textStyle="bold"
+                    tools:ignore="VisualLintTextFieldSize" />
 
 
-
-                    <RelativeLayout
-                        android:layout_width="wrap_content"
-                        android:layout_height="1dp"
-                        android:layout_marginStart="40dp"
-                        android:layout_marginEnd="40dp"
-                        android:background="#696969" />
-
-
-                    <EditText
-                        android:id="@+id/edPassword"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="30dp"
-                        android:layout_marginTop="30dp"
-                        android:layout_marginEnd="30dp"
-                        android:autofillHints=""
-                        android:background="@android:color/transparent"
-                        android:drawableEnd="@drawable/key"
-                        android:drawableTint="#696969"
-                        android:hint="@string/password"
-                        android:inputType="textPassword"
-                        android:padding="15dp"
-                        android:textColor="#191919"
-                        android:textColorHint="#696969"
-                        android:textStyle="bold"
-                        tools:ignore="VisualLintTextFieldSize" />
-
-                    <RelativeLayout
-                        android:layout_width="wrap_content"
-                        android:layout_height="1dp"
-                        android:layout_marginStart="40dp"
-                        android:layout_marginEnd="40dp"
-                        android:background="#696969" />
-
-                    <RelativeLayout
-                        android:layout_width="wrap_content"
-                        android:layout_height="1dp"
-                        android:layout_marginStart="40dp"
-                        android:layout_marginEnd="40dp"
-                        android:background="#696969" />
+                <RelativeLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="1dp"
+                    android:layout_marginStart="40dp"
+                    android:layout_marginEnd="40dp"
+                    android:background="#696969" />
 
 
-                    <EditText
-                        android:id="@+id/edConfirmPass"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="30dp"
-                        android:layout_marginTop="30dp"
-                        android:layout_marginEnd="30dp"
-                        android:autofillHints=""
-                        android:background="@android:color/transparent"
-                        android:drawableEnd="@drawable/unlock"
-                        android:drawableTint="#696969"
-                        android:hint="@string/confirm_password"
-                        android:inputType="textPassword"
-                        android:padding="15dp"
-                        android:textColor="#191919"
-                        android:textColorHint="#696969"
-                        android:textStyle="bold"
-                        tools:ignore="VisualLintTextFieldSize" />
+                <EditText
+                    android:id="@+id/edPassword"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="30dp"
+                    android:layout_marginTop="30dp"
+                    android:layout_marginEnd="30dp"
+                    android:autofillHints=""
+                    android:background="@android:color/transparent"
+                    android:drawableEnd="@drawable/key"
+                    android:drawableTint="#696969"
+                    android:hint="@string/password"
+                    android:inputType="textPassword"
+                    android:padding="15dp"
+                    android:textColor="#191919"
+                    android:textColorHint="#696969"
+                    android:textStyle="bold"
+                    tools:ignore="VisualLintTextFieldSize" />
 
-                    <RelativeLayout
-                        android:layout_width="wrap_content"
-                        android:layout_height="1dp"
-                        android:layout_marginStart="40dp"
-                        android:layout_marginEnd="40dp"
-                        android:background="#696969" />
+                <RelativeLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="1dp"
+                    android:layout_marginStart="40dp"
+                    android:layout_marginEnd="40dp"
+                    android:background="#696969" />
 
-                    <EditText
-                        android:id="@+id/edAdress"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="30dp"
-                        android:layout_marginTop="30dp"
-                        android:layout_marginEnd="30dp"
-                        android:autofillHints=""
-                        android:background="@android:color/transparent"
-                        android:drawableEnd="@drawable/pin"
-                        android:drawableTint="#696969"
-                        android:hint="@string/adress"
-                        android:inputType="text"
-                        android:padding="15dp"
-                        android:textColor="#191919"
-                        android:textColorHint="#696969"
-                        android:textStyle="bold"
-                        tools:ignore="VisualLintTextFieldSize" />
-
-                    <RelativeLayout
-                        android:layout_width="wrap_content"
-                        android:layout_height="1dp"
-                        android:layout_marginStart="40dp"
-                        android:layout_marginEnd="40dp"
-                        android:background="#696969" />
-
-                    <Button
-                        android:id="@+id/btnSignin"
-                        android:layout_width="match_parent"
-                        android:layout_height="50dp"
-                        android:layout_gravity="bottom"
-                        android:layout_marginStart="50dp"
-                        android:layout_marginTop="40dp"
-                        android:layout_marginEnd="50dp"
-                        android:background="@drawable/button_signin_background"
-                        android:text="@string/sign_in"
-                        android:textAllCaps="false"
-                        android:textColor="@android:color/white"
-                        android:textSize="20sp"
-                        android:textStyle="bold"
-                        tools:ignore="VisualLintButtonSize"
-                        android:onClick="OpenHomePage"/>
-
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:clickable="true"
-                        android:focusable="true"
-                        android:foreground="?android:attr/selectableItemBackground"
-                        android:onClick="OpenLoginPage"
-                        android:gravity="center"
-                        android:text="@string/log_existing"
-                        android:paddingTop="15dp"
-                        android:layout_gravity="center"
-                        android:textColor="#191919"
-                        android:textSize="15sp"
-                        android:textStyle="bold"
-                        tools:ignore="TextSizeCheck" />
-
-                    <RelativeLayout
-                        android:layout_width="wrap_content"
-                        android:layout_height="170dp"
-                        android:layout_marginStart="40dp"
-                        android:layout_marginEnd="40dp"
-                        android:background="#696969" />
+                <RelativeLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="1dp"
+                    android:layout_marginStart="40dp"
+                    android:layout_marginEnd="40dp"
+                    android:background="#696969" />
 
 
-                </LinearLayout>
+                <EditText
+                    android:id="@+id/edConfirmPass"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="30dp"
+                    android:layout_marginTop="30dp"
+                    android:layout_marginEnd="30dp"
+                    android:autofillHints=""
+                    android:background="@android:color/transparent"
+                    android:drawableEnd="@drawable/unlock"
+                    android:drawableTint="#696969"
+                    android:hint="@string/confirm_password"
+                    android:inputType="textPassword"
+                    android:padding="15dp"
+                    android:textColor="#191919"
+                    android:textColorHint="#696969"
+                    android:textStyle="bold"
+                    tools:ignore="VisualLintTextFieldSize" />
 
-            </androidx.core.widget.NestedScrollView>
+                <RelativeLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="1dp"
+                    android:layout_marginStart="40dp"
+                    android:layout_marginEnd="40dp"
+                    android:background="#696969" />
+
+                <EditText
+                    android:id="@+id/edAdress"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="30dp"
+                    android:layout_marginTop="30dp"
+                    android:layout_marginEnd="30dp"
+                    android:autofillHints=""
+                    android:background="@android:color/transparent"
+                    android:drawableEnd="@drawable/pin"
+                    android:drawableTint="#696969"
+                    android:hint="@string/adress"
+                    android:inputType="text"
+                    android:padding="15dp"
+                    android:textColor="#191919"
+                    android:textColorHint="#696969"
+                    android:textStyle="bold"
+                    tools:ignore="VisualLintTextFieldSize" />
+
+                <RelativeLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="1dp"
+                    android:layout_marginStart="40dp"
+                    android:layout_marginEnd="40dp"
+                    android:background="#696969" />
+
+                <Button
+                    android:id="@+id/btnSignin"
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:layout_gravity="bottom"
+                    android:layout_marginStart="50dp"
+                    android:layout_marginTop="40dp"
+                    android:layout_marginEnd="50dp"
+                    android:background="@drawable/button_signin_background"
+                    android:text="@string/sign_in"
+                    android:textAllCaps="false"
+                    android:textColor="@android:color/white"
+                    android:textSize="20sp"
+                    android:textStyle="bold"
+                    tools:ignore="VisualLintButtonSize"
+                    android:onClick="OpenHomePage" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:foreground="?android:attr/selectableItemBackground"
+                    android:onClick="OpenLoginPage"
+                    android:gravity="center"
+                    android:text="@string/log_existing"
+                    android:paddingTop="15dp"
+                    android:layout_gravity="center"
+                    android:textColor="#191919"
+                    android:textSize="15sp"
+                    android:textStyle="bold"
+                    tools:ignore="TextSizeCheck" />
+
+                <RelativeLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="170dp"
+                    android:layout_marginStart="40dp"
+                    android:layout_marginEnd="40dp"
+                    android:background="#696969" />
 
 
-        </com.github.captain_miao.optroundcardview.OptRoundCardView>
+            </LinearLayout>
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
+        </androidx.core.widget.NestedScrollView>
+
+
+    </com.github.captain_miao.optroundcardview.OptRoundCardView>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

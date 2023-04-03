@@ -54,7 +54,7 @@ public class UpdateInfoActivity extends AppCompatActivity {
 
         this.initView();
         edBirthdate.setOnClickListener(v -> {
-            int y = (Calendar.getInstance().get(Calendar.YEAR))-18;
+            int y = (Calendar.getInstance().get(Calendar.YEAR)) - 18;
             int m = Calendar.getInstance().get(Calendar.MONTH);
             int d = Calendar.getInstance().get(Calendar.DAY_OF_MONTH);
             DatePickerDialog datePickerDialog = new DatePickerDialog(
@@ -64,14 +64,14 @@ public class UpdateInfoActivity extends AppCompatActivity {
             datePickerDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
             datePickerDialog.show();
         });
-        setListener= (view, year, month, day) -> {
-            month = month+1;
-            String date = day+"/"+month+"/"+year;
+        setListener = (view, year, month, day) -> {
+            month = month + 1;
+            String date = day + "/" + month + "/" + year;
             edBirthdate.setText(date);
             int y = Calendar.getInstance().get(Calendar.YEAR);
             int m = Calendar.getInstance().get(Calendar.MONTH);
             int d = Calendar.getInstance().get(Calendar.DAY_OF_MONTH);
-            if (year>=(y-18) && month>=m && day>=d){
+            if (year >= (y - 18) && month >= m && day >= d) {
                 Toast.makeText(UpdateInfoActivity.this, "User should be older than 18 years old!", Toast.LENGTH_LONG).show();
                 edBirthdate.setText("");
             }
@@ -81,29 +81,26 @@ public class UpdateInfoActivity extends AppCompatActivity {
 
     void updateUser() {
         String name = edName.getText().toString();
-        String birthdate= edBirthdate.getText().toString();
+        String birthdate = edBirthdate.getText().toString();
         String password = edPassword.getText().toString();
         String adress = edAdress.getText().toString();
         if (name.isEmpty() || birthdate.isEmpty() || password.isEmpty() || adress.isEmpty()) {
             Toast.makeText(getApplicationContext().getApplicationContext(), "All fields required!", Toast.LENGTH_LONG).show();
-        }
-        else if (password.length()<5) {
+        } else if (password.length() < 5) {
             Toast.makeText(getApplicationContext().getApplicationContext(), "Password must be at least 5 characters!", Toast.LENGTH_LONG).show();
-        }
-        else {
+        } else {
             new Update().execute();
         }
     }
 
     @SuppressLint("StaticFieldLeak")
-    class Update extends AsyncTask<String,String,String>
-    {
+    class Update extends AsyncTask<String, String, String> {
 
 
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
-            dialog=new ProgressDialog(UpdateInfoActivity.this);
+            dialog = new ProgressDialog(UpdateInfoActivity.this);
             dialog.setMessage("Please wait");
             dialog.show();
 
@@ -111,18 +108,17 @@ public class UpdateInfoActivity extends AppCompatActivity {
         }
 
         @Override
-        protected String doInBackground(String... strings)
-        {
-            HashMap<String,String> map= new HashMap<>();
-            map.put("email",SharedPrefManager.getInstance(getApplicationContext()).getUser().getEmail());
-            map.put("name",edName.getText().toString());
-            map.put("birthdate",edBirthdate.getText().toString());
-            map.put("password",edPassword.getText().toString());
-            map.put("adress",edAdress.getText().toString());
+        protected String doInBackground(String... strings) {
+            HashMap<String, String> map = new HashMap<>();
+            map.put("email", SharedPrefManager.getInstance(getApplicationContext()).getUser().getEmail());
+            map.put("name", edName.getText().toString());
+            map.put("birthdate", edBirthdate.getText().toString());
+            map.put("password", edPassword.getText().toString());
+            map.put("adress", edAdress.getText().toString());
             try {
                 Class.forName("com.mysql.jdbc.Driver");
                 Connection connection = DriverManager.getConnection(url, user, password);
-               // JSONObject object = parser.makeHttpRequest("http://192.168.43.205/healthbuddy/user/update.php", "GET", map);
+                // JSONObject object = parser.makeHttpRequest("http://192.168.43.205/healthbuddy/user/update.php", "GET", map);
                 JSONObject object = parser.makeHttpRequest("http://192.168.1.16/healthbuddy/user/update.php", "GET", map);
                 success = object.getInt("success");
                 JSONArray userJson = object.getJSONArray("user");
@@ -150,19 +146,15 @@ public class UpdateInfoActivity extends AppCompatActivity {
         }
 
         @Override
-        protected void onPostExecute(String s)
-        {
+        protected void onPostExecute(String s) {
             super.onPostExecute(s);
             dialog.cancel();
 
-            if(success==1)
-            {
-                Toast.makeText(UpdateInfoActivity.this,"Update account successful",Toast.LENGTH_LONG).show();
-                startActivity(new Intent( UpdateInfoActivity.this, ManageAccountActivity.class));
-            }
-            else
-            {
-                Toast.makeText(UpdateInfoActivity.this,"Error updating!",Toast.LENGTH_LONG).show();
+            if (success == 1) {
+                Toast.makeText(UpdateInfoActivity.this, "Update account successful", Toast.LENGTH_LONG).show();
+                startActivity(new Intent(UpdateInfoActivity.this, ManageAccountActivity.class));
+            } else {
+                Toast.makeText(UpdateInfoActivity.this, "Error updating!", Toast.LENGTH_LONG).show();
             }
         }
     }
@@ -176,7 +168,7 @@ public class UpdateInfoActivity extends AppCompatActivity {
 
     }
 
-    public void backManage (View view) {
-        startActivity(new Intent( UpdateInfoActivity.this, ManageAccountActivity.class));
+    public void backManage(View view) {
+        startActivity(new Intent(UpdateInfoActivity.this, ManageAccountActivity.class));
     }
 }

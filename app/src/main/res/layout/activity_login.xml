@@ -49,7 +49,7 @@
         app:layout_constraintBottom_toBottomOf="@+id/imageview"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/linearLayout" >
+        app:layout_constraintTop_toBottomOf="@+id/linearLayout">
 
         <androidx.core.widget.NestedScrollView
             android:layout_width="match_parent"
@@ -125,7 +125,7 @@
                     tools:ignore="VisualLintButtonSize"
                     android:onClick="login"
                     android:clickable="true"
-                    android:focusable="true"/>
+                    android:focusable="true" />
 
                 <TextView
                     android:layout_width="match_parent"
@@ -175,8 +175,6 @@
             </LinearLayout>
 
         </androidx.core.widget.NestedScrollView>
-
-
 
 
     </com.github.captain_miao.optroundcardview.OptRoundCardView>

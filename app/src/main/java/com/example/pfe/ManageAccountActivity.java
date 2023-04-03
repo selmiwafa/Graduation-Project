@@ -34,7 +34,7 @@ public class ManageAccountActivity extends AppCompatActivity {
 
     private AlertDialog.Builder dialogBuilder;
     private AlertDialog delDialog;
-   // String url = "jdbc:mysql://192.168.43.205:3306/healthbuddy";
+    // String url = "jdbc:mysql://192.168.43.205:3306/healthbuddy";
     String url = "jdbc:mysql://192.168.1.16:3306/healthbuddy";
     String user = "root";
     String password = "";
@@ -53,28 +53,31 @@ public class ManageAccountActivity extends AppCompatActivity {
     public void deleteUser(View view) {
         new Delete().execute();
     }
+
     public void deleteUserDialog(View view) {
-        dialogBuilder=new AlertDialog.Builder(this);
-        final View contactPopupView=getLayoutInflater().inflate(delete_dialog,null);
+        dialogBuilder = new AlertDialog.Builder(this);
+        final View contactPopupView = getLayoutInflater().inflate(delete_dialog, null);
         dialogBuilder.setView(contactPopupView);
-        delDialog=dialogBuilder.create();
+        delDialog = dialogBuilder.create();
         delDialog.show();
     }
-    public void backHomepage (View view) {
-        startActivity(new Intent( ManageAccountActivity.this, HomepageActivity.class));
+
+    public void backHomepage(View view) {
+        startActivity(new Intent(ManageAccountActivity.this, HomepageActivity.class));
     }
-    public void openPageUpdate (View view) {
-        startActivity(new Intent( ManageAccountActivity.this, UpdateInfoActivity.class));
+
+    public void openPageUpdate(View view) {
+        startActivity(new Intent(ManageAccountActivity.this, UpdateInfoActivity.class));
     }
+
     @SuppressLint("StaticFieldLeak")
-    class Delete extends AsyncTask<String,String,String>
-    {
+    class Delete extends AsyncTask<String, String, String> {
 
 
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
-            dialog=new ProgressDialog(ManageAccountActivity.this);
+            dialog = new ProgressDialog(ManageAccountActivity.this);
             dialog.setMessage("Please wait");
             dialog.show();
 
@@ -82,10 +85,9 @@ public class ManageAccountActivity extends AppCompatActivity {
         }
 
         @Override
-        protected String doInBackground(String... strings)
-        {
-            HashMap<String,String> map= new HashMap<>();
-            map.put("email",SharedPrefManager.getInstance(getApplicationContext()).getUser().getEmail());
+        protected String doInBackground(String... strings) {
+            HashMap<String, String> map = new HashMap<>();
+            map.put("email", SharedPrefManager.getInstance(getApplicationContext()).getUser().getEmail());
             try {
                 Class.forName("com.mysql.jdbc.Driver");
                 Connection connection = DriverManager.getConnection(url, user, password);
@@ -106,19 +108,15 @@ public class ManageAccountActivity extends AppCompatActivity {
         }
 
         @Override
-        protected void onPostExecute(String s)
-        {
+        protected void onPostExecute(String s) {
             super.onPostExecute(s);
             dialog.cancel();
 
-            if(success==1)
-            {
-                Toast.makeText(ManageAccountActivity.this,"Account deleted successfully",Toast.LENGTH_LONG).show();
-                startActivity(new Intent( ManageAccountActivity.this, LoginActivity.class));
-            }
-            else
-            {
-                Toast.makeText(ManageAccountActivity.this,"Error deleting!",Toast.LENGTH_LONG).show();
+            if (success == 1) {
+                Toast.makeText(ManageAccountActivity.this, "Account deleted successfully", Toast.LENGTH_LONG).show();
+                startActivity(new Intent(ManageAccountActivity.this, LoginActivity.class));
+            } else {
+                Toast.makeText(ManageAccountActivity.this, "Error deleting!", Toast.LENGTH_LONG).show();
             }
         }
     }

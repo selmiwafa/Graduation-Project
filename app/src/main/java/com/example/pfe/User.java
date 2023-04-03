@@ -49,6 +49,7 @@ public class User {
     public String getPassword() {
         return this.password;
     }
+
     public String getAdress() {
         return this.adress;
     }

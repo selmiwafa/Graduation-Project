@@ -93,10 +93,12 @@ public class SharedPrefManager {
         editor.putInt(String.valueOf(KEY_NUMBER_PATIENTS), a);
         editor.apply();
     }
+
     public int getKeyNumberPatients() {
         SharedPreferences sharedPreferences = mCtx.getSharedPreferences(SHARED_PREF_NAME, Context.MODE_PRIVATE);
         return sharedPreferences.getInt(String.valueOf(KEY_NUMBER_PATIENTS), 0);
     }
+
     //this method will checker whether user is already logged in or not
     public boolean isLoggedIn() {
         SharedPreferences sharedPreferences = mCtx.getSharedPreferences(SHARED_PREF_NAME, Context.MODE_PRIVATE);

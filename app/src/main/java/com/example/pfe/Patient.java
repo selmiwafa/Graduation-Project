@@ -10,6 +10,7 @@ public class Patient {
         this.relationship = "";
         this.age = 0;
     }
+
     public Patient(String name, int age, String relationship) {
         this.name = name;
         this.age = age;
@@ -20,7 +21,11 @@ public class Patient {
     public String getName() {
         return this.name;
     }
-    public int getAge() {return this.age;}
+
+    public int getAge() {
+        return this.age;
+    }
+
     public String getRelationship() {
         return this.relationship;
     }

@@ -38,6 +38,7 @@ public class HomepageActivity extends AppCompatActivity implements NavigationVie
 
         createNavbar();
     }
+
     public void logout(View view) {
         SharedPrefManager.getInstance(getApplicationContext()).logout();
     }
@@ -99,7 +100,7 @@ public class HomepageActivity extends AppCompatActivity implements NavigationVie
                 Intent intent = new Intent(HomepageActivity.this, MyPatientsActivity.class);
                 startActivity(intent);
                 break;
-            case (R.id.add_medicine):
+            case (R.id.scan):
                 intent = new Intent(HomepageActivity.this, BarcodeActivity.class);
                 startActivity(intent);
                 break;

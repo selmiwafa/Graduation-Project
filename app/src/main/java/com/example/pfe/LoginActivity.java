@@ -32,7 +32,7 @@ public class LoginActivity extends AppCompatActivity {
     JSONParser parser = new JSONParser();
     int success, number = 0;
     String message;
-   // String url = "jdbc:mysql://192.168.43.205:3306/healthbuddy";
+    // String url = "jdbc:mysql://192.168.43.205:3306/healthbuddy";
     String url = "jdbc:mysql://192.168.1.16:3306/healthbuddy";
     String user = "root";
     String password = "";
@@ -47,22 +47,21 @@ public class LoginActivity extends AppCompatActivity {
 
         if (SharedPrefManager.getInstance(this).isLoggedIn()) {
             finish();
-            startActivity(new Intent( LoginActivity.this, HomepageActivity.class));
+            startActivity(new Intent(LoginActivity.this, HomepageActivity.class));
             return;
         }
         this.initView();
 
     }
+
     public void login(View view) {
         String email = edEmailLogin.getText().toString();
         String password = edPasswordLogin.getText().toString();
         if (email.isEmpty() || password.isEmpty()) {
             Toast.makeText(getApplicationContext().getApplicationContext(), "All fields required!", Toast.LENGTH_LONG).show();
-        }
-        else if (!isValidEmail(email)) {
+        } else if (!isValidEmail(email)) {
             Toast.makeText(getApplicationContext().getApplicationContext(), "Invalid e-mail format!", Toast.LENGTH_LONG).show();
-        }
-        else {
+        } else {
             new LoginActivity.Log().execute();
         }
     }
@@ -78,16 +77,15 @@ public class LoginActivity extends AppCompatActivity {
         }
 
         @Override
-        protected String doInBackground(String... strings)
-        {
+        protected String doInBackground(String... strings) {
 
-            HashMap<String,String> map= new HashMap<>();
-            map.put("email",edEmailLogin.getText().toString());
-            map.put("password",edPasswordLogin.getText().toString());
+            HashMap<String, String> map = new HashMap<>();
+            map.put("email", edEmailLogin.getText().toString());
+            map.put("password", edPasswordLogin.getText().toString());
             try {
                 Class.forName("com.mysql.jdbc.Driver");
                 Connection connection = DriverManager.getConnection(url, user, password);
-               // JSONObject object = parser.makeHttpRequest("http://192.168.43.205/healthbuddy/user/log.php", "GET", map);
+                // JSONObject object = parser.makeHttpRequest("http://192.168.43.205/healthbuddy/user/log.php", "GET", map);
                 JSONObject object = parser.makeHttpRequest("http://192.168.1.16/healthbuddy/user/log.php", "GET", map);
                 success = object.getInt("success");
                 message = object.getString("message");
@@ -146,16 +144,13 @@ public class LoginActivity extends AppCompatActivity {
 
 
         @Override
-        protected void onPostExecute(String s)
-        {
+        protected void onPostExecute(String s) {
             super.onPostExecute(s);
             dialog.cancel();
-            if(success == 1)
-            {
-                Toast.makeText(LoginActivity.this,"Login successful",Toast.LENGTH_LONG).show();
-                startActivity(new Intent( LoginActivity.this, HomepageActivity.class));
-            }
-            else {
+            if (success == 1) {
+                Toast.makeText(LoginActivity.this, "Login successful", Toast.LENGTH_LONG).show();
+                startActivity(new Intent(LoginActivity.this, HomepageActivity.class));
+            } else {
                 Toast.makeText(LoginActivity.this, message, Toast.LENGTH_LONG).show();
                 restartActivity(LoginActivity.this);
             }
@@ -171,16 +166,20 @@ public class LoginActivity extends AppCompatActivity {
     public boolean isValidEmail(String str) {
         return Patterns.EMAIL_ADDRESS.matcher(str).matches();
     }
+
     public void OpenSignupPage(View view) {
-        startActivity(new Intent( LoginActivity.this, SignupActivity.class));
+        startActivity(new Intent(LoginActivity.this, SignupActivity.class));
     }
+
     public void OpenForgetPage(View view) {
-        startActivity(new Intent( LoginActivity.this, ForgetActivity.class));
+        startActivity(new Intent(LoginActivity.this, ForgetActivity.class));
     }
+
     public void OpenHomePage(View view) {
-        startActivity(new Intent( LoginActivity.this, HomepageActivity.class));
+        startActivity(new Intent(LoginActivity.this, HomepageActivity.class));
     }
-    public static void restartActivity(Activity activity){
+
+    public static void restartActivity(Activity activity) {
         if (Build.VERSION.SDK_INT >= 11) {
             activity.recreate();
         } else {

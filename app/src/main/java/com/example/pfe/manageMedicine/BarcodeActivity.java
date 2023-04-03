@@ -3,11 +3,14 @@ package com.example.pfe.manageMedicine;
 import android.Manifest;
 import android.annotation.SuppressLint;
 import android.content.pm.PackageManager;
+import android.hardware.Camera;
 import android.os.Bundle;
 import android.util.SparseArray;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 import android.view.View;
+import android.widget.CompoundButton;
+import android.widget.Switch;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -23,6 +26,7 @@ import com.google.android.gms.vision.barcode.BarcodeDetector;
 import com.google.android.material.snackbar.Snackbar;
 
 import java.io.IOException;
+import java.lang.reflect.Field;
 
 public class BarcodeActivity extends AppCompatActivity {
 
@@ -51,6 +55,15 @@ public class BarcodeActivity extends AppCompatActivity {
         cameraSource = new CameraSource.Builder(this, barcodeDetector)
                 .setAutoFocusEnabled(true)
                 .build();
+        Switch flashlightSwitch = findViewById(R.id.flashlight);
+
+        flashlightSwitch.setOnCheckedChangeListener((CompoundButton.OnCheckedChangeListener) (buttonView, isChecked) -> {
+            if (isChecked) {
+                turnOnFlashlight();
+            } else {
+                turnOffFlashlight();
+            }
+        });
 
         // Set surface view callback
         surfaceView.getHolder().addCallback(new SurfaceHolder.Callback() {
@@ -92,6 +105,50 @@ public class BarcodeActivity extends AppCompatActivity {
         }
     }
 
+    private void turnOnFlashlight() {
+        if (cameraSource != null) {
+            try {
+                Field[] declaredFields = CameraSource.class.getDeclaredFields();
+                for (Field field : declaredFields) {
+                    if (field.getType() == Camera.class) {
+                        field.setAccessible(true);
+                        Camera camera = (Camera) field.get(cameraSource);
+                        if (camera != null) {
+                            Camera.Parameters params = camera.getParameters();
+                            params.setFlashMode(Camera.Parameters.FLASH_MODE_TORCH);
+                            camera.setParameters(params);
+                            break;
+                        }
+                    }
+                }
+            } catch (IllegalAccessException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
+    private void turnOffFlashlight() {
+        if (cameraSource != null) {
+            try {
+                Field[] declaredFields = CameraSource.class.getDeclaredFields();
+                for (Field field : declaredFields) {
+                    if (field.getType() == Camera.class) {
+                        field.setAccessible(true);
+                        Camera camera = (Camera) field.get(cameraSource);
+                        if (camera != null) {
+                            Camera.Parameters params = camera.getParameters();
+                            params.setFlashMode(Camera.Parameters.FLASH_MODE_OFF);
+                            camera.setParameters(params);
+                            break;
+                        }
+                    }
+                }
+            } catch (IllegalAccessException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
     private void stopCameraSource() {
         cameraSource.stop();
         cameraSource.release();
@@ -120,6 +177,10 @@ public class BarcodeActivity extends AppCompatActivity {
     private void onBarcodeScanned(Barcode barcode) {
         final String message = "Format: " + barcode.format + "\nValue: " + barcode.rawValue;
         runOnUiThread(() -> Toast.makeText(BarcodeActivity.this, message, Toast.LENGTH_SHORT).show());
+    }
+
+    public void goToPreviousActivity(View view) {
+        finish();
     }
 
     private class BarcodeDetectorListener implements Detector.Processor<Barcode> {

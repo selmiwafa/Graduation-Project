@@ -1,17 +1,70 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:fitsSystemWindows="true">
 
-    <FrameLayout
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
         <SurfaceView
             android:id="@+id/surfaceView"
             android:layout_width="match_parent"
-            android:layout_height="match_parent" />
+            android:layout_height="match_parent"
+            android:layout_centerInParent="true" />
 
-    </FrameLayout>
+        <View
+            android:id="@+id/focus_rect"
+            android:layout_width="360dp"
+            android:layout_height="200dp"
+            android:layout_centerInParent="true"
+            android:background="@drawable/barcode_focus_rect" />
+
+        <Switch
+            android:id="@+id/flashlight"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:clickable="true"
+            android:focusable="true"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentStart="true"
+            android:layout_marginTop="20dp"
+            android:layout_marginStart="15dp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="40dp"
+            android:textColor="@color/appwhite"
+            android:textSize="15sp"
+            android:text="Point camera at barcode" />
+
+        <ImageButton
+            android:id="@+id/closeBtn"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:clickable="true"
+            android:focusable="true"
+            android:background="@android:color/transparent"
+            android:src="@drawable/whitex"
+            android:onClick="goToPreviousActivity"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentRight="true"
+            android:layout_marginTop="20dp"
+            android:layout_marginEnd="15dp" />
+
+        <Button
+            android:layout_width="300dp"
+            android:layout_height="40dp"
+            android:background="@drawable/button_login_background"
+            android:textSize="15sp"
+            android:textColor="@color/appwhite"
+            android:text="Enter barcode manually"
+            android:layout_centerHorizontal="true"
+            android:layout_alignParentBottom="true"
+            android:layout_marginBottom="60dp" />
+    </RelativeLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
