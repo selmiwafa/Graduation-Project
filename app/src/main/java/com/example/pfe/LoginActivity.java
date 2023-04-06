@@ -82,6 +82,7 @@ public class LoginActivity extends AppCompatActivity {
             HashMap<String, String> map = new HashMap<>();
             map.put("email", edEmailLogin.getText().toString());
             map.put("password", edPasswordLogin.getText().toString());
+            try {
             /*
             GetIPAdress ipAdress = new GetIPAdress();
             String ip = ipAdress.getIPadress();
@@ -90,57 +91,55 @@ public class LoginActivity extends AppCompatActivity {
             String url2 = "http://"+ ip +"/healthbuddy/user/log.php";
             Class.forName("com.mysql.jdbc.Driver");
             Connection connection = DriverManager.getConnection(url, user, password);
-            JSONObject object = parser.makeHttpRequest(url2, "GET", map);*/
-            try {
+            JSONObject object = parser.makeHttpRequest(url, "GET", map);*/
 
             Class.forName("com.mysql.jdbc.Driver");
             Connection connection = DriverManager.getConnection(url, user, password);
-            //JSONObject object = parser.makeHttpRequest("http://192.168.1.16/healthbuddy/user/add.php", "GET", map);
-            JSONObject object = parser.makeHttpRequest("http://192.168.43.205/healthbuddy/user/add.php", "GET", map);
-
-                success = object.getInt("success");
-                message = object.getString("message");
-                while (success == 1) {
-                    JSONArray userJson = object.getJSONArray("user");
-                    JSONObject jsonObject = userJson.getJSONObject(0);
-                    User user = new User(
-                            jsonObject.getString("email"),
-                            jsonObject.getString("name"),
-                            jsonObject.getString("birthdate"),
-                            jsonObject.getString("password"),
-                            jsonObject.getString("adress")
+            //JSONObject object = parser.makeHttpRequest("http://192.168.1.16/healthbuddy/user/log.php", "GET", map);
+            JSONObject object = parser.makeHttpRequest("http://192.168.43.205/healthbuddy/user/log.php", "GET", map);
+            success = object.getInt("success");
+            message = object.getString("message");
+            while (success == 1) {
+                JSONArray userJson = object.getJSONArray("user");
+                JSONObject jsonObject = userJson.getJSONObject(0);
+                User user = new User(
+                        jsonObject.getString("email"),
+                        jsonObject.getString("name"),
+                        jsonObject.getString("birthdate"),
+                        jsonObject.getString("password"),
+                        jsonObject.getString("adress")
+                );
+                SharedPrefManager.getInstance(getApplicationContext()).userLogin(user);
+                number = object.getInt("number");
+                if (number == 1) {
+                    SharedPrefManager.getInstance(getApplicationContext()).setKeyNumberPatients(1);
+                    JSONArray patientsJson = object.getJSONArray("patients");
+                    JSONObject patientJson = patientsJson.getJSONObject(0);
+                    Patient patient = new Patient(
+                            patientJson.getString("patient_name"),
+                            patientJson.getInt("patient_age"),
+                            patientJson.getString("relationship")
                     );
-                    SharedPrefManager.getInstance(getApplicationContext()).userLogin(user);
-                    number = object.getInt("number");
-                    if (number == 1) {
-                        SharedPrefManager.getInstance(getApplicationContext()).setKeyNumberPatients(1);
-                        JSONArray patientsJson = object.getJSONArray("patients");
-                        JSONObject patientJson = patientsJson.getJSONObject(0);
-                        Patient patient = new Patient(
-                                patientJson.getString("patient_name"),
-                                patientJson.getInt("patient_age"),
-                                patientJson.getString("relationship")
-                        );
-                        SharedPrefManager.getInstance(getApplicationContext()).addPatient1(patient);
-                    } else if (number >= 2) {
-                        SharedPrefManager.getInstance(getApplicationContext()).setKeyNumberPatients(2);
-                        JSONArray patientsJson = object.getJSONArray("patients");
-                        JSONObject patient1Json = patientsJson.getJSONObject(0);
-                        Patient patient1 = new Patient(
-                                patient1Json.getString("patient_name"),
-                                patient1Json.getInt("patient_age"),
-                                patient1Json.getString("relationship")
-                        );
-                        JSONObject patient2Json = patientsJson.getJSONObject(1);
-                        Patient patient2 = new Patient(
-                                patient2Json.getString("patient_name"),
-                                patient2Json.getInt("patient_age"),
-                                patient2Json.getString("relationship")
-                        );
-                        SharedPrefManager.getInstance(getApplicationContext()).addPatient1(patient1);
-                        SharedPrefManager.getInstance(getApplicationContext()).addPatient2(patient2);
-                    }
-                    break;
+                    SharedPrefManager.getInstance(getApplicationContext()).addPatient1(patient);
+                } else if (number >= 2) {
+                    SharedPrefManager.getInstance(getApplicationContext()).setKeyNumberPatients(2);
+                    JSONArray patientsJson = object.getJSONArray("patients");
+                    JSONObject patient1Json = patientsJson.getJSONObject(0);
+                    Patient patient1 = new Patient(
+                            patient1Json.getString("patient_name"),
+                            patient1Json.getInt("patient_age"),
+                            patient1Json.getString("relationship")
+                    );
+                    JSONObject patient2Json = patientsJson.getJSONObject(1);
+                    Patient patient2 = new Patient(
+                            patient2Json.getString("patient_name"),
+                            patient2Json.getInt("patient_age"),
+                            patient2Json.getString("relationship")
+                    );
+                    SharedPrefManager.getInstance(getApplicationContext()).addPatient1(patient1);
+                    SharedPrefManager.getInstance(getApplicationContext()).addPatient2(patient2);
+                }
+                break;
                 }
                 connection.close();
             } catch (ClassNotFoundException e) {

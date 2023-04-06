@@ -43,14 +43,15 @@
             android:background="@android:color/transparent"
             android:elevation="0dp"
             android:clickable="true"
-            android:onClick="createUserDialog"
+            android:onClick="OpenAddMedicine"
             android:contentDescription="@string/user_image" />
 
-        <androidx.recyclerview.widget.RecyclerView
+        <include
+            android:id="@+id/medicine_list"
+            layout="@layout/medicine_list"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_marginTop="20dp"
-            android:layout_below="@id/logo"/>
+            android:layout_height="wrap_content"/>
+
 
     </RelativeLayout>
 

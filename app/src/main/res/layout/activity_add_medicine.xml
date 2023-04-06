@@ -47,8 +47,8 @@
             android:background="@android:color/transparent"
             android:drawableEnd="@drawable/camera"
             android:drawableTint="#696969"
-            android:hint="Barcode"
-            android:inputType="number"
+            android:hint="Barcode *"
+            android:inputType="text"
             android:padding="15dp"
             android:textColor="#191919"
             android:textColorHint="#696969"
@@ -71,7 +71,7 @@
             android:layout_marginEnd="30dp"
             android:autofillHints=""
             android:background="@android:color/transparent"
-            android:hint="Product name"
+            android:hint="Product name *"
             android:inputType="text"
             android:padding="15dp"
             android:textColor="#191919"
@@ -88,7 +88,7 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Quantity"
+            android:text="Quantity *"
             android:paddingLeft="15dp"
             android:layout_marginStart="30dp"
             android:layout_marginTop="30dp"
@@ -175,7 +175,7 @@
             android:background="@android:color/transparent"
             android:drawableEnd="@drawable/calendar"
             android:drawableTint="#696969"
-            android:hint="Expiration Date"
+            android:hint="Expiration Date *"
             android:focusableInTouchMode="true"
             android:cursorVisible="false"
             android:focusable="false"
@@ -192,6 +192,16 @@
             android:layout_marginStart="40dp"
             android:layout_marginEnd="40dp"
             android:background="#696969" />
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="(*) Required"
+            android:paddingLeft="15dp"
+            android:layout_marginTop="20dp"
+            android:layout_marginStart="30dp"
+            android:layout_marginEnd="30dp"
+            android:textSize="15sp"
+            android:textStyle="bold"/>
         </LinearLayout>
         <RelativeLayout
             android:layout_width="match_parent"
@@ -207,6 +217,7 @@
                 android:text="Delete"
                 android:background="@drawable/button_login_background"/>
             <Button
+                android:id="@+id/saveBtn"
                 android:layout_width="150dp"
                 android:layout_height="50dp"
                 android:layout_alignParentEnd="true"
