@@ -19,6 +19,7 @@ import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 
 import com.example.pfe.manageMedicine.BarcodeActivity;
+import com.example.pfe.manageMedicine.InventoryActivity;
 import com.google.android.material.navigation.NavigationView;
 
 public class HomepageActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
@@ -102,6 +103,10 @@ public class HomepageActivity extends AppCompatActivity implements NavigationVie
                 break;
             case (R.id.scan):
                 intent = new Intent(HomepageActivity.this, BarcodeActivity.class);
+                startActivity(intent);
+                break;
+            case (R.id.inventory):
+                intent = new Intent(HomepageActivity.this, InventoryActivity.class);
                 startActivity(intent);
                 break;
         }

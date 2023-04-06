@@ -1,0 +1,220 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".manageMedicine.AddMedicineActivity">
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@android:color/white"
+        android:layout_marginTop="40dp">
+    <ImageView
+        android:id="@+id/logo"
+        android:layout_width="200dp"
+        android:layout_height="40dp"
+        android:layout_centerHorizontal="true"
+        android:src="@drawable/hbtext"
+        android:contentDescription="@string/logo" />
+
+    <ImageButton
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:src="@drawable/greenx"
+        android:background="@android:color/transparent"
+        android:layout_marginStart="20dp"/>
+    <ImageButton
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:src="@drawable/save"
+        android:background="@android:color/transparent"
+        android:layout_alignParentEnd="true"
+        android:layout_marginEnd="20dp"/>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/logo"
+        android:orientation="vertical">
+        <EditText
+            android:id="@+id/edBarcode"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="30dp"
+            android:layout_marginTop="30dp"
+            android:layout_marginEnd="30dp"
+            android:autofillHints=""
+            android:background="@android:color/transparent"
+            android:drawableEnd="@drawable/camera"
+            android:drawableTint="#696969"
+            android:hint="Barcode"
+            android:inputType="number"
+            android:padding="15dp"
+            android:textColor="#191919"
+            android:textColorHint="#696969"
+            android:textStyle="bold"
+            tools:ignore="VisualLintTextFieldSize" />
+
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="1dp"
+            android:layout_marginStart="40dp"
+            android:layout_marginEnd="40dp"
+            android:background="#696969" />
+
+        <EditText
+            android:id="@+id/edMedName"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="30dp"
+            android:layout_marginTop="30dp"
+            android:layout_marginEnd="30dp"
+            android:autofillHints=""
+            android:background="@android:color/transparent"
+            android:hint="Product name"
+            android:inputType="text"
+            android:padding="15dp"
+            android:textColor="#191919"
+            android:textColorHint="#696969"
+            android:textStyle="bold"
+            tools:ignore="VisualLintTextFieldSize" />
+
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="1dp"
+            android:layout_marginStart="40dp"
+            android:layout_marginEnd="40dp"
+            android:background="#696969" />
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Quantity"
+            android:paddingLeft="15dp"
+            android:layout_marginStart="30dp"
+            android:layout_marginTop="30dp"
+            android:layout_marginEnd="30dp"
+            android:textSize="18sp"
+            android:textStyle="bold"/>
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <ImageButton
+                android:id="@+id/decrease"
+                android:layout_width="60dp"
+                android:layout_height="60dp"
+                android:background="@android:color/transparent"
+                android:src="@drawable/minus"
+                android:layout_marginStart="30dp"
+                android:onClick="decreaseInteger"/>
+
+            <TextView
+                android:id="@+id/edQuantity"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="30dp"
+                android:autofillHints=""
+                android:background="@android:color/transparent"
+                android:text="0"
+                android:gravity="center"
+                android:padding="15dp"
+                android:textColor="#696969"
+                android:textSize="22sp"
+                android:layout_centerHorizontal="true"
+                android:textStyle="bold"
+                tools:ignore="VisualLintTextFieldSize" />
+            <ImageButton
+                android:id="@+id/increase"
+                android:layout_width="60dp"
+                android:layout_height="60dp"
+                android:background="@android:color/transparent"
+                android:src="@drawable/plus"
+                android:layout_alignParentEnd="true"
+                android:layout_marginEnd="30dp"
+                android:onClick="increaseInteger"/>
+
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="1dp"
+            android:layout_marginStart="40dp"
+            android:layout_marginEnd="40dp"
+            android:background="#696969" />
+        </RelativeLayout>
+
+        <EditText
+            android:id="@+id/edDesc"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="30dp"
+            android:layout_marginTop="30dp"
+            android:layout_marginEnd="30dp"
+            android:autofillHints=""
+            android:background="@android:color/transparent"
+            android:hint="Description"
+            android:inputType="text"
+            android:padding="15dp"
+            android:textColor="#191919"
+            android:textColorHint="#696969"
+            android:textStyle="bold"
+            tools:ignore="VisualLintTextFieldSize" />
+
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="1dp"
+            android:layout_marginStart="40dp"
+            android:layout_marginEnd="40dp"
+            android:background="#696969" />
+        <EditText
+            android:id="@+id/edExpDate"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="30dp"
+            android:layout_marginTop="30dp"
+            android:layout_marginEnd="30dp"
+            android:autofillHints=""
+            android:background="@android:color/transparent"
+            android:drawableEnd="@drawable/calendar"
+            android:drawableTint="#696969"
+            android:hint="Expiration Date"
+            android:focusableInTouchMode="true"
+            android:cursorVisible="false"
+            android:focusable="false"
+            android:padding="15dp"
+            android:textColor="#191919"
+            android:textColorHint="#696969"
+            android:textStyle="bold"
+            tools:ignore="VisualLintTextFieldSize" />
+
+
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="1dp"
+            android:layout_marginStart="40dp"
+            android:layout_marginEnd="40dp"
+            android:background="#696969" />
+        </LinearLayout>
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:paddingBottom="60dp"
+            android:background="#696969">
+            <Button
+                android:layout_width="150dp"
+                android:layout_height="50dp"
+                android:layout_marginStart="30dp"
+                android:layout_marginTop="15dp"
+                android:text="Delete"
+                android:background="@drawable/button_login_background"/>
+            <Button
+                android:layout_width="150dp"
+                android:layout_height="50dp"
+                android:layout_alignParentEnd="true"
+                android:layout_marginEnd="30dp"
+                android:layout_marginTop="15dp"
+                android:text="Save &amp; Close"
+                android:background="@drawable/button_signin_background"/>
+        </RelativeLayout>
+
+    </RelativeLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

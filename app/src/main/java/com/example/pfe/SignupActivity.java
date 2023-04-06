@@ -36,8 +36,8 @@ public class SignupActivity extends AppCompatActivity {
     private EditText edAdress;
     private Button btnSignin;
     boolean verify;
-    // String url = "jdbc:mysql://192.168.43.205:3306/healthbuddy";
-    String url = "jdbc:mysql://192.168.1.16:3306/healthbuddy";
+    String url = "jdbc:mysql://192.168.43.205:3306/healthbuddy";
+    //String url = "jdbc:mysql://192.168.1.16:3306/healthbuddy";
     String user = "root";
     String password = "";
     DatePickerDialog.OnDateSetListener setListener;
@@ -131,6 +131,7 @@ public class SignupActivity extends AppCompatActivity {
             try {
                 Class.forName("com.mysql.jdbc.Driver");
                 Connection connection = DriverManager.getConnection(url, user, password);
+                //JSONObject object = parser.makeHttpRequest("http://192.168.1.16/healthbuddy/user/add.php", "GET", map);
                 JSONObject object = parser.makeHttpRequest("http://192.168.43.205/healthbuddy/user/add.php", "GET", map);
                 success = object.getInt("success");
                 connection.close();

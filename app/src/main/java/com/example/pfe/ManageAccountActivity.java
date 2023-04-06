@@ -34,8 +34,8 @@ public class ManageAccountActivity extends AppCompatActivity {
 
     private AlertDialog.Builder dialogBuilder;
     private AlertDialog delDialog;
-    // String url = "jdbc:mysql://192.168.43.205:3306/healthbuddy";
-    String url = "jdbc:mysql://192.168.1.16:3306/healthbuddy";
+    String url = "jdbc:mysql://192.168.43.205:3306/healthbuddy";
+    //String url = "jdbc:mysql://192.168.1.16:3306/healthbuddy";
     String user = "root";
     String password = "";
 
@@ -91,8 +91,8 @@ public class ManageAccountActivity extends AppCompatActivity {
             try {
                 Class.forName("com.mysql.jdbc.Driver");
                 Connection connection = DriverManager.getConnection(url, user, password);
-                //JSONObject object = parser.makeHttpRequest("http://192.168.43.205/healthbuddy/user/delete.php", "GET", map);
-                JSONObject object = parser.makeHttpRequest("http://192.168.1.16/healthbuddy/user/delete.php", "GET", map);
+                JSONObject object = parser.makeHttpRequest("http://192.168.43.205/healthbuddy/user/delete.php", "GET", map);
+                //JSONObject object = parser.makeHttpRequest("http://192.168.1.16/healthbuddy/user/delete.php", "GET", map);
                 success = object.getInt("success");
                 SharedPrefManager.getInstance(getApplicationContext()).logout();
                 connection.close();

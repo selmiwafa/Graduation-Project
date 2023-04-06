@@ -32,8 +32,8 @@ public class LoginActivity extends AppCompatActivity {
     JSONParser parser = new JSONParser();
     int success, number = 0;
     String message;
-    // String url = "jdbc:mysql://192.168.43.205:3306/healthbuddy";
-    String url = "jdbc:mysql://192.168.1.16:3306/healthbuddy";
+    String url = "jdbc:mysql://192.168.43.205:3306/healthbuddy";
+    //String url = "jdbc:mysql://192.168.1.16:3306/healthbuddy";
     String user = "root";
     String password = "";
 
@@ -82,11 +82,22 @@ public class LoginActivity extends AppCompatActivity {
             HashMap<String, String> map = new HashMap<>();
             map.put("email", edEmailLogin.getText().toString());
             map.put("password", edPasswordLogin.getText().toString());
+            /*
+            GetIPAdress ipAdress = new GetIPAdress();
+            String ip = ipAdress.getIPadress();
+
+            String url = "jdbc:mysql://" + ip + ":3306/healthbuddy";
+            String url2 = "http://"+ ip +"/healthbuddy/user/log.php";
+            Class.forName("com.mysql.jdbc.Driver");
+            Connection connection = DriverManager.getConnection(url, user, password);
+            JSONObject object = parser.makeHttpRequest(url2, "GET", map);*/
             try {
-                Class.forName("com.mysql.jdbc.Driver");
-                Connection connection = DriverManager.getConnection(url, user, password);
-                // JSONObject object = parser.makeHttpRequest("http://192.168.43.205/healthbuddy/user/log.php", "GET", map);
-                JSONObject object = parser.makeHttpRequest("http://192.168.1.16/healthbuddy/user/log.php", "GET", map);
+
+            Class.forName("com.mysql.jdbc.Driver");
+            Connection connection = DriverManager.getConnection(url, user, password);
+            //JSONObject object = parser.makeHttpRequest("http://192.168.1.16/healthbuddy/user/add.php", "GET", map);
+            JSONObject object = parser.makeHttpRequest("http://192.168.43.205/healthbuddy/user/add.php", "GET", map);
+
                 success = object.getInt("success");
                 message = object.getString("message");
                 while (success == 1) {

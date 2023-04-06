@@ -1,34 +1,14 @@
-import smtplib
+import yagmail
 
-# Set up the email addresses and message content
-from_email = 'healthbuddyapplication@gmail.com'
-to_email = 'bouabidiamina4@gmail.com'
-subject = 'Verification Email'
-body = 'Your verification code is #993887 .'
+# create a yagmail instance with SSL encryption
+yag = yagmail.SMTP('healthbuddyapplication@gmail.com', 'jehwdflnlmaablwr', smtp_ssl=True)
 
-# Set up the SMTP server and login credentials
-smtp_server = 'smtp.gmail.com'
-smtp_port = 587
-username = 'healthbuddyapplication@gmail.com'
-password = 'fvxtqvvyaumlrxde'
+# send the email
+to = 'selmiwafaaa@gmail.com'
+subject = 'Test Email'
+body = 'Hello, this is a test email sent using yagmail with SSL!'
+attachments = ['/path/to/attachment1', '/path/to/attachment2']
+yag.send(to=to, subject=subject, contents=body, attachments=attachments)
 
-# Create the email message
-message = f"""\
-From: {from_email}
-To: {to_email}
-Subject: {subject}
-
-{body}
-"""
-
-# Send the email
-try:
-    server = smtplib.SMTP(smtp_server, smtp_port)
-    server.starttls()
-    server.login(username, password)
-    server.sendmail(from_email, to_email, message)
-    print('Email sent successfully!')
-except Exception as e:
-    print('An error occurred:', e)
-finally:
-    server.quit()
+# close the yagmail instance
+yag.close()

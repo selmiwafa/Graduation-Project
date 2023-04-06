@@ -2,6 +2,7 @@ package com.example.pfe.manageMedicine;
 
 import android.Manifest;
 import android.annotation.SuppressLint;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.hardware.Camera;
 import android.os.Bundle;
@@ -18,7 +19,10 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
+import com.example.pfe.GetIPAdress;
+import com.example.pfe.ManageAccountActivity;
 import com.example.pfe.R;
+import com.example.pfe.manage_account.UpdateInfoActivity;
 import com.google.android.gms.vision.CameraSource;
 import com.google.android.gms.vision.Detector;
 import com.google.android.gms.vision.barcode.Barcode;
@@ -35,7 +39,6 @@ public class BarcodeActivity extends AppCompatActivity {
     private SurfaceView surfaceView;
     private CameraSource cameraSource;
     private BarcodeDetector barcodeDetector;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -148,12 +151,10 @@ public class BarcodeActivity extends AppCompatActivity {
             }
         }
     }
-
     private void stopCameraSource() {
         cameraSource.stop();
         cameraSource.release();
     }
-
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
@@ -162,23 +163,20 @@ public class BarcodeActivity extends AppCompatActivity {
                 startCameraSource();
             } else {
                 Snackbar.make(surfaceView, "Camera permission is required.", Snackbar.LENGTH_INDEFINITE)
-                        .setAction("Retry", new View.OnClickListener() {
-                            @Override
-                            public void onClick(View v) {
-                                ActivityCompat.requestPermissions(BarcodeActivity.this,
-                                        new String[]{Manifest.permission.CAMERA}, CAMERA_PERMISSION_REQUEST);
-                            }
-                        })
-                        .show();
+                        .setAction("Retry", v -> ActivityCompat.requestPermissions(BarcodeActivity.this,
+                            new String[]{Manifest.permission.CAMERA}, CAMERA_PERMISSION_REQUEST)).show();
             }
         }
     }
-
     private void onBarcodeScanned(Barcode barcode) {
         final String message = "Format: " + barcode.format + "\nValue: " + barcode.rawValue;
-        runOnUiThread(() -> Toast.makeText(BarcodeActivity.this, message, Toast.LENGTH_SHORT).show());
+        runOnUiThread(() -> {
+            Toast.makeText(BarcodeActivity.this, message, Toast.LENGTH_SHORT).show();
+            Intent intent = new Intent(this, AddMedicineActivity.class);
+            intent.putExtra("key", barcode.rawValue);
+            startActivity(intent);
+        });
     }
-
     public void goToPreviousActivity(View view) {
         finish();
     }
