@@ -33,7 +33,7 @@
             android:src="@drawable/hbtext"
             android:contentDescription="@string/logo" />
         <ImageButton
-            android:id="@+id/userImg"
+            android:id="@+id/deleteButton"
             android:layout_width="40dp"
             android:layout_height="40dp"
             android:src="@drawable/plus"
@@ -47,10 +47,12 @@
             android:contentDescription="@string/user_image" />
 
 
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/medecine_list"
+        <androidx.fragment.app.FragmentContainerView
+            android:id="@+id/fragment_container"
+            android:name="com.example.pfe.manageMedicine.MedicineList"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            tools:layout="@layout/fragment_medicine_list"
             android:layout_marginTop="15dp"
             android:layout_below="@id/logo"/>
 

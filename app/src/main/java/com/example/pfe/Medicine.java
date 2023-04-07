@@ -6,6 +6,7 @@ public class Medicine {
     private int quantity;
     private String description;
     private String exp_date;
+    private boolean isSelected;
     public Medicine (
             String barcode,
             String med_name,
@@ -58,5 +59,13 @@ public class Medicine {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public boolean isSelected() {
+        return isSelected;
+    }
+
+    public void setSelected(boolean selected) {
+        isSelected = selected;
     }
 }
