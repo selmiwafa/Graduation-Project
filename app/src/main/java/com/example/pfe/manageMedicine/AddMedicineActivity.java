@@ -87,6 +87,7 @@ public class AddMedicineActivity extends AppCompatActivity {
                 edExpDate.setText("");
             }
         };
+        saveBtn.setOnClickListener(v -> addMedicine());
     }
     public void increaseInteger(View view) {
         minteger = minteger + 1;
