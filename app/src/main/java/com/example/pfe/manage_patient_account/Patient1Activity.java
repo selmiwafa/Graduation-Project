@@ -13,7 +13,7 @@ import com.example.pfe.R;
 import com.example.pfe.SharedPrefManager;
 
 public class Patient1Activity extends AppCompatActivity {
-
+    int patient = 1;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -30,8 +30,8 @@ public class Patient1Activity extends AppCompatActivity {
     public void OpenMypatients(View view) {
         startActivity(new Intent(Patient1Activity.this, MyPatientsActivity.class));
     }
-    public void OpenUpdatePatient(View view) {
-        startActivity(new Intent(Patient1Activity.this, UpdatePatientActivity.class));
+    public void OpenUpdatePatient1(View view) {
+        startActivity(new Intent(Patient1Activity.this, UpdatePatient1Activity.class));
     }
 
 }

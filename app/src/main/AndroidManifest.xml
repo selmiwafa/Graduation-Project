@@ -14,10 +14,13 @@
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
         <activity
-            android:name=".UpdatePatientActivity"
+            android:name=".manage_patient_account.UpdatePatient2Activity"
             android:exported="false" />
         <activity
-            android:name=".MedicineInfoActivity"
+            android:name=".manage_patient_account.UpdatePatient1Activity"
+            android:exported="false" />
+        <activity
+            android:name=".manageMedicine.MedicineInfoActivity"
             android:exported="false" />
         <activity
             android:name=".manageMedicine.InventoryActivity"

@@ -50,7 +50,7 @@
                 android:background="@drawable/button_login_background"
                 android:clickable="true"
                 android:focusable="true"
-                android:onClick="deleteUser"
+                android:onClick="deletePatient"
                 android:text="Yes"
                 android:textAllCaps="false"
                 android:textColor="#455A64"

@@ -1,0 +1,134 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:fitsSystemWindows="true"
+    tools:context=".manage_patient_account.UpdatePatient2Activity">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@android:color/white"
+        android:layout_marginTop="40dp">
+
+        <ImageView
+            android:id="@+id/logo"
+            android:layout_width="230dp"
+            android:layout_height="50dp"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="12dp"
+            android:src="@drawable/hbtext"
+            android:contentDescription="@string/logo" />
+
+        <ImageButton
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:src="@drawable/backarrow"
+            android:background="@android:color/transparent"
+            android:onClick="backMypatients" />
+
+        <TextView
+            android:id="@+id/addPatientText"
+            android:layout_width="280dp"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/logo"
+            android:text="Update your patient's information"
+            android:layout_centerHorizontal="true"
+            android:textSize="25sp"
+            android:gravity="center"
+            android:layout_marginTop="60dp" />
+
+        <EditText
+            android:id="@+id/new_patient2_name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="30dp"
+            android:layout_marginTop="50dp"
+            android:layout_marginEnd="30dp"
+            android:autofillHints=""
+            android:background="@android:color/transparent"
+            android:hint="Patient's name"
+            android:drawableEnd="@drawable/user"
+            android:drawableTint="#5C5C5C"
+            android:inputType="text"
+            android:padding="15dp"
+            android:textColor="@android:color/black"
+            android:textColorHint="#5C5C5C"
+            android:layout_below="@+id/addPatientText"
+            tools:ignore="VisualLintTextFieldSize" />
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginStart="40dp"
+            android:layout_marginEnd="40dp"
+            android:background="@android:color/black"
+            android:layout_below="@+id/new_patient2_name" />
+
+        <Spinner
+            android:id="@+id/new_relationship2"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_marginStart="30dp"
+            android:layout_marginTop="30dp"
+            android:layout_marginEnd="30dp"
+            android:padding="15dp"
+            android:layout_below="@+id/new_patient2_name" />
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginTop="1dp"
+            android:layout_marginStart="40dp"
+            android:layout_marginEnd="40dp"
+            android:background="@android:color/black"
+            android:layout_below="@+id/new_relationship2" />
+
+        <EditText
+            android:id="@+id/new_patient2_age"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="30dp"
+            android:layout_marginTop="30dp"
+            android:layout_marginEnd="30dp"
+            android:autofillHints=""
+            android:background="@android:color/transparent"
+            android:hint="Patient's age"
+            android:drawableEnd="@drawable/calendar"
+            android:inputType="number"
+            android:drawableTint="#5C5C5C"
+            android:padding="15dp"
+            android:layout_below="@+id/new_relationship2"
+            android:textColor="@android:color/black"
+            android:textColorHint="#5C5C5C"
+            tools:ignore="VisualLintTextFieldSize" />
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginStart="40dp"
+            android:layout_marginEnd="40dp"
+            android:background="@android:color/black"
+            android:layout_below="@+id/new_patient2_age" />
+
+        <Button
+            android:id="@+id/updatePatientBtn2"
+            android:layout_width="280dp"
+            android:layout_height="50dp"
+            android:background="@drawable/button_login_background"
+            android:clickable="true"
+            android:focusable="true"
+            android:text="Update patient"
+            android:textAllCaps="false"
+            android:textColor="@android:color/black"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            android:layout_marginTop="70dp"
+            android:layout_below="@+id/new_patient2_age"
+            android:layout_centerHorizontal="true"
+            tools:ignore="MissingConstraints,VisualLintButtonSize" />
+
+    </RelativeLayout>
+</RelativeLayout>

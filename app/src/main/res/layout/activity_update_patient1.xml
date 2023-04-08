@@ -5,7 +5,7 @@
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:fitsSystemWindows="true"
-    tools:context=".manage_patient_account.AddPatientActivity">
+    tools:context=".manage_patient_account.UpdatePatient1Activity">
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -41,7 +41,7 @@
             android:layout_marginTop="60dp" />
 
         <EditText
-            android:id="@+id/new_patient_name"
+            android:id="@+id/new_patient1_name"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginStart="30dp"
@@ -65,17 +65,17 @@
             android:layout_marginStart="40dp"
             android:layout_marginEnd="40dp"
             android:background="@android:color/black"
-            android:layout_below="@+id/new_patient_name" />
+            android:layout_below="@+id/new_patient1_name" />
 
         <Spinner
-            android:id="@+id/new_relationship"
+            android:id="@+id/new_relationship1"
             android:layout_width="match_parent"
             android:layout_height="50dp"
             android:layout_marginStart="30dp"
             android:layout_marginTop="30dp"
             android:layout_marginEnd="30dp"
             android:padding="15dp"
-            android:layout_below="@+id/new_patient_name" />
+            android:layout_below="@+id/new_patient1_name" />
 
         <RelativeLayout
             android:layout_width="match_parent"
@@ -84,10 +84,10 @@
             android:layout_marginStart="40dp"
             android:layout_marginEnd="40dp"
             android:background="@android:color/black"
-            android:layout_below="@+id/new_relationship" />
+            android:layout_below="@+id/new_relationship1" />
 
         <EditText
-            android:id="@+id/new_patient_age"
+            android:id="@+id/new_patient1_age"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginStart="30dp"
@@ -100,7 +100,7 @@
             android:inputType="number"
             android:drawableTint="#5C5C5C"
             android:padding="15dp"
-            android:layout_below="@+id/new_relationship"
+            android:layout_below="@+id/new_relationship1"
             android:textColor="@android:color/black"
             android:textColorHint="#5C5C5C"
             tools:ignore="VisualLintTextFieldSize" />
@@ -111,10 +111,10 @@
             android:layout_marginStart="40dp"
             android:layout_marginEnd="40dp"
             android:background="@android:color/black"
-            android:layout_below="@+id/new_patient_age" />
+            android:layout_below="@+id/new_patient1_age" />
 
         <Button
-            android:id="@+id/updatePatientBtn"
+            android:id="@+id/updatePatient1Btn"
             android:layout_width="280dp"
             android:layout_height="50dp"
             android:background="@drawable/button_login_background"
@@ -126,7 +126,7 @@
             android:textSize="20sp"
             android:textStyle="bold"
             android:layout_marginTop="70dp"
-            android:layout_below="@+id/new_patient_age"
+            android:layout_below="@+id/new_patient1_age"
             android:layout_centerHorizontal="true"
             tools:ignore="MissingConstraints,VisualLintButtonSize" />
 

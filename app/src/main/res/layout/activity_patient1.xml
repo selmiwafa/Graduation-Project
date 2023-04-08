@@ -42,7 +42,7 @@
             android:layout_width="30dp"
             android:layout_height="30dp"
             android:src="@drawable/settings"
-            android:onClick="OpenUpdatePatient"
+            android:onClick="OpenUpdatePatient1"
             android:layout_alignParentEnd="true"
             android:layout_marginEnd="15dp"
             android:layout_marginTop="12dp"

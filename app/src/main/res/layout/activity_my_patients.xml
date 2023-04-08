@@ -73,7 +73,8 @@
                 android:layout_height="match_parent"
                 android:textColor="@android:color/black"
                 android:background="@drawable/patients_card_bg"
-                android:visibility="invisible">
+                android:visibility="invisible"
+                android:onClick="OpenPatient1">
 
                 <TextView
                     android:id="@+id/pat1"
@@ -137,6 +138,7 @@
                 android:layout_height="match_parent"
                 android:textColor="@android:color/black"
                 android:background="@drawable/patients_card_bg"
+                android:onClick="OpenPatient2"
                 android:visibility="invisible">
 
                 <TextView
@@ -186,15 +188,6 @@
 
         </RelativeLayout>
 
-        <TextView
-            android:id="@+id/text"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textSize="50dp"
-            android:text="Text"
-            android:layout_below="@+id/layoutcard2"
-            android:layout_centerHorizontal="true"
-            android:layout_marginTop="30dp" />
 
         <ImageButton
             android:id="@+id/addBtn"

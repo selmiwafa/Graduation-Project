@@ -30,7 +30,7 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.util.HashMap;
 
-public class UpdatePatientActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
+public class UpdatePatient1Activity extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
     Button btnUpdatePatient;
     EditText edName, edAge;
     Spinner edRelationship;
@@ -42,14 +42,14 @@ public class UpdatePatientActivity extends AppCompatActivity implements AdapterV
     //String url = "jdbc:mysql://192.168.1.16:3306/healthbuddy";
     String user = "root";
     String password = "";
+    int patient;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS, WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS);
         getWindow().setStatusBarColor(Color.TRANSPARENT);
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE);
-        setContentView(R.layout.activity_update_patient);
-
+        setContentView(R.layout.activity_update_patient1);
         initView();
         createSpinner();
         btnUpdatePatient.setOnClickListener(v -> updatePatient());
@@ -75,12 +75,14 @@ public class UpdatePatientActivity extends AppCompatActivity implements AdapterV
     }
 
     private void initView() {
-        edName = findViewById(R.id.new_patient_name);
-        edAge = findViewById(R.id.new_patient_age);
-        edRelationship = findViewById(R.id.new_relationship);
-        btnUpdatePatient = findViewById(R.id.updatePatientBtn);
+        edName = findViewById(R.id.new_patient1_name);
+        edAge = findViewById(R.id.new_patient1_age);
+        edRelationship = findViewById(R.id.new_relationship1);
+        btnUpdatePatient = findViewById(R.id.updatePatient1Btn);
+        edName.setText(SharedPrefManager.getInstance(getApplicationContext()).getPatient1().getName());
+        String age = String.valueOf(SharedPrefManager.getInstance(getApplicationContext()).getPatient1().getAge());
+        edAge.setText(age);
     }
-
     @Override
     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
         switch (position) {
@@ -100,7 +102,6 @@ public class UpdatePatientActivity extends AppCompatActivity implements AdapterV
                 break;
         }
     }
-
     @Override
     public void onNothingSelected(AdapterView<?> parent) {
 
@@ -111,7 +112,7 @@ public class UpdatePatientActivity extends AppCompatActivity implements AdapterV
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
-            dialog = new ProgressDialog(UpdatePatientActivity.this);
+            dialog = new ProgressDialog(UpdatePatient1Activity.this);
             dialog.setMessage("Please wait");
             dialog.show();
         }
@@ -132,35 +133,15 @@ public class UpdatePatientActivity extends AppCompatActivity implements AdapterV
                 message = object.getString("message");
                 success = object.getInt("success");
                 while (success == 1) {
-                    number = object.getInt("number");
-                    if (number == 1) {
-                        SharedPrefManager.getInstance(getApplicationContext()).setKeyNumberPatients(1);
-                        JSONArray patientsJson = object.getJSONArray("patients");
-                        JSONObject patientJson = patientsJson.getJSONObject(0);
-                        Patient patient = new Patient(
-                                patientJson.getString("patient_name"),
-                                patientJson.getInt("patient_age"),
-                                patientJson.getString("relationship")
-                        );
-                        SharedPrefManager.getInstance(getApplicationContext()).addPatient1(patient);
-                    } else if (number >= 2) {
-                        SharedPrefManager.getInstance(getApplicationContext()).setKeyNumberPatients(2);
-                        JSONArray patientsJson = object.getJSONArray("patients");
-                        JSONObject patient1Json = patientsJson.getJSONObject(0);
-                        Patient patient1 = new Patient(
-                                patient1Json.getString("patient_name"),
-                                patient1Json.getInt("patient_age"),
-                                patient1Json.getString("relationship")
-                        );
-                        JSONObject patient2Json = patientsJson.getJSONObject(1);
-                        Patient patient2 = new Patient(
-                                patient2Json.getString("patient_name"),
-                                patient2Json.getInt("patient_age"),
-                                patient2Json.getString("relationship")
-                        );
-                        SharedPrefManager.getInstance(getApplicationContext()).addPatient1(patient1);
-                        SharedPrefManager.getInstance(getApplicationContext()).addPatient2(patient2);
-                    }
+                    SharedPrefManager.getInstance(getApplicationContext()).setKeyNumberPatients(1);
+                    JSONArray patientsJson = object.getJSONArray("patient");
+                    JSONObject patientJson = patientsJson.getJSONObject(0);
+                    Patient patient = new Patient(
+                            patientJson.getString("patient_name"),
+                            patientJson.getInt("patient_age"),
+                            patientJson.getString("relationship")
+                    );
+                    SharedPrefManager.getInstance(getApplicationContext()).addPatient1(patient);
                     break;
                 }
                 connection.close();
@@ -180,11 +161,11 @@ public class UpdatePatientActivity extends AppCompatActivity implements AdapterV
             dialog.cancel();
 
             if (success == 1) {
-                Toast.makeText(UpdatePatientActivity.this, "Patient added successfully", Toast.LENGTH_LONG).show();
-                startActivity(new Intent(UpdatePatientActivity.this, MyPatientsActivity.class));
+                Toast.makeText(UpdatePatient1Activity.this, "Patient updated successfully", Toast.LENGTH_LONG).show();
+                startActivity(new Intent(UpdatePatient1Activity.this, MyPatientsActivity.class));
 
             } else {
-                Toast.makeText(UpdatePatientActivity.this, message, Toast.LENGTH_LONG).show();
+                Toast.makeText(UpdatePatient1Activity.this, message, Toast.LENGTH_LONG).show();
             }
         }
     }
