@@ -7,7 +7,7 @@
     android:id="@+id/drawerlayout2"
     tools:openDrawer="start"
     android:fitsSystemWindows="true"
-    tools:context=".manage_patients.AddPatientActivity">
+    tools:context=".manage_patient_account.AddPatientActivity">
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -114,6 +114,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:src="@drawable/whitex"
+                        android:onClick="deletePatientDialog1"
                         android:background="@android:color/transparent" />
 
                 </RelativeLayout>
@@ -177,6 +178,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:src="@drawable/whitex"
+                        android:onClick="deletePatientDialog2"
                         android:background="@android:color/transparent" />
 
                 </RelativeLayout>

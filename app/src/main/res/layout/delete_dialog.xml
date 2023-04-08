@@ -32,19 +32,19 @@
                 tools:ignore="MissingConstraints" />
 
             <TextView
-                android:id="@+id/detail_email"
+                android:id="@+id/text"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="130dp"
                 android:textSize="20dp"
-                android:text="Are you sure you want to permanently delete your account?"
+                android:text="Are you sure you want to permanently delete this patient?"
                 android:gravity="center"
                 android:layout_alignParentStart="true"
                 android:layout_alignParentEnd="true"
                 tools:ignore="MissingConstraints" />
 
             <Button
-                android:id="@+id/manage_account"
+                android:id="@+id/yesBtn"
                 android:layout_width="150dp"
                 android:layout_height="50dp"
                 android:background="@drawable/button_login_background"
@@ -57,13 +57,13 @@
                 android:textSize="20sp"
                 android:textStyle="bold"
                 android:layout_marginTop="20dp"
-                android:layout_below="@+id/detail_email"
+                android:layout_below="@+id/text"
                 android:layout_alignParentStart="true"
                 android:layout_alignParentEnd="true"
                 tools:ignore="MissingConstraints,VisualLintButtonSize" />
 
             <Button
-                android:id="@+id/logout_btn"
+                android:id="@+id/cancelBtn"
                 android:layout_width="250dp"
                 android:layout_height="50dp"
                 android:background="@drawable/logout_button_background"
@@ -75,7 +75,7 @@
                 android:textColor="#455A64"
                 android:textSize="20sp"
                 android:textStyle="bold"
-                android:layout_below="@+id/manage_account"
+                android:layout_below="@+id/yesBtn"
                 android:layout_alignParentStart="true"
                 android:layout_alignParentEnd="true"
                 android:layout_marginTop="20dp"

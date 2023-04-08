@@ -1,4 +1,4 @@
-package com.example.pfe.manage_patients;
+package com.example.pfe.manage_patient_account;
 
 import android.graphics.Color;
 import android.os.Bundle;

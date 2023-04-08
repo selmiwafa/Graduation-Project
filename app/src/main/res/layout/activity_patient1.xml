@@ -4,19 +4,21 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    tools:context=".manage_patients.Patient1Activity"
+    tools:context=".manage_patient_account.Patient1Activity"
     android:id="@+id/drawerlayout"
     android:fitsSystemWindows="true">
 
     <RelativeLayout
+        android:id="@+id/toolbar_layout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@android:color/white"
-        android:layout_marginTop="40dp">
+        android:layout_marginTop="40dp"
+        tools:ignore="UselessParent">
 
         <androidx.appcompat.widget.Toolbar
             android:layout_width="match_parent"
-            android:layout_height="100dp"
+            android:layout_height="60dp"
             android:id="@+id/toolbar"
             app:navigationIcon="@drawable/backarrow"
             android:clickable="true"
@@ -40,6 +42,7 @@
             android:layout_width="30dp"
             android:layout_height="30dp"
             android:src="@drawable/settings"
+            android:onClick="OpenUpdatePatient"
             android:layout_alignParentEnd="true"
             android:layout_marginEnd="15dp"
             android:layout_marginTop="12dp"
@@ -47,7 +50,52 @@
             android:clickable="true"
             android:contentDescription="@string/user_image" />
 
+        <RelativeLayout
+            android:id="@+id/layoutcard1"
+            android:layout_width="match_parent"
+            android:layout_height="100dp"
+            android:layout_below="@id/toolbar"
+            android:layout_marginStart="25dp"
+            android:layout_marginEnd="25dp"
+            android:layout_marginBottom="10dp">
+            <RelativeLayout
+                android:id="@+id/card1"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:textColor="@android:color/black"
+                android:background="@drawable/patients_card_bg">
 
+                <TextView
+                    android:id="@+id/edName"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Patient 1"
+                    android:paddingStart="40dp"
+                    android:layout_marginTop="15dp"
+                    android:textSize="30sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/relationship"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="relationship"
+                    android:paddingStart="40dp"
+                    android:layout_below="@+id/edName"
+                    android:textSize="15sp"
+                    android:textStyle="normal" />
+
+            </RelativeLayout>
+        </RelativeLayout>
+        <RelativeLayout
+            android:id="@+id/layout2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/layoutcard1"
+            android:layout_marginStart="25dp"
+            android:layout_marginEnd="25dp">
+
+        </RelativeLayout>
     </RelativeLayout>
 
 

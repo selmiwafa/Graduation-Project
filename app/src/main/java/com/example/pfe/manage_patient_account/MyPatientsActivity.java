@@ -12,6 +12,7 @@ import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.WindowManager;
+import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -32,7 +33,6 @@ import com.example.pfe.R;
 import com.example.pfe.SharedPrefManager;
 import com.example.pfe.manageMedicine.BarcodeActivity;
 import com.example.pfe.manageMedicine.InventoryActivity;
-import com.example.pfe.manage_patients.AddPatientActivity;
 import com.google.android.material.navigation.NavigationView;
 
 import org.json.JSONException;
@@ -62,6 +62,7 @@ public class MyPatientsActivity extends AppCompatActivity implements NavigationV
 
     private AlertDialog.Builder dialogBuilder;
     private AlertDialog delDialog;
+    int patient = 0;
 
     @SuppressLint("MissingInflatedId")
     @Override
@@ -99,12 +100,9 @@ public class MyPatientsActivity extends AppCompatActivity implements NavigationV
             patient2.setText(String.valueOf(SharedPrefManager.getInstance(getApplicationContext()).getPatient2().getName()));
             rel2 = findViewById(R.id.rel2);
             rel2.setText(String.valueOf(SharedPrefManager.getInstance(getApplicationContext()).getPatient2().getRelationship()));
-
             addBtn.setVisibility(View.INVISIBLE);
         }
-
     }
-
     public void createNavbar() {
         drawerLayout = findViewById(R.id.drawerlayout2);
         navigationView = findViewById(R.id.nav_menu);
@@ -118,7 +116,6 @@ public class MyPatientsActivity extends AppCompatActivity implements NavigationV
         toggle.syncState();
         navigationView.setNavigationItemSelectedListener(this);
     }
-
     public void createUserDialog(View view) {
         AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(this);
         final View contactPopupView = getLayoutInflater().inflate(user_details, null);
@@ -129,39 +126,44 @@ public class MyPatientsActivity extends AppCompatActivity implements NavigationV
         detail_email = dialog.findViewById(R.id.detail_email);
         showInfo(username, detail_email);
     }
-    public void deletePatientDialog(View view) {
+    public void deletePatientDialog1(View view) {
         dialogBuilder = new AlertDialog.Builder(this);
         final View contactPopupView = getLayoutInflater().inflate(delete_dialog, null);
         dialogBuilder.setView(contactPopupView);
         delDialog = dialogBuilder.create();
+        delDialog.findViewById(R.id.yesBtn).setOnClickListener(v -> deletePatient(view));
         delDialog.show();
+        patient = 1;
+    }
+    public void deletePatientDialog2(View view) {
+        dialogBuilder = new AlertDialog.Builder(this);
+        final View contactPopupView = getLayoutInflater().inflate(delete_dialog, null);
+        dialogBuilder.setView(contactPopupView);
+        delDialog = dialogBuilder.create();
+        Button yesBtn = delDialog.findViewById(R.id.yesBtn);
+        yesBtn.setOnClickListener(v -> deletePatient(view));
+        delDialog.show();
+        patient = 2;
     }
     public void deletePatient(View view) {
         new Delete().execute();
     }
-
     public void cancel(View view) {
         dialog.dismiss();
     }
-
     public void logout(View view) {
         SharedPrefManager.getInstance(getApplicationContext()).logout();
     }
-
-
     public void OpenManageAccount(View view) {
         startActivity(new Intent(MyPatientsActivity.this, ManageAccountActivity.class));
     }
-
     public void OpenAddPatient(View view) {
         startActivity(new Intent(MyPatientsActivity.this, AddPatientActivity.class));
     }
-
     public void showInfo(TextView username, TextView email) {
         username.setText(String.valueOf(SharedPrefManager.getInstance(getApplicationContext()).getUser().getName()));
         email.setText(String.valueOf(SharedPrefManager.getInstance(getApplicationContext()).getUser().getEmail()));
     }
-
     @Override
     public void onBackPressed() {
         if (drawerLayout.isDrawerOpen(GravityCompat.START)) {
@@ -170,7 +172,6 @@ public class MyPatientsActivity extends AppCompatActivity implements NavigationV
             super.onBackPressed();
         }
     }
-
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
         switch (item.getItemId()) {
@@ -195,30 +196,49 @@ public class MyPatientsActivity extends AppCompatActivity implements NavigationV
     }
     @SuppressLint("StaticFieldLeak")
     class Delete extends AsyncTask<String, String, String> {
-
-
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
             progressDialog = new ProgressDialog(MyPatientsActivity.this);
             progressDialog.setMessage("Please wait");
             progressDialog.show();
-
-
         }
-
         @Override
         protected String doInBackground(String... strings) {
             HashMap<String, String> map = new HashMap<>();
             map.put("email", SharedPrefManager.getInstance(getApplicationContext()).getUser().getEmail());
-            map.put("patient_name", SharedPrefManager.getInstance(getApplicationContext()).getPatient1().getName());
+            if (patient == 1) {
+                map.put("patient_name", SharedPrefManager.getInstance(getApplicationContext()).getPatient1().getName());
+            }
+            else {
+                map.put("patient_name", SharedPrefManager.getInstance(getApplicationContext()).getPatient2().getName());
+            }
             try {
                 Class.forName("com.mysql.jdbc.Driver");
                 Connection connection = DriverManager.getConnection(url, user, password);
                 JSONObject object = parser.makeHttpRequest("http://192.168.43.205/healthbuddy/patient/deletePatient.php", "GET", map);
                 //JSONObject object = parser.makeHttpRequest("http://192.168.1.16/healthbuddy/patient/deletePatient.php", "GET", map);
                 success = object.getInt("success");
-                SharedPrefManager.getInstance(getApplicationContext()).logout();
+                if (patient == 1) {
+                    String name = SharedPrefManager.getInstance(getApplicationContext()).getPatient2().getName();
+                    int age = SharedPrefManager.getInstance(getApplicationContext()).getPatient2().getAge();
+                    String relationship = SharedPrefManager.getInstance(getApplicationContext()).getPatient2().getRelationship();
+                    SharedPrefManager.getInstance(getApplicationContext()).getPatient1().setName(name);
+                    SharedPrefManager.getInstance(getApplicationContext()).getPatient1().setAge(age);
+                    SharedPrefManager.getInstance(getApplicationContext()).getPatient1().setRelationship(relationship);
+                    card2 = findViewById(R.id.card2);
+                    card2.setVisibility(View.INVISIBLE);
+                    SharedPrefManager.getInstance(getApplicationContext()).getPatient2().setName("");
+                    SharedPrefManager.getInstance(getApplicationContext()).getPatient2().setAge(0);
+                    SharedPrefManager.getInstance(getApplicationContext()).getPatient2().setRelationship("");
+                }
+                else {
+                    card2 = findViewById(R.id.card2);
+                    card2.setVisibility(View.INVISIBLE);
+                    SharedPrefManager.getInstance(getApplicationContext()).getPatient2().setName("");
+                    SharedPrefManager.getInstance(getApplicationContext()).getPatient2().setAge(0);
+                    SharedPrefManager.getInstance(getApplicationContext()).getPatient2().setRelationship("");
+                }
                 connection.close();
             } catch (ClassNotFoundException e) {
                 e.printStackTrace();
@@ -228,9 +248,7 @@ public class MyPatientsActivity extends AppCompatActivity implements NavigationV
                 throw new RuntimeException(ex);
             }
             return null;
-
         }
-
         @Override
         protected void onPostExecute(String s) {
             super.onPostExecute(s);

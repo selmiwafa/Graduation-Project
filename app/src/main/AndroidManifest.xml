@@ -14,6 +14,9 @@
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
         <activity
+            android:name=".UpdatePatientActivity"
+            android:exported="false" />
+        <activity
             android:name=".MedicineInfoActivity"
             android:exported="false" />
         <activity
@@ -26,10 +29,10 @@
             android:name=".manageMedicine.BarcodeActivity"
             android:exported="false" />
         <activity
-            android:name=".manage_patients.Patient2Activity"
+            android:name=".manage_patient_account.Patient2Activity"
             android:exported="false" />
         <activity
-            android:name=".manage_patients.Patient1Activity"
+            android:name=".manage_patient_account.Patient1Activity"
             android:exported="false" />
         <activity
             android:name=".manage_patient_account.MyPatientsActivity"
@@ -38,10 +41,10 @@
             android:name=".manage_user_account.VerifyActivity"
             android:exported="false" />
         <activity
-            android:name=".manage_patients.AddPatientActivity"
+            android:name=".manage_patient_account.AddPatientActivity"
             android:exported="false" />
         <activity
-            android:name=".manage_patient_account.UpdateInfoActivity"
+            android:name=".manage_user_account.UpdateInfoActivity"
             android:exported="false" />
         <activity
             android:name=".manage_user_account.ManageAccountActivity"

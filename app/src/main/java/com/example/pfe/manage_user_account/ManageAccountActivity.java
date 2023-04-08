@@ -19,7 +19,6 @@ import com.example.pfe.HomepageActivity;
 import com.example.pfe.JSONParser;
 import com.example.pfe.R;
 import com.example.pfe.SharedPrefManager;
-import com.example.pfe.manage_patient_account.UpdateInfoActivity;
 
 import org.json.JSONException;
 import org.json.JSONObject;

@@ -34,14 +34,14 @@
             android:layout_width="280dp"
             android:layout_height="wrap_content"
             android:layout_below="@+id/logo"
-            android:text="Add close patient to manage his/her account with yours"
+            android:text="Update your patient's information"
             android:layout_centerHorizontal="true"
             android:textSize="25sp"
             android:gravity="center"
-            android:layout_marginTop="100dp" />
+            android:layout_marginTop="60dp" />
 
         <EditText
-            android:id="@+id/patient_name"
+            android:id="@+id/new_patient_name"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginStart="30dp"
@@ -65,17 +65,17 @@
             android:layout_marginStart="40dp"
             android:layout_marginEnd="40dp"
             android:background="@android:color/black"
-            android:layout_below="@+id/patient_name" />
+            android:layout_below="@+id/new_patient_name" />
 
         <Spinner
-            android:id="@+id/relationship"
+            android:id="@+id/new_relationship"
             android:layout_width="match_parent"
             android:layout_height="50dp"
             android:layout_marginStart="30dp"
             android:layout_marginTop="30dp"
             android:layout_marginEnd="30dp"
             android:padding="15dp"
-            android:layout_below="@+id/patient_name" />
+            android:layout_below="@+id/new_patient_name" />
 
         <RelativeLayout
             android:layout_width="match_parent"
@@ -84,10 +84,10 @@
             android:layout_marginStart="40dp"
             android:layout_marginEnd="40dp"
             android:background="@android:color/black"
-            android:layout_below="@+id/relationship" />
+            android:layout_below="@+id/new_relationship" />
 
         <EditText
-            android:id="@+id/patient_age"
+            android:id="@+id/new_patient_age"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginStart="30dp"
@@ -100,7 +100,7 @@
             android:inputType="number"
             android:drawableTint="#5C5C5C"
             android:padding="15dp"
-            android:layout_below="@+id/relationship"
+            android:layout_below="@+id/new_relationship"
             android:textColor="@android:color/black"
             android:textColorHint="#5C5C5C"
             tools:ignore="VisualLintTextFieldSize" />
@@ -111,22 +111,22 @@
             android:layout_marginStart="40dp"
             android:layout_marginEnd="40dp"
             android:background="@android:color/black"
-            android:layout_below="@+id/patient_age" />
+            android:layout_below="@+id/new_patient_age" />
 
         <Button
-            android:id="@+id/addPatientBtn"
+            android:id="@+id/updatePatientBtn"
             android:layout_width="280dp"
             android:layout_height="50dp"
             android:background="@drawable/button_login_background"
             android:clickable="true"
             android:focusable="true"
-            android:text="Add patient"
+            android:text="Update patient"
             android:textAllCaps="false"
             android:textColor="@android:color/black"
             android:textSize="20sp"
             android:textStyle="bold"
             android:layout_marginTop="70dp"
-            android:layout_below="@+id/patient_age"
+            android:layout_below="@+id/new_patient_age"
             android:layout_centerHorizontal="true"
             tools:ignore="MissingConstraints,VisualLintButtonSize" />
 

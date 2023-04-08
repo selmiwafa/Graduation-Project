@@ -1,4 +1,4 @@
-package com.example.pfe.manage_patient_account;
+package com.example.pfe.manage_user_account;
 
 import android.annotation.SuppressLint;
 import android.app.DatePickerDialog;
@@ -17,10 +17,8 @@ import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.pfe.JSONParser;
-import com.example.pfe.manage_user_account.ManageAccountActivity;
 import com.example.pfe.R;
 import com.example.pfe.SharedPrefManager;
-import com.example.pfe.manage_user_account.User;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -43,7 +41,6 @@ public class UpdateInfoActivity extends AppCompatActivity {
     //String url = "jdbc:mysql://192.168.1.16:3306/healthbuddy";
     String user = "root";
     String password = "";
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -51,7 +48,6 @@ public class UpdateInfoActivity extends AppCompatActivity {
         getWindow().setStatusBarColor(Color.TRANSPARENT);
         setContentView(R.layout.activity_update_info);
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE);
-
         this.initView();
         edBirthdate.setOnClickListener(v -> {
             int y = (Calendar.getInstance().get(Calendar.YEAR)) - 18;
@@ -78,7 +74,6 @@ public class UpdateInfoActivity extends AppCompatActivity {
         };
         btnUpdate.setOnClickListener(v -> updateUser());
     }
-
     void updateUser() {
         String name = edName.getText().toString();
         String birthdate = edBirthdate.getText().toString();
@@ -92,21 +87,15 @@ public class UpdateInfoActivity extends AppCompatActivity {
             new Update().execute();
         }
     }
-
     @SuppressLint("StaticFieldLeak")
     class Update extends AsyncTask<String, String, String> {
-
-
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
             dialog = new ProgressDialog(UpdateInfoActivity.this);
             dialog.setMessage("Please wait");
             dialog.show();
-
-
         }
-
         @Override
         protected String doInBackground(String... strings) {
             HashMap<String, String> map = new HashMap<>();
@@ -132,19 +121,13 @@ public class UpdateInfoActivity extends AppCompatActivity {
                 );
                 SharedPrefManager.getInstance(getApplicationContext()).userLogin(user);
                 connection.close();
-            } catch (ClassNotFoundException e) {
-                e.printStackTrace();
-            } catch (SQLException e) {
+            } catch (ClassNotFoundException | SQLException e) {
                 e.printStackTrace();
             } catch (JSONException ex) {
                 throw new RuntimeException(ex);
             }
-
-
             return null;
-
         }
-
         @Override
         protected void onPostExecute(String s) {
             super.onPostExecute(s);
@@ -158,16 +141,16 @@ public class UpdateInfoActivity extends AppCompatActivity {
             }
         }
     }
-
     private void initView() {
         edName = findViewById(R.id.username);
         edBirthdate = findViewById(R.id.birthdate);
         edPassword = findViewById(R.id.password);
         edAdress = findViewById(R.id.adress);
         btnUpdate = findViewById(R.id.update_infoBtn);
-
+        edName.setText(SharedPrefManager.getInstance(getApplicationContext()).getUser().getName());
+        edAdress.setText(SharedPrefManager.getInstance(getApplicationContext()).getUser().getAdress());
+        edBirthdate.setText(SharedPrefManager.getInstance(getApplicationContext()).getUser().getBirthdate());
     }
-
     public void backManage(View view) {
         startActivity(new Intent(UpdateInfoActivity.this, ManageAccountActivity.class));
     }
