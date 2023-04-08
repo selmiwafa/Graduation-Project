@@ -1,4 +1,4 @@
-package com.example.pfe;
+package com.example.pfe.manageMedicine;
 
 public class Medicine {
     private String barcode;

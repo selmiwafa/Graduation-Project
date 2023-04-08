@@ -1,4 +1,6 @@
-package com.example.pfe;
+package com.example.pfe.manage_user_account;
+
+import com.example.pfe.manage_patient_account.Patient;
 
 import java.util.ArrayList;
 import java.util.Random;

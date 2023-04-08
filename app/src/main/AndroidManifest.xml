@@ -14,6 +14,9 @@
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
         <activity
+            android:name=".MedicineInfoActivity"
+            android:exported="false" />
+        <activity
             android:name=".manageMedicine.InventoryActivity"
             android:exported="false" />
         <activity
@@ -29,19 +32,19 @@
             android:name=".manage_patients.Patient1Activity"
             android:exported="false" />
         <activity
-            android:name=".MyPatientsActivity"
+            android:name=".manage_patient_account.MyPatientsActivity"
             android:exported="false" />
         <activity
-            android:name=".VerifyActivity"
+            android:name=".manage_user_account.VerifyActivity"
             android:exported="false" />
         <activity
             android:name=".manage_patients.AddPatientActivity"
             android:exported="false" />
         <activity
-            android:name=".manage_account.UpdateInfoActivity"
+            android:name=".manage_patient_account.UpdateInfoActivity"
             android:exported="false" />
         <activity
-            android:name=".ManageAccountActivity"
+            android:name=".manage_user_account.ManageAccountActivity"
             android:exported="false" />
 
         <uses-library
@@ -52,14 +55,14 @@
             android:name=".HomepageActivity"
             android:exported="true" />
         <activity
-            android:name=".SignupActivity"
+            android:name=".manage_user_account.SignupActivity"
             android:exported="true"
             android:windowSoftInputMode="adjustResize" />
         <activity
-            android:name=".ForgetActivity"
+            android:name=".manage_user_account.ForgetActivity"
             android:exported="true" />
         <activity
-            android:name=".LoginActivity"
+            android:name=".manage_user_account.LoginActivity"
             android:exported="true"
             android:windowSoftInputMode="adjustResize">
             <intent-filter>

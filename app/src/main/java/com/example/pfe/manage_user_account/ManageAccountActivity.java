@@ -1,4 +1,4 @@
-package com.example.pfe;
+package com.example.pfe.manage_user_account;
 
 import static com.example.pfe.R.layout.delete_dialog;
 
@@ -15,7 +15,11 @@ import android.widget.Toast;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.example.pfe.manage_account.UpdateInfoActivity;
+import com.example.pfe.HomepageActivity;
+import com.example.pfe.JSONParser;
+import com.example.pfe.R;
+import com.example.pfe.SharedPrefManager;
+import com.example.pfe.manage_patient_account.UpdateInfoActivity;
 
 import org.json.JSONException;
 import org.json.JSONObject;

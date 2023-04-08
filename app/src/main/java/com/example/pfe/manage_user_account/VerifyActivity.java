@@ -1,4 +1,4 @@
-package com.example.pfe;
+package com.example.pfe.manage_user_account;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
@@ -9,6 +9,9 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
+
+import com.example.pfe.R;
+import com.example.pfe.SharedPrefManager;
 
 public class VerifyActivity extends AppCompatActivity {
     EditText edCode;

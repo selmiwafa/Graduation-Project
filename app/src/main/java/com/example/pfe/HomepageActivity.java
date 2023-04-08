@@ -20,6 +20,8 @@ import androidx.drawerlayout.widget.DrawerLayout;
 
 import com.example.pfe.manageMedicine.BarcodeActivity;
 import com.example.pfe.manageMedicine.InventoryActivity;
+import com.example.pfe.manage_patient_account.MyPatientsActivity;
+import com.example.pfe.manage_user_account.ManageAccountActivity;
 import com.google.android.material.navigation.NavigationView;
 
 public class HomepageActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {

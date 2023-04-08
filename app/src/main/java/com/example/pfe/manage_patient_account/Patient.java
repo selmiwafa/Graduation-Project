@@ -1,4 +1,4 @@
-package com.example.pfe;
+package com.example.pfe.manage_patient_account;
 
 public class Patient {
     private String name;

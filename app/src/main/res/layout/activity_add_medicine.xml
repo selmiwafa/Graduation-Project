@@ -22,9 +22,11 @@
         android:layout_width="40dp"
         android:layout_height="40dp"
         android:src="@drawable/greenx"
+        android:onClick="back"
         android:background="@android:color/transparent"
         android:layout_marginStart="20dp"/>
     <ImageButton
+        android:id="@+id/topSaveBtn"
         android:layout_width="40dp"
         android:layout_height="40dp"
         android:src="@drawable/save"
@@ -215,6 +217,7 @@
                 android:layout_marginStart="30dp"
                 android:layout_marginTop="15dp"
                 android:text="Delete"
+                android:onClick="back"
                 android:background="@drawable/button_login_background"/>
             <Button
                 android:id="@+id/saveBtn"

@@ -8,7 +8,7 @@ import android.view.WindowManager;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.example.pfe.MyPatientsActivity;
+import com.example.pfe.manage_patient_account.MyPatientsActivity;
 import com.example.pfe.R;
 
 public class Patient1Activity extends AppCompatActivity {

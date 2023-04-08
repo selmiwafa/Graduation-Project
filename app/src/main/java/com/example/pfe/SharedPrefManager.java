@@ -5,6 +5,10 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 
+import com.example.pfe.manage_patient_account.Patient;
+import com.example.pfe.manage_user_account.LoginActivity;
+import com.example.pfe.manage_user_account.User;
+
 
 public class SharedPrefManager {
 

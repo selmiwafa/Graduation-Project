@@ -19,10 +19,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
-import com.example.pfe.GetIPAdress;
-import com.example.pfe.ManageAccountActivity;
 import com.example.pfe.R;
-import com.example.pfe.manage_account.UpdateInfoActivity;
 import com.google.android.gms.vision.CameraSource;
 import com.google.android.gms.vision.Detector;
 import com.google.android.gms.vision.barcode.Barcode;
@@ -173,6 +170,7 @@ public class BarcodeActivity extends AppCompatActivity {
         runOnUiThread(() -> {
             Toast.makeText(BarcodeActivity.this, message, Toast.LENGTH_SHORT).show();
             Intent intent = new Intent(this, AddMedicineActivity.class);
+            intent.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
             intent.putExtra("key", barcode.rawValue);
             startActivity(intent);
         });

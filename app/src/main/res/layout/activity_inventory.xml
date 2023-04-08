@@ -10,10 +10,14 @@
     android:fitsSystemWindows="true">
 
     <RelativeLayout
+
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@android:color/white"
         android:layout_marginTop="40dp">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
 
         <androidx.appcompat.widget.Toolbar
             android:layout_width="match_parent"
@@ -33,7 +37,7 @@
             android:src="@drawable/hbtext"
             android:contentDescription="@string/logo" />
         <ImageButton
-            android:id="@+id/deleteButton"
+            android:id="@+id/addButton"
             android:layout_width="40dp"
             android:layout_height="40dp"
             android:src="@drawable/plus"
@@ -55,7 +59,41 @@
             tools:layout="@layout/fragment_medicine_list"
             android:layout_marginTop="15dp"
             android:layout_below="@id/logo"/>
+        <RelativeLayout
+            android:id="@+id/bottom_bar"
+            android:layout_width="match_parent"
+            android:layout_height="120dp"
+            android:layout_alignParentBottom="true"
+            android:background="@android:color/background_dark"
+            android:paddingBottom="20dp"/>
+        <FrameLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:elevation="0dp"
+            android:layout_above="@+id/bottom_bar"
+            android:layout_centerHorizontal="true"
+            android:layout_marginBottom="60dp"
 
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="-20dp"
+            android:layout_alignParentBottom="true">
+        <ImageButton
+            android:id="@+id/scanBtn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@android:color/transparent"
+            android:onClick="OpenBarcodeScanner"
+            android:src="@drawable/scan_circle" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:textStyle="bold"
+            android:textSize="18sp"
+            android:text="SCAN" />
+        </FrameLayout>
+    </RelativeLayout>
 
     </RelativeLayout>
 

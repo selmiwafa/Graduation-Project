@@ -18,8 +18,8 @@ import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.pfe.JSONParser;
-import com.example.pfe.MyPatientsActivity;
-import com.example.pfe.Patient;
+import com.example.pfe.manage_patient_account.MyPatientsActivity;
+import com.example.pfe.manage_patient_account.Patient;
 import com.example.pfe.R;
 import com.example.pfe.SharedPrefManager;
 

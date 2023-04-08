@@ -1,4 +1,4 @@
-package com.example.pfe.manage_account;
+package com.example.pfe.manage_patient_account;
 
 import android.annotation.SuppressLint;
 import android.app.DatePickerDialog;
@@ -17,10 +17,10 @@ import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.pfe.JSONParser;
-import com.example.pfe.ManageAccountActivity;
+import com.example.pfe.manage_user_account.ManageAccountActivity;
 import com.example.pfe.R;
 import com.example.pfe.SharedPrefManager;
-import com.example.pfe.User;
+import com.example.pfe.manage_user_account.User;
 
 import org.json.JSONArray;
 import org.json.JSONException;

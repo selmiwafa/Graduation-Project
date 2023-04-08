@@ -1,4 +1,4 @@
-package com.example.pfe;
+package com.example.pfe.manage_patient_account;
 
 import static com.example.pfe.R.layout.delete_dialog;
 import static com.example.pfe.R.layout.user_details;
@@ -25,6 +25,11 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 
+import com.example.pfe.HomepageActivity;
+import com.example.pfe.JSONParser;
+import com.example.pfe.manage_user_account.ManageAccountActivity;
+import com.example.pfe.R;
+import com.example.pfe.SharedPrefManager;
 import com.example.pfe.manageMedicine.BarcodeActivity;
 import com.example.pfe.manageMedicine.InventoryActivity;
 import com.example.pfe.manage_patients.AddPatientActivity;
