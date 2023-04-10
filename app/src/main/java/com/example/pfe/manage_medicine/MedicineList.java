@@ -1,4 +1,4 @@
-package com.example.pfe.manageMedicine;
+package com.example.pfe.manage_medicine;
 
 import android.annotation.SuppressLint;
 import android.app.ProgressDialog;
@@ -11,6 +11,7 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.os.Parcelable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -77,8 +78,10 @@ public class MedicineList extends Fragment {
                     number = object.getInt("number");
                     JSONArray userJson = object.getJSONArray("medicine");
                     medicineList = new ArrayList<>();
+                    ArrayList<String> myList = new ArrayList<>();
                     for(int i=0;i<number;i++) {
                         JSONObject jsonObject = userJson.getJSONObject(i);
+                        myList.add(jsonObject.getString("barcode"));
                         Medicine medicine = new Medicine(
                                 jsonObject.getString("barcode"),
                                 jsonObject.getString("med_name"),
@@ -88,6 +91,10 @@ public class MedicineList extends Fragment {
                         );
                         medicineList.add(medicine);
                     }
+                    Bundle bundle = new Bundle();
+                    bundle.putStringArrayList("medicineList", myList);
+                    Intent intent = new Intent(getContext(), BarcodeActivity.class);
+                    intent.putExtras(bundle);
                 }
                 connection.close();
             } catch (ClassNotFoundException | SQLException e) {

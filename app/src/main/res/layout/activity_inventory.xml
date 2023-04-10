@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    tools:context=".manageMedicine.InventoryActivity"
+    tools:context=".manage_medicine.InventoryActivity"
     android:id="@+id/drawerlayout"
     tools:openDrawer="start"
     android:fitsSystemWindows="true">
@@ -53,7 +53,7 @@
 
         <androidx.fragment.app.FragmentContainerView
             android:id="@+id/fragment_container"
-            android:name="com.example.pfe.manageMedicine.MedicineList"
+            android:name="com.example.pfe.manage_medicine.MedicineList"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             tools:layout="@layout/fragment_medicine_list"
@@ -103,8 +103,7 @@
         app:menu="@menu/menu_elements"
         android:id="@+id/nav_menu"
         app:headerLayout="@layout/menu_header"
-        android:layout_gravity="start"
-        android:visibility="gone"/>
+        android:layout_gravity="start"/>
 
 
 </androidx.drawerlayout.widget.DrawerLayout>

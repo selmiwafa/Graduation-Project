@@ -133,7 +133,6 @@ public class UpdatePatient1Activity extends AppCompatActivity implements Adapter
                 message = object.getString("message");
                 success = object.getInt("success");
                 while (success == 1) {
-                    SharedPrefManager.getInstance(getApplicationContext()).setKeyNumberPatients(1);
                     JSONArray patientsJson = object.getJSONArray("patient");
                     JSONObject patientJson = patientsJson.getJSONObject(0);
                     Patient patient = new Patient(
@@ -150,9 +149,7 @@ public class UpdatePatient1Activity extends AppCompatActivity implements Adapter
             } catch (JSONException e) {
                 throw new RuntimeException(e);
             }
-
             return null;
-
         }
 
         @Override
@@ -162,7 +159,7 @@ public class UpdatePatient1Activity extends AppCompatActivity implements Adapter
 
             if (success == 1) {
                 Toast.makeText(UpdatePatient1Activity.this, "Patient updated successfully", Toast.LENGTH_LONG).show();
-                startActivity(new Intent(UpdatePatient1Activity.this, MyPatientsActivity.class));
+                startActivity(new Intent(UpdatePatient1Activity.this, Patient1Activity.class));
 
             } else {
                 Toast.makeText(UpdatePatient1Activity.this, message, Toast.LENGTH_LONG).show();

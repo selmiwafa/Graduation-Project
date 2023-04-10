@@ -1,10 +1,13 @@
-package com.example.pfe.manageMedicine;
+package com.example.pfe.manage_medicine;
 
 import android.Manifest;
 import android.annotation.SuppressLint;
+import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.hardware.Camera;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.SparseArray;
 import android.view.SurfaceHolder;
@@ -19,27 +22,48 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
+import com.example.pfe.JSONParser;
 import com.example.pfe.R;
+import com.example.pfe.SharedPrefManager;
 import com.google.android.gms.vision.CameraSource;
 import com.google.android.gms.vision.Detector;
 import com.google.android.gms.vision.barcode.Barcode;
 import com.google.android.gms.vision.barcode.BarcodeDetector;
 import com.google.android.material.snackbar.Snackbar;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.io.IOException;
 import java.lang.reflect.Field;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.HashMap;
 
 public class BarcodeActivity extends AppCompatActivity {
 
     private static final int CAMERA_PERMISSION_REQUEST = 1;
-
+    JSONParser parser = new JSONParser();
+    private MedicineAdapter.OnItemClickListener mListener;
+    String url = "jdbc:mysql://192.168.43.205:3306/healthbuddy";
+    //String url = "jdbc:mysql://192.168.1.16:3306/healthbuddy";
+    String user = "root";
+    String password = "";
+    int success, number;
+    ProgressDialog dialog;
+    String scannedBarcode;
     private SurfaceView surfaceView;
     private CameraSource cameraSource;
     private BarcodeDetector barcodeDetector;
+    ArrayList<String> myList;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_barcode);
+        //Bundle bundle = getIntent().getExtras();
+        //myList = bundle.getStringArrayList("medecinelist");
 
         surfaceView = findViewById(R.id.surfaceView);
 
@@ -167,12 +191,20 @@ public class BarcodeActivity extends AppCompatActivity {
     }
     private void onBarcodeScanned(Barcode barcode) {
         final String message = "Format: " + barcode.format + "\nValue: " + barcode.rawValue;
+        scannedBarcode = barcode.rawValue;
         runOnUiThread(() -> {
-            Toast.makeText(BarcodeActivity.this, message, Toast.LENGTH_SHORT).show();
-            Intent intent = new Intent(this, AddMedicineActivity.class);
-            intent.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
-            intent.putExtra("key", barcode.rawValue);
-            startActivity(intent);
+            /*if (myList.contains(barcode.rawValue)) {
+                Toast.makeText(BarcodeActivity.this, "Medicine existing!", Toast.LENGTH_LONG).show();
+                Intent intent = new Intent(BarcodeActivity.this, InventoryActivity.class);
+                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                startActivity(intent);
+            } else {*/
+                Toast.makeText(BarcodeActivity.this, message, Toast.LENGTH_SHORT).show();
+                Intent intent = new Intent(this, AddMedicineActivity.class);
+                intent.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
+                intent.putExtra("key", barcode.rawValue);
+                startActivity(intent);
+            //}
         });
     }
     public void goToPreviousActivity(View view) {

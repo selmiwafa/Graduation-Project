@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="16dp"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context=".manage_prescriptions.AddPrescriptionActivity">
+
+    <TextView
+        android:id="@+id/prescription_name_text_view"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Prescription Name:"
+        android:textSize="16sp" />
+
+    <EditText
+        android:id="@+id/prescription_name_edit_text"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/prescription_name_text_view"
+        android:hint="Enter prescription name"
+        android:inputType="text" />
+
+    <TextView
+        android:id="@+id/medicine_text_view"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/prescription_name_edit_text"
+        android:text="Medicine:"
+        android:textSize="16sp" />
+
+    <Spinner
+        android:id="@+id/medicine_spinner"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/medicine_text_view"
+        android:entries="@array/medicine_list" />
+
+    <TextView
+        android:id="@+id/dosage_text_view"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/medicine_spinner"
+        android:text="Dosage:"
+        android:textSize="16sp" />
+
+    <EditText
+        android:id="@+id/dosage_edit_text"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/dosage_text_view"
+        android:hint="Enter dosage"
+        android:inputType="text" />
+
+    <TextView
+        android:id="@+id/frequency_text_view"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/dosage_edit_text"
+        android:text="Frequency:"
+        android:textSize="16sp" />
+
+    <EditText
+        android:id="@+id/frequency_edit_text"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/frequency_text_view"
+        android:hint="Enter frequency"
+        android:inputType="text" />
+
+    <Button
+        android:id="@+id/add_prescription_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/frequency_edit_text"
+        android:layout_centerHorizontal="true"
+        android:background="@drawable/button_login_background"
+        android:text="Add Prescription"
+        android:padding="20dp"/>
+
+</RelativeLayout>

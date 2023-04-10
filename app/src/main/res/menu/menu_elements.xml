@@ -38,6 +38,26 @@
                     android:id="@+id/scan"
                     android:icon="@drawable/camera"
                     android:title="Scan new medicine" />
+                <item
+                    android:id="@+id/add_med"
+                    android:icon="@drawable/simple_plus"
+                    android:title="Add medicine manually" />
+            </group>
+        </menu>
+    </item>
+    <item
+        android:id="@+id/Prescriptions"
+        android:title="Prescriptions">
+        <menu>
+            <group android:checkableBehavior="single">
+                <item
+                    android:title="My prescriptions"
+                    android:icon="@drawable/folder"
+                    android:id="@+id/my_prescriptions" />
+                <item
+                    android:title="Add a prescription"
+                    android:icon="@drawable/simple_plus"
+                    android:id="@+id/add_prescription" />
             </group>
         </menu>
     </item>

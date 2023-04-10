@@ -20,7 +20,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.example.pfe.JSONParser;
 import com.example.pfe.R;
 import com.example.pfe.SharedPrefManager;
-import com.example.pfe.manageMedicine.BarcodeActivity;
+import com.example.pfe.manage_medicine.BarcodeActivity;
 
 import org.json.JSONArray;
 import org.json.JSONException;

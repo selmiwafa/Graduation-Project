@@ -57,7 +57,8 @@
             android:layout_below="@id/toolbar"
             android:layout_marginStart="25dp"
             android:layout_marginEnd="25dp"
-            android:layout_marginBottom="10dp">
+            android:layout_marginBottom="10dp"
+            android:layout_marginTop="20dp">
             <RelativeLayout
                 android:id="@+id/card1"
                 android:layout_width="match_parent"

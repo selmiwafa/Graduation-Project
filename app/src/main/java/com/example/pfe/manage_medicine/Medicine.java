@@ -1,4 +1,4 @@
-package com.example.pfe.manageMedicine;
+package com.example.pfe.manage_medicine;
 
 public class Medicine {
     private String barcode;
@@ -6,7 +6,6 @@ public class Medicine {
     private int quantity;
     private String description;
     private String exp_date;
-    private boolean isSelected;
     public Medicine (
             String barcode,
             String med_name,
@@ -61,11 +60,4 @@ public class Medicine {
         this.description = description;
     }
 
-    public boolean isSelected() {
-        return isSelected;
-    }
-
-    public void setSelected(boolean selected) {
-        isSelected = selected;
-    }
 }

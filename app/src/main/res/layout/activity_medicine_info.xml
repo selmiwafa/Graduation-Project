@@ -3,8 +3,7 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="500dp"
-    tools:context=".manageMedicine.MedicineInfoActivity">
+    android:layout_height="300dp">
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -47,6 +46,30 @@
 
         <TextView
             android:id="@+id/quantityValueTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="" />
+        <TextView
+            android:id="@+id/ExpDateTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Exipration date: "
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/ExpDateValueTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="" />
+        <TextView
+            android:id="@+id/DescTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Description: "
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/DescValueTextView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="" />

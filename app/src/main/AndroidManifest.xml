@@ -14,22 +14,28 @@
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
         <activity
+            android:name=".manage_medicine.UpdateMedicineActivity"
+            android:exported="false" />
+        <activity
+            android:name=".manage_prescriptions.AddPrescriptionActivity"
+            android:exported="false" />
+        <activity
+            android:name=".manage_prescriptions.MyPrescriptionsActivity"
+            android:exported="false" />
+        <activity
             android:name=".manage_patient_account.UpdatePatient2Activity"
             android:exported="false" />
         <activity
             android:name=".manage_patient_account.UpdatePatient1Activity"
             android:exported="false" />
         <activity
-            android:name=".manageMedicine.MedicineInfoActivity"
+            android:name=".manage_medicine.InventoryActivity"
             android:exported="false" />
         <activity
-            android:name=".manageMedicine.InventoryActivity"
+            android:name=".manage_medicine.AddMedicineActivity"
             android:exported="false" />
         <activity
-            android:name=".manageMedicine.AddMedicineActivity"
-            android:exported="false" />
-        <activity
-            android:name=".manageMedicine.BarcodeActivity"
+            android:name=".manage_medicine.BarcodeActivity"
             android:exported="false" />
         <activity
             android:name=".manage_patient_account.Patient2Activity"

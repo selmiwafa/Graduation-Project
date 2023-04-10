@@ -1,15 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
+xmlns:app="http://schemas.android.com/apk/res-auto"
+xmlns:tools="http://schemas.android.com/tools"
+android:layout_width="match_parent"
+android:layout_height="match_parent"
+tools:context=".manage_medicine.UpdateMedicineActivity">
+<RelativeLayout
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".manage_medicine.AddMedicineActivity">
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="@android:color/white"
-        android:layout_marginTop="40dp">
+    android:background="@android:color/white"
+    android:layout_marginTop="40dp">
     <ImageView
         android:id="@+id/logo"
         android:layout_width="200dp"
@@ -135,12 +135,12 @@
                 android:layout_marginEnd="30dp"
                 android:onClick="increaseInteger"/>
 
-        <RelativeLayout
-            android:layout_width="wrap_content"
-            android:layout_height="1dp"
-            android:layout_marginStart="40dp"
-            android:layout_marginEnd="40dp"
-            android:background="#696969" />
+            <RelativeLayout
+                android:layout_width="wrap_content"
+                android:layout_height="1dp"
+                android:layout_marginStart="40dp"
+                android:layout_marginEnd="40dp"
+                android:background="#696969" />
         </RelativeLayout>
 
         <EditText
@@ -204,31 +204,31 @@
             android:layout_marginEnd="30dp"
             android:textSize="15sp"
             android:textStyle="bold"/>
-        </LinearLayout>
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
-            android:paddingBottom="60dp"
-            android:background="#696969">
-            <Button
-                android:layout_width="150dp"
-                android:layout_height="50dp"
-                android:layout_marginStart="30dp"
-                android:layout_marginTop="15dp"
-                android:text="Delete"
-                android:onClick="back"
-                android:background="@drawable/button_login_background"/>
-            <Button
-                android:id="@+id/saveBtn"
-                android:layout_width="150dp"
-                android:layout_height="50dp"
-                android:layout_alignParentEnd="true"
-                android:layout_marginEnd="30dp"
-                android:layout_marginTop="15dp"
-                android:text="Save &amp; Close"
-                android:background="@drawable/button_signin_background"/>
-        </RelativeLayout>
-
+    </LinearLayout>
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:paddingBottom="60dp"
+        android:background="#696969">
+        <Button
+            android:layout_width="150dp"
+            android:layout_height="50dp"
+            android:layout_marginStart="30dp"
+            android:layout_marginTop="15dp"
+            android:text="Delete"
+            android:onClick="delete"
+            android:background="@drawable/button_login_background"/>
+        <Button
+            android:id="@+id/saveBtn"
+            android:layout_width="150dp"
+            android:layout_height="50dp"
+            android:layout_alignParentEnd="true"
+            android:layout_marginEnd="30dp"
+            android:layout_marginTop="15dp"
+            android:text="Save &amp; Close"
+            android:background="@drawable/button_signin_background"/>
     </RelativeLayout>
+
+</RelativeLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

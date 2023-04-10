@@ -12,7 +12,6 @@ import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.WindowManager;
-import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -28,13 +27,13 @@ import androidx.drawerlayout.widget.DrawerLayout;
 
 import com.example.pfe.HomepageActivity;
 import com.example.pfe.JSONParser;
-import com.example.pfe.manage_user_account.LoginActivity;
+import com.example.pfe.manage_medicine.AddMedicineActivity;
+import com.example.pfe.manage_prescriptions.MyPrescriptionsActivity;
 import com.example.pfe.manage_user_account.ManageAccountActivity;
 import com.example.pfe.R;
 import com.example.pfe.SharedPrefManager;
-import com.example.pfe.manageMedicine.BarcodeActivity;
-import com.example.pfe.manageMedicine.InventoryActivity;
-import com.example.pfe.manage_user_account.User;
+import com.example.pfe.manage_medicine.BarcodeActivity;
+import com.example.pfe.manage_medicine.InventoryActivity;
 import com.google.android.material.navigation.NavigationView;
 
 import org.json.JSONArray;
@@ -196,6 +195,14 @@ public class MyPatientsActivity extends AppCompatActivity implements NavigationV
                 break;
             case (R.id.inventory):
                 intent = new Intent(MyPatientsActivity.this, InventoryActivity.class);
+                startActivity(intent);
+                break;
+            case (R.id.add_med):
+                intent = new Intent(MyPatientsActivity.this, AddMedicineActivity.class);
+                startActivity(intent);
+                break;
+            case (R.id.my_prescriptions):
+                intent = new Intent(MyPatientsActivity.this, MyPrescriptionsActivity.class);
                 startActivity(intent);
                 break;
         }

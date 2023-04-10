@@ -55,7 +55,8 @@
         app:menu="@menu/menu_elements"
         android:id="@+id/nav_menu"
         app:headerLayout="@layout/menu_header"
-        android:layout_gravity="start" />
+        android:layout_gravity="start"
+        android:paddingBottom="40dp"/>
 
 
 </androidx.drawerlayout.widget.DrawerLayout>

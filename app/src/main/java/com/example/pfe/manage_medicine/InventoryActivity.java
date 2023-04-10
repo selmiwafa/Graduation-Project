@@ -1,7 +1,9 @@
-package com.example.pfe.manageMedicine;
+package com.example.pfe.manage_medicine;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 
@@ -13,13 +15,16 @@ import android.view.View;
 import android.view.WindowManager;
 
 import com.example.pfe.HomepageActivity;
+import com.example.pfe.manage_patient_account.AddPatientActivity;
 import com.example.pfe.manage_patient_account.MyPatientsActivity;
 import com.example.pfe.R;
+import com.example.pfe.manage_prescriptions.MyPrescriptionsActivity;
 import com.google.android.material.navigation.NavigationView;
 
 public class InventoryActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
     DrawerLayout drawerLayout;
     NavigationView navigationView;
+    Toolbar toolbar;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -27,7 +32,7 @@ public class InventoryActivity extends AppCompatActivity implements NavigationVi
         getWindow().setStatusBarColor(Color.TRANSPARENT);
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE);
         setContentView(R.layout.activity_inventory);
-
+        createNavbar();
         getSupportFragmentManager().beginTransaction()
                 .add(R.id.fragment_container, new MedicineList())
                 .commit();
@@ -39,6 +44,19 @@ public class InventoryActivity extends AppCompatActivity implements NavigationVi
         } else {
             super.onBackPressed();
         }
+    }
+    public void createNavbar() {
+        drawerLayout = findViewById(R.id.drawerlayout);
+        navigationView = findViewById(R.id.nav_menu);
+        toolbar = findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayShowTitleEnabled(false);
+        navigationView.bringToFront();
+        ActionBarDrawerToggle toggle;
+        toggle = new ActionBarDrawerToggle(this, drawerLayout, toolbar, R.string.open, R.string.close);
+        drawerLayout.addDrawerListener(toggle);
+        navigationView.setNavigationItemSelectedListener(this);
+        toggle.syncState();
     }
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
@@ -56,6 +74,14 @@ public class InventoryActivity extends AppCompatActivity implements NavigationVi
                 startActivity(intent);
                 break;
             case (R.id.inventory):
+                break;
+            case (R.id.add_med):
+                intent = new Intent(InventoryActivity.this, AddMedicineActivity.class);
+                startActivity(intent);
+                break;
+            case (R.id.my_prescriptions):
+                intent = new Intent(InventoryActivity.this, MyPrescriptionsActivity.class);
+                startActivity(intent);
                 break;
         }
         drawerLayout.closeDrawer(GravityCompat.START);

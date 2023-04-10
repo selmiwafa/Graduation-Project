@@ -1,4 +1,4 @@
-package com.example.pfe.manageMedicine;
+package com.example.pfe.manage_medicine;
 
 import android.annotation.SuppressLint;
 import android.app.AlertDialog;
@@ -63,7 +63,6 @@ public class MedicineAdapter extends RecyclerView.Adapter<MedicineAdapter.ViewHo
 
         holder.medName.setText(medicine.getMed_name());
         holder.barcode.setText(medicine.getBarcode());
-        holder.quantity.setText(String.valueOf(medicine.getQuantity()));
         holder.deleteBtn.setOnClickListener(v -> {
             itemPosition = holder.getAdapterPosition();
             new Delete().execute();
@@ -80,19 +79,29 @@ public class MedicineAdapter extends RecyclerView.Adapter<MedicineAdapter.ViewHo
                 TextView medNameTv = dialogView.findViewById(R.id.medNameValueTextView);
                 TextView barcodeTv = dialogView.findViewById(R.id.barcodeValueTextView);
                 TextView quantityTv = dialogView.findViewById(R.id.quantityValueTextView);
+                TextView expTv = dialogView.findViewById(R.id.ExpDateValueTextView);
+                TextView descTv = dialogView.findViewById(R.id.DescValueTextView);
+
 
                 medNameTv.setText(medicine.getMed_name());
                 barcodeTv.setText(medicine.getBarcode());
                 quantityTv.setText(String.valueOf(medicine.getQuantity()));
+                expTv.setText(medicine.getExp_date());
+                descTv.setText(medicine.getDescription());
 
                 builder.setView(dialogView)
                         .setTitle("Medicine Information")
-                        .setPositiveButton("OK", new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int which) {
-                                dialog.dismiss();
-                            }
-                        });
+                        .setPositiveButton("OK", (dialog, which) -> dialog.dismiss())
+                        .setNeutralButton("Edit details", (dialog, which) -> {
+                            Intent intent = new Intent(mContext, UpdateMedicineActivity.class);
+                            intent.putExtra("barcode",medicine.getBarcode());
+                            intent.putExtra("med_name",medicine.getMed_name());
+                            intent.putExtra("quantity",medicine.getQuantity());
+                            intent.putExtra("exp_date",medicine.getExp_date());
+                            intent.putExtra("description",medicine.getDescription());
+                            mContext.startActivity(intent);
+                        })
+                        .setIcon(R.drawable.help);
 
                 AlertDialog dialog = builder.create();
                 dialog.show();
@@ -123,7 +132,6 @@ public class MedicineAdapter extends RecyclerView.Adapter<MedicineAdapter.ViewHo
     }
     public class ViewHolder extends RecyclerView.ViewHolder {
         private final TextView medName;
-        private final TextView quantity;
         private final TextView barcode;
         public ImageButton deleteBtn;
 
@@ -132,7 +140,6 @@ public class MedicineAdapter extends RecyclerView.Adapter<MedicineAdapter.ViewHo
             deleteBtn = itemView.findViewById(R.id.deleteBtn);
             medName = itemView.findViewById(R.id.medName);
             barcode = itemView.findViewById(R.id.barcode);
-            quantity = itemView.findViewById(R.id.quantity);
 
             itemView.setOnClickListener(v -> {
                 if (mListener != null) {

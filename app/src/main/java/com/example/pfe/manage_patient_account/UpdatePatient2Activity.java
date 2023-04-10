@@ -80,9 +80,9 @@ public class UpdatePatient2Activity extends AppCompatActivity implements Adapter
         edRelationship = findViewById(R.id.new_relationship2);
         btnUpdatePatient = findViewById(R.id.updatePatientBtn2);
         edName.setText(SharedPrefManager.getInstance(getApplicationContext()).getPatient2().getName());
-        edAge.setText(SharedPrefManager.getInstance(getApplicationContext()).getPatient2().getAge());
+        String age = String.valueOf(SharedPrefManager.getInstance(getApplicationContext()).getPatient2().getAge());
+        edAge.setText(age);
     }
-
     @Override
     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
         switch (position) {
@@ -102,7 +102,6 @@ public class UpdatePatient2Activity extends AppCompatActivity implements Adapter
                 break;
         }
     }
-
     @Override
     public void onNothingSelected(AdapterView<?> parent) {
 
@@ -134,8 +133,6 @@ public class UpdatePatient2Activity extends AppCompatActivity implements Adapter
                 message = object.getString("message");
                 success = object.getInt("success");
                 while (success == 1) {
-                    number = object.getInt("number");
-                    SharedPrefManager.getInstance(getApplicationContext()).setKeyNumberPatients(2);
                     JSONArray patientsJson = object.getJSONArray("patient");
                     JSONObject patient2Json = patientsJson.getJSONObject(0);
                     Patient patient2 = new Patient(
@@ -152,9 +149,7 @@ public class UpdatePatient2Activity extends AppCompatActivity implements Adapter
             } catch (JSONException e) {
                 throw new RuntimeException(e);
             }
-
             return null;
-
         }
 
         @Override
