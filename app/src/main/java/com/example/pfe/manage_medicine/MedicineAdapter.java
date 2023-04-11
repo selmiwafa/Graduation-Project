@@ -59,7 +59,7 @@ public class MedicineAdapter extends RecyclerView.Adapter<MedicineAdapter.ViewHo
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        medicine = medicineList.get(position);
+        Medicine medicine = medicineList.get(position);
 
         holder.medName.setText(medicine.getMed_name());
         holder.barcode.setText(medicine.getBarcode());
@@ -70,7 +70,7 @@ public class MedicineAdapter extends RecyclerView.Adapter<MedicineAdapter.ViewHo
         });
         holder.itemView.setOnClickListener(v -> {
             if (mListener != null) {
-                mListener.onItemClick(medicineList.get(position));
+                mListener.onItemClick(medicine);
 
                 AlertDialog.Builder builder = new AlertDialog.Builder(mContext);
                 LayoutInflater inflater = LayoutInflater.from(mContext);
@@ -82,7 +82,7 @@ public class MedicineAdapter extends RecyclerView.Adapter<MedicineAdapter.ViewHo
                 TextView expTv = dialogView.findViewById(R.id.ExpDateValueTextView);
                 TextView descTv = dialogView.findViewById(R.id.DescValueTextView);
 
-
+                // Use the current item instead of the global medicine object
                 medNameTv.setText(medicine.getMed_name());
                 barcodeTv.setText(medicine.getBarcode());
                 quantityTv.setText(String.valueOf(medicine.getQuantity()));

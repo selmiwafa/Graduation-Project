@@ -14,7 +14,19 @@
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true" >
         <activity
-            android:name=".AddPresMedicineActivity"
+            android:name=".manage_medicine.UpdateMedicineActivity"
+            android:exported="false" />
+        <activity
+            android:name=".manage_analyses.DeleteAnalysisActivity"
+            android:exported="false" />
+        <activity
+            android:name=".manage_analyses.AddAnalysisActivity"
+            android:exported="false" />
+        <activity
+            android:name=".manage_analyses.MyAnalysesActivity"
+            android:exported="false" />
+        <activity
+            android:name=".manage_prescriptions.AddPresMedicineActivity"
             android:exported="false" />
         <activity
             android:name=".manage_prescriptions.MedicinePresListActivity"
