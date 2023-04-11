@@ -48,7 +48,6 @@ public class UpdateMedicineActivity extends AppCompatActivity {
     String user = "root";
     String password = "";
     int success;
-    String message;
     int minteger;
     DatePickerDialog.OnDateSetListener setListener;
     @Override

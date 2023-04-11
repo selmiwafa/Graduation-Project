@@ -25,6 +25,7 @@ import androidx.core.content.ContextCompat;
 import com.example.pfe.JSONParser;
 import com.example.pfe.R;
 import com.example.pfe.SharedPrefManager;
+import com.example.pfe.manage_analyses.AddAnalysisActivity;
 import com.google.android.gms.vision.CameraSource;
 import com.google.android.gms.vision.Detector;
 import com.google.android.gms.vision.barcode.Barcode;
@@ -224,6 +225,9 @@ public class BarcodeActivity extends AppCompatActivity {
                 onBarcodeScanned(barcodes.valueAt(0));
             }
         }
+    }
+    public void OpenAddMedicine(View view) {
+        startActivity(new Intent(BarcodeActivity.this, AddMedicineActivity.class));
     }
 }
 
