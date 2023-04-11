@@ -18,6 +18,7 @@ import com.example.pfe.HomepageActivity;
 import com.example.pfe.manage_patient_account.AddPatientActivity;
 import com.example.pfe.manage_patient_account.MyPatientsActivity;
 import com.example.pfe.R;
+import com.example.pfe.manage_prescriptions.AddPrescriptionActivity;
 import com.example.pfe.manage_prescriptions.MyPrescriptionsActivity;
 import com.google.android.material.navigation.NavigationView;
 
@@ -81,6 +82,10 @@ public class InventoryActivity extends AppCompatActivity implements NavigationVi
                 break;
             case (R.id.my_prescriptions):
                 intent = new Intent(InventoryActivity.this, MyPrescriptionsActivity.class);
+                startActivity(intent);
+                break;
+            case (R.id.add_prescription):
+                intent = new Intent(InventoryActivity.this, AddPrescriptionActivity.class);
                 startActivity(intent);
                 break;
         }

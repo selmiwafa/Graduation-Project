@@ -4,78 +4,133 @@
     android:layout_height="match_parent"
     android:padding="16dp"
     xmlns:tools="http://schemas.android.com/tools"
+    android:layout_marginTop="40dp"
     tools:context=".manage_prescriptions.AddPrescriptionActivity">
 
-    <TextView
-        android:id="@+id/prescription_name_text_view"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Prescription Name:"
-        android:textSize="16sp" />
 
+    <ImageView
+        android:id="@+id/logo"
+        android:layout_width="230dp"
+        android:layout_height="50dp"
+        android:layout_centerHorizontal="true"
+        android:src="@drawable/hbtext"
+        android:contentDescription="@string/logo" />
+
+    <ImageButton
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:src="@drawable/backarrow"
+        android:background="@android:color/transparent"
+        android:onClick="backMypatients" />
+
+    <TextView
+        android:id="@+id/addPresText"
+        android:layout_width="280dp"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/logo"
+        android:text="Add prescription details"
+        android:layout_centerHorizontal="true"
+        android:textSize="25sp"
+        android:gravity="center"
+        android:layout_marginTop="30dp" />
     <EditText
         android:id="@+id/prescription_name_edit_text"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/prescription_name_text_view"
-        android:hint="Enter prescription name"
-        android:inputType="text" />
-
-    <TextView
-        android:id="@+id/medicine_text_view"
+        android:layout_marginStart="30dp"
+        android:layout_marginTop="50dp"
+        android:layout_marginEnd="30dp"
+        android:autofillHints=""
+        android:background="@android:color/transparent"
+        android:hint="Prescription name"
+        android:inputType="text"
+        android:padding="15dp"
+        android:layout_below="@+id/addPresText"
+        android:textColor="#191919"
+        android:textColorHint="#696969"
+        android:textStyle="bold"
+        tools:ignore="VisualLintTextFieldSize" />
+    <RelativeLayout
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/prescription_name_edit_text"
-        android:text="Medicine:"
-        android:textSize="16sp" />
-
-    <Spinner
-        android:id="@+id/medicine_spinner"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/medicine_text_view"
-        android:entries="@array/medicine_list" />
-
-    <TextView
-        android:id="@+id/dosage_text_view"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/medicine_spinner"
-        android:text="Dosage:"
-        android:textSize="16sp" />
+        android:layout_height="1dp"
+        android:layout_marginStart="40dp"
+        android:layout_marginEnd="40dp"
+        android:layout_below="@id/prescription_name_edit_text"
+        android:background="#696969" />
 
     <EditText
-        android:id="@+id/dosage_edit_text"
+        android:id="@+id/edStartDate"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/dosage_text_view"
-        android:hint="Enter dosage"
-        android:inputType="text" />
+        android:layout_marginStart="30dp"
+        android:layout_marginTop="30dp"
+        android:layout_marginEnd="30dp"
+        android:autofillHints=""
+        android:background="@android:color/transparent"
+        android:drawableEnd="@drawable/calendar"
+        android:drawableTint="#696969"
+        android:hint="Start Date"
+        android:focusableInTouchMode="true"
+        android:cursorVisible="false"
+        android:focusable="false"
+        android:padding="15dp"
+        android:textColor="#191919"
+        android:layout_below="@id/prescription_name_edit_text"
+        android:textColorHint="#696969"
+        android:textStyle="bold"
+        tools:ignore="VisualLintTextFieldSize" />
 
-    <TextView
-        android:id="@+id/frequency_text_view"
+
+    <RelativeLayout
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/dosage_edit_text"
-        android:text="Frequency:"
-        android:textSize="16sp" />
-
+        android:layout_height="1dp"
+        android:layout_marginStart="40dp"
+        android:layout_below="@id/edStartDate"
+        android:layout_marginEnd="40dp"
+        android:background="#696969" />
     <EditText
-        android:id="@+id/frequency_edit_text"
+        android:id="@+id/edEndDate"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/frequency_text_view"
-        android:hint="Enter frequency"
-        android:inputType="text" />
+        android:layout_marginStart="30dp"
+        android:layout_marginTop="30dp"
+        android:layout_marginEnd="30dp"
+        android:autofillHints=""
+        android:background="@android:color/transparent"
+        android:drawableEnd="@drawable/calendar"
+        android:drawableTint="#696969"
+        android:hint="End Date"
+        android:focusableInTouchMode="true"
+        android:cursorVisible="false"
+        android:focusable="false"
+        android:padding="15dp"
+        android:textColor="#191919"
+        android:layout_below="@id/edStartDate"
+        android:textColorHint="#696969"
+        android:textStyle="bold"
+        tools:ignore="VisualLintTextFieldSize" />
 
-    <Button
-        android:id="@+id/add_prescription_button"
+
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="1dp"
+        android:layout_marginStart="40dp"
+        android:layout_below="@id/edEndDate"
+        android:layout_marginEnd="40dp"
+        android:background="#696969" />
+    <ImageButton
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/frequency_edit_text"
-        android:layout_centerHorizontal="true"
-        android:background="@drawable/button_login_background"
-        android:text="Add Prescription"
-        android:padding="20dp"/>
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginBottom="60dp"
+        android:layout_marginEnd="15dp"
+        android:textSize="24sp"
+        android:textColor="@color/darkgreen"
+        android:src="@drawable/arrow_right"
+        android:padding="20dp"
+        android:focusable="true"
+        android:clickable="true"
+        android:background="@android:color/transparent"/>
 
 </RelativeLayout>

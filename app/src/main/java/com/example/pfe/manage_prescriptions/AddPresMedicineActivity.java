@@ -8,7 +8,7 @@ import android.view.WindowManager;
 
 import com.example.pfe.R;
 
-public class AddPrescriptionActivity extends AppCompatActivity {
+public class AddPresMedicineActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -16,6 +16,6 @@ public class AddPrescriptionActivity extends AppCompatActivity {
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS, WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS);
         getWindow().setStatusBarColor(Color.TRANSPARENT);
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE);
-        setContentView(R.layout.activity_add_prescription);
+        setContentView(R.layout.activity_add_pres_medicine);
     }
 }

@@ -36,7 +36,7 @@ public class LoginActivity extends AppCompatActivity {
     private EditText edPasswordLogin;
     ProgressDialog dialog;
     JSONParser parser = new JSONParser();
-    int success, number = 0;
+    int success, number;
     String message;
     String url = "jdbc:mysql://192.168.43.205:3306/healthbuddy";
     //String url = "jdbc:mysql://192.168.1.16:3306/healthbuddy";
@@ -84,27 +84,18 @@ public class LoginActivity extends AppCompatActivity {
 
         @Override
         protected String doInBackground(String... strings) {
-
+            number = 0;
             HashMap<String, String> map = new HashMap<>();
             map.put("email", edEmailLogin.getText().toString());
             map.put("password", edPasswordLogin.getText().toString());
             try {
-            /*
-            GetIPAdress ipAdress = new GetIPAdress();
-            String ip = ipAdress.getIPadress();
-
-            String url = "jdbc:mysql://" + ip + ":3306/healthbuddy";
-            String url2 = "http://"+ ip +"/healthbuddy/user/log.php";
-            Class.forName("com.mysql.jdbc.Driver");
-            Connection connection = DriverManager.getConnection(url, user, password);
-            JSONObject object = parser.makeHttpRequest(url, "GET", map);*/
-
             Class.forName("com.mysql.jdbc.Driver");
             Connection connection = DriverManager.getConnection(url, user, password);
             //JSONObject object = parser.makeHttpRequest("http://192.168.1.16/healthbuddy/user/log.php", "GET", map);
             JSONObject object = parser.makeHttpRequest("http://192.168.43.205/healthbuddy/user/log.php", "GET", map);
             success = object.getInt("success");
             message = object.getString("message");
+            number = object.getInt("number");
             while (success == 1) {
                 JSONArray userJson = object.getJSONArray("user");
                 JSONObject jsonObject = userJson.getJSONObject(0);
@@ -116,7 +107,6 @@ public class LoginActivity extends AppCompatActivity {
                         jsonObject.getString("adress")
                 );
                 SharedPrefManager.getInstance(getApplicationContext()).userLogin(user);
-                number = object.getInt("number");
                 if (number == 1) {
                     SharedPrefManager.getInstance(getApplicationContext()).setKeyNumberPatients(1);
                     JSONArray patientsJson = object.getJSONArray("patients");
@@ -148,9 +138,7 @@ public class LoginActivity extends AppCompatActivity {
                 break;
                 }
                 connection.close();
-            } catch (ClassNotFoundException e) {
-                e.printStackTrace();
-            } catch (SQLException e) {
+            } catch (ClassNotFoundException | SQLException e) {
                 e.printStackTrace();
             } catch (JSONException ex) {
                 throw new RuntimeException(ex);

@@ -23,6 +23,7 @@ import com.example.pfe.manage_medicine.BarcodeActivity;
 import com.example.pfe.manage_medicine.InventoryActivity;
 import com.example.pfe.manage_patient_account.AddPatientActivity;
 import com.example.pfe.manage_patient_account.MyPatientsActivity;
+import com.example.pfe.manage_prescriptions.AddPrescriptionActivity;
 import com.example.pfe.manage_prescriptions.MyPrescriptionsActivity;
 import com.example.pfe.manage_user_account.ManageAccountActivity;
 import com.google.android.material.navigation.NavigationView;
@@ -122,6 +123,11 @@ public class HomepageActivity extends AppCompatActivity implements NavigationVie
                 intent = new Intent(HomepageActivity.this, MyPrescriptionsActivity.class);
                 startActivity(intent);
                 break;
+            case (R.id.add_prescription):
+                intent = new Intent(HomepageActivity.this, AddPrescriptionActivity.class);
+                startActivity(intent);
+                break;
+
         }
         drawerLayout.closeDrawer(GravityCompat.START);
         navigationView.setCheckedItem(R.id.home);

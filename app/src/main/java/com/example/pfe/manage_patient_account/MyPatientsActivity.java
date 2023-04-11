@@ -28,6 +28,7 @@ import androidx.drawerlayout.widget.DrawerLayout;
 import com.example.pfe.HomepageActivity;
 import com.example.pfe.JSONParser;
 import com.example.pfe.manage_medicine.AddMedicineActivity;
+import com.example.pfe.manage_prescriptions.AddPrescriptionActivity;
 import com.example.pfe.manage_prescriptions.MyPrescriptionsActivity;
 import com.example.pfe.manage_user_account.ManageAccountActivity;
 import com.example.pfe.R;
@@ -203,6 +204,10 @@ public class MyPatientsActivity extends AppCompatActivity implements NavigationV
                 break;
             case (R.id.my_prescriptions):
                 intent = new Intent(MyPatientsActivity.this, MyPrescriptionsActivity.class);
+                startActivity(intent);
+                break;
+            case (R.id.add_prescription):
+                intent = new Intent(MyPatientsActivity.this, AddPrescriptionActivity.class);
                 startActivity(intent);
                 break;
         }
