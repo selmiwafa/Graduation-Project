@@ -61,4 +61,80 @@
             </group>
         </menu>
     </item>
+    <item
+        android:id="@+id/Analyses"
+        android:title="Analysis">
+        <menu>
+            <group android:checkableBehavior="single">
+                <item
+                    android:title="My analyses"
+                    android:icon="@drawable/folder"
+                    android:id="@+id/my_analyses" />
+                <item
+                    android:id="@+id/add_analysis"
+                    android:icon="@drawable/simple_plus"
+                    android:title="Add an analysis" />
+            </group>
+        </menu>
+    </item>
+    <item
+        android:id="@+id/Localisation"
+        android:title="Localisation">
+        <menu>
+            <group android:checkableBehavior="single">
+                <item
+                    android:title="Locate nearby doctors"
+                    android:icon="@drawable/pin"
+                    android:id="@+id/locate_doctors" />
+                <item
+                    android:id="@+id/locate_pharmacies"
+                    android:icon="@drawable/pin"
+                    android:title="Locate nearby pharmacies" />
+            </group>
+        </menu>
+    </item>
+    <item
+        android:id="@+id/appointments"
+        android:title="Appointments">
+        <menu>
+            <group android:checkableBehavior="single">
+                <item
+                    android:title="Make a doctor appointment reminder"
+                    android:icon="@drawable/calendar"
+                    android:id="@+id/make_doctor_appointment" />
+                <item
+                    android:title="Make an analysis reminder"
+                    android:icon="@drawable/calendar"
+                    android:id="@+id/make_analysis_appointment" />
+            </group>
+        </menu>
+    </item>
+    <item
+        android:id="@+id/donations"
+        android:title="Donations">
+        <menu>
+            <group android:checkableBehavior="single">
+                <item
+                    android:title="Request a donation"
+                    android:icon="@drawable/help"
+                    android:id="@+id/request_donation" />
+                <item
+                    android:id="@+id/propose_donation"
+                    android:icon="@drawable/check_circle"
+                    android:title="Propose a donation" />
+            </group>
+        </menu>
+    </item>
+    <item
+        android:id="@+id/diet"
+        android:title="Diet">
+        <menu>
+            <group android:checkableBehavior="single">
+                <item
+                    android:title="Propose a diet"
+                    android:icon="@drawable/calendar"
+                    android:id="@+id/propose_diet" />
+            </group>
+        </menu>
+    </item>
 </menu>

@@ -85,8 +85,44 @@ public class InventoryActivity extends AppCompatActivity implements NavigationVi
                 startActivity(intent);
                 break;
             case (R.id.add_prescription):
-                intent = new Intent(InventoryActivity.this, AddPrescriptionActivity.class);
-                startActivity(intent);
+                //intent = new Intent(InventoryActivity.this, AddPrescriptionActivity.class);
+                //startActivity(intent);
+                break;
+            case (R.id.my_analyses):
+                //intent = new Intent(InventoryActivity.this, AddPrescriptionActivity.class);
+                //startActivity(intent);
+                break;
+            case (R.id.add_analysis):
+                //intent = new Intent(InventoryActivity.this, AddPrescriptionActivity.class);
+                //startActivity(intent);
+                break;
+            case (R.id.locate_doctors):
+                //intent = new Intent(InventoryActivity.this, AddPrescriptionActivity.class);
+                //startActivity(intent);
+                break;
+            case (R.id.locate_pharmacies):
+                //intent = new Intent(InventoryActivity.this, AddPrescriptionActivity.class);
+                //startActivity(intent);
+                break;
+            case (R.id.make_doctor_appointment):
+                //intent = new Intent(InventoryActivity.this, AddPrescriptionActivity.class);
+                //startActivity(intent);
+                break;
+            case (R.id.make_analysis_appointment):
+                //intent = new Intent(InventoryActivity.this, AddPrescriptionActivity.class);
+                //startActivity(intent);
+                break;
+            case (R.id.request_donation):
+                //intent = new Intent(InventoryActivity.this, AddPrescriptionActivity.class);
+                //startActivity(intent);
+                break;
+            case (R.id.propose_donation):
+                //intent = new Intent(InventoryActivity.this, AddPrescriptionActivity.class);
+                //startActivity(intent);
+                break;
+            case (R.id.propose_diet):
+                //intent = new Intent(InventoryActivity.this, AddPrescriptionActivity.class);
+                //startActivity(intent);
                 break;
         }
         drawerLayout.closeDrawer(GravityCompat.START);
