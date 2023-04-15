@@ -69,15 +69,15 @@ public class AddPresMedDetails extends AppCompatActivity {
         edPeriod.setText("" + number);
     }
     public void increaseTpw(View view) {
-        period = period + 1;
-        displayTpw(period);
+        tpw = tpw + 1;
+        displayTpw(tpw);
 
     }
     public void decreaseTpw(View view) {
-        if (period>0) {
-            period = period - 1;
+        if (tpw>0) {
+            tpw = tpw - 1;
         }
-        displayTpw(period);
+        displayTpw(tpw);
     }
     private void displayTpw(int number) {
         edTpw = (TextView) findViewById(R.id.edtpw);
