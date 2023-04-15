@@ -18,7 +18,7 @@ import java.util.Calendar;
 public class AddPrescriptionActivity extends AppCompatActivity {
     EditText edStartDate, edEndDate, edPresName;
     String id;
-    DatePickerDialog.OnDateSetListener setListener;
+    DatePickerDialog.OnDateSetListener setListener, setListener2;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -26,6 +26,8 @@ public class AddPrescriptionActivity extends AppCompatActivity {
         getWindow().setStatusBarColor(Color.TRANSPARENT);
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE);
         setContentView(R.layout.activity_add_prescription);
+
+        edStartDate = findViewById(R.id.edStartDate);
         edStartDate.setOnClickListener(v -> pickDate());
         setListener = (view, year, month, day) -> {
             String date = day + "/" + month + "/" + year;
@@ -34,8 +36,9 @@ public class AddPrescriptionActivity extends AppCompatActivity {
             int m = Calendar.getInstance().get(Calendar.MONTH);
             int d = Calendar.getInstance().get(Calendar.DAY_OF_MONTH);
         };
-        edEndDate.setOnClickListener(v -> pickDate());
-        setListener = (view, year, month, day) -> {
+        edEndDate = findViewById(R.id.edEndDate);
+        edEndDate.setOnClickListener(v -> pickDate2());
+        setListener2 = (view, year, month, day) -> {
             String date = day + "/" + month + "/" + year;
             edEndDate.setText(date);
             int y = (Calendar.getInstance().get(Calendar.YEAR));
@@ -64,6 +67,17 @@ public class AddPrescriptionActivity extends AppCompatActivity {
                 AddPrescriptionActivity.this
                 , android.R.style.Theme_Holo_Light_Dialog_MinWidth
                 , setListener, y, m, d);
+        datePickerDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        datePickerDialog.show();
+    }
+    public void pickDate2(){
+        int y = Calendar.getInstance().get(Calendar.YEAR) ;
+        int m = Calendar.getInstance().get(Calendar.MONTH);
+        int d = Calendar.getInstance().get(Calendar.DAY_OF_MONTH);
+        DatePickerDialog datePickerDialog = new DatePickerDialog(
+                AddPrescriptionActivity.this
+                , android.R.style.Theme_Holo_Light_Dialog_MinWidth
+                , setListener2, y, m, d);
         datePickerDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
         datePickerDialog.show();
     }

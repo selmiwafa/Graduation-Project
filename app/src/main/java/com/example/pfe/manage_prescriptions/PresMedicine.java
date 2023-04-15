@@ -24,6 +24,7 @@ public class PresMedicine {
         this.other=other;
     }
 
+
     public String getMed_name() {
         return med_name;
     }

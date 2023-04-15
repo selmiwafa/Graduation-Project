@@ -69,7 +69,7 @@ tools:context=".manage_prescriptions.AddPresMedDetails">
             android:layout_marginTop="30dp"
             android:layout_marginEnd="30dp">
             <EditText
-                android:id="@+id/edMedName"
+                android:id="@+id/edFrequency"
                 android:layout_width="200dp"
                 android:layout_height="wrap_content"
                 android:autofillHints=""
@@ -109,16 +109,16 @@ tools:context=".manage_prescriptions.AddPresMedDetails">
             android:layout_height="wrap_content">
 
             <ImageButton
-                android:id="@+id/decrease"
+                android:id="@+id/decrease_p"
                 android:layout_width="60dp"
                 android:layout_height="60dp"
                 android:background="@android:color/transparent"
                 android:src="@drawable/minus"
                 android:layout_marginStart="30dp"
-                android:onClick="decreaseInteger"/>
+                android:onClick="decreasePeriod"/>
 
             <TextView
-                android:id="@+id/edQuantity"
+                android:id="@+id/edPeriod"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="30dp"
@@ -134,14 +134,14 @@ tools:context=".manage_prescriptions.AddPresMedDetails">
                 tools:ignore="VisualLintTextFieldSize" />
 
             <ImageButton
-                android:id="@+id/increase"
+                android:id="@+id/increase_p"
                 android:layout_width="60dp"
                 android:layout_height="60dp"
                 android:background="@android:color/transparent"
                 android:src="@drawable/plus"
                 android:layout_alignParentEnd="true"
                 android:layout_marginEnd="30dp"
-                android:onClick="increaseInteger"/>
+                android:onClick="increasePeriod"/>
 
         </RelativeLayout>
         <TextView
@@ -165,7 +165,7 @@ tools:context=".manage_prescriptions.AddPresMedDetails">
                 android:background="@android:color/transparent"
                 android:src="@drawable/minus"
                 android:layout_marginStart="30dp"
-                android:onClick="decreaseInteger"/>
+                android:onClick="decreaseTpw"/>
 
             <TextView
                 android:id="@+id/edtpw"
@@ -191,7 +191,7 @@ tools:context=".manage_prescriptions.AddPresMedDetails">
                 android:src="@drawable/plus"
                 android:layout_alignParentEnd="true"
                 android:layout_marginEnd="30dp"
-                android:onClick="increaseInteger"/>
+                android:onClick="increaseTpw"/>
 
         </RelativeLayout>
         <EditText
@@ -251,6 +251,7 @@ tools:context=".manage_prescriptions.AddPresMedDetails">
             android:layout_marginEnd="30dp"
             android:layout_marginTop="15dp"
             android:text="Save"
+            android:onClick="savePresMed"
             android:background="@drawable/button_signin_background"/>
     </RelativeLayout>
 

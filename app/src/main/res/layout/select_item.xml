@@ -18,14 +18,14 @@
             android:layout_marginStart="16dp">
 
             <TextView
-                android:id="@+id/medName"
+                android:id="@+id/selectMedName"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Medicine Name"
                 android:textSize="18sp"
                 android:textColor="@android:color/black"/>
             <TextView
-                android:id="@+id/barcode"
+                android:id="@+id/selectBarcode"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="000000000000"
@@ -33,13 +33,6 @@
                 android:textColor="@android:color/black"/>
 
         </LinearLayout>
-        <CheckBox
-            android:background="@android:color/transparent"
-            android:src="@drawable/trash"
-            android:id="@+id/deleteBtn"
-            android:layout_width="40dp"
-            android:layout_marginTop="10dp"
-            android:layout_height="40dp"/>
 
     </LinearLayout>
 </LinearLayout>

@@ -1,8 +1,7 @@
-package com.example.pfe.manage_medicine;
+package com.example.pfe.manage_prescriptions;
 
 import android.annotation.SuppressLint;
 import android.app.ProgressDialog;
-import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -18,6 +17,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.pfe.JSONParser;
 import com.example.pfe.R;
 import com.example.pfe.SharedPrefManager;
+import com.example.pfe.manage_medicine.Medicine;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -30,11 +30,11 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
-public class MedicineList extends Fragment {
+public class SelectMedicineFragment extends Fragment {
     private RecyclerView mRecyclerView;
     JSONParser parser = new JSONParser();
     List<Medicine> medicineList;
-    MedicineAdapter adapter;
+    SelectMedicineAdapter adapter;
     LinearLayoutManager linearlayoutmanager;
     String url = "jdbc:mysql://192.168.43.205:3306/healthbuddy";
     //String url = "jdbc:mysql://192.168.1.16:3306/healthbuddy";
@@ -45,8 +45,8 @@ public class MedicineList extends Fragment {
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View rootView = inflater.inflate(R.layout.fragment_medicine_list, container, false);
-        mRecyclerView = rootView.findViewById(R.id.listMedicine);
+        View rootView = inflater.inflate(R.layout.fragment_select_medicine, container, false);
+        mRecyclerView = rootView.findViewById(R.id.selectlistMedicine);
         new Select().execute();
         return rootView;
     }
@@ -54,7 +54,6 @@ public class MedicineList extends Fragment {
 
     @SuppressLint("StaticFieldLeak")
     class Select extends AsyncTask<String, String, String> {
-
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
@@ -90,10 +89,6 @@ public class MedicineList extends Fragment {
                         );
                         medicineList.add(medicine);
                     }
-                    Bundle bundle = new Bundle();
-                    bundle.putStringArrayList("medicineList", myList);
-                    Intent intent = new Intent(getContext(), BarcodeActivity.class);
-                    intent.putExtras(bundle);
                 }
                 connection.close();
             } catch (ClassNotFoundException | SQLException e) {
@@ -108,7 +103,7 @@ public class MedicineList extends Fragment {
         protected void onPostExecute(String s) {
             super.onPostExecute(s);
             dialog.cancel();
-            adapter = new MedicineAdapter(getActivity(), medicineList);
+            adapter = new SelectMedicineAdapter(getActivity(), medicineList);
             mRecyclerView.setAdapter(adapter);
             adapter.setOnItemClickListener(medicine -> {
                 Toast.makeText(getContext(), "Item selected", Toast.LENGTH_SHORT).show();
@@ -122,6 +117,5 @@ public class MedicineList extends Fragment {
             }
         }
     }
-
 
 }
