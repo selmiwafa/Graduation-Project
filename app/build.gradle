@@ -2,6 +2,7 @@ apply plugin: 'com.android.application'
 apply plugin: 'org.jetbrains.kotlin.android'
 apply plugin: 'com.android.application'
 apply plugin: 'com.chaquo.python'
+apply plugin: 'com.android.application'
 
 android {
     compileSdk 33
@@ -37,11 +38,17 @@ dependencies {
     implementation 'androidx.appcompat:appcompat:1.6.1'
     implementation 'androidx.constraintlayout:constraintlayout:2.1.4'
     implementation 'com.google.android.material:material:1.8.0'
-    implementation 'androidx.core:core-ktx:1.9.0'
-    implementation 'androidx.core:core-ktx:1.9.0'
+    implementation 'androidx.core:core-ktx:1.10.0'
+    implementation 'androidx.core:core-ktx:1.10.0'
     implementation 'androidx.test.ext:junit:1.1.5'
     //noinspection GradlePath
     implementation files('D:/Graduation-Project/app/libs/mysql-connector.jar')
+
+    implementation 'org.osmdroid:osmdroid-android:6.1.10'
+    implementation 'org.osmdroid:osmdroid-mapsforge:6.1.10'
+
+
+
 
     testImplementation 'junit:junit:4.13.2'
     androidTestImplementation 'androidx.test:runner:1.5.2'

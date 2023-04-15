@@ -15,6 +15,8 @@ import android.view.View;
 import android.view.WindowManager;
 
 import com.example.pfe.HomepageActivity;
+import com.example.pfe.localisation.LocateDoctorsActivity;
+import com.example.pfe.localisation.LocatePharmaciesActivity;
 import com.example.pfe.manage_analyses.AddAnalysisActivity;
 import com.example.pfe.manage_analyses.MyAnalysesActivity;
 import com.example.pfe.manage_patient_account.AddPatientActivity;
@@ -98,15 +100,15 @@ public class InventoryActivity extends AppCompatActivity implements NavigationVi
                 intent = new Intent(InventoryActivity.this, AddAnalysisActivity.class);
                 startActivity(intent);
                 break;
-
             case (R.id.locate_doctors):
-                //intent = new Intent(InventoryActivity.this, AddPrescriptionActivity.class);
-                //startActivity(intent);
+                intent = new Intent(InventoryActivity.this, LocateDoctorsActivity.class);
+                startActivity(intent);
                 break;
             case (R.id.locate_pharmacies):
-                //intent = new Intent(InventoryActivity.this, AddPrescriptionActivity.class);
-                //startActivity(intent);
+                intent = new Intent(InventoryActivity.this, LocatePharmaciesActivity.class);
+                startActivity(intent);
                 break;
+
             case (R.id.make_doctor_appointment):
                 //intent = new Intent(InventoryActivity.this, AddPrescriptionActivity.class);
                 //startActivity(intent);

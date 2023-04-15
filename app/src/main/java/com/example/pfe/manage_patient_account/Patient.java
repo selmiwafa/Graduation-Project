@@ -1,6 +1,7 @@
 package com.example.pfe.manage_patient_account;
 
 public class Patient {
+
     private String name;
     private int age;
     private String relationship;

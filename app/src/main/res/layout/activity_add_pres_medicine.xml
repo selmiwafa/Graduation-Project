@@ -35,15 +35,24 @@
                 android:elevation="0dp"
                 android:clickable="true"
                 android:contentDescription="@string/user_image" />
-
+            <TextView
+                android:id="@+id/addPresText"
+                android:layout_width="280dp"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/logo"
+                android:text="Select medicine to add to prescription"
+                android:layout_centerHorizontal="true"
+                android:textSize="25sp"
+                android:gravity="center"
+                android:layout_marginTop="30dp" />
             <androidx.fragment.app.FragmentContainerView
                 android:id="@+id/fragment_container"
                 android:name="com.example.pfe.manage_medicine.MedicineList"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 tools:layout="@layout/fragment_pres_med_list"
-                android:layout_marginTop="15dp"
-                android:layout_below="@id/logo"/>
+                android:layout_marginTop="35dp"
+                android:layout_below="@id/addPresText"/>
         </RelativeLayout>
         <RelativeLayout
             android:id="@+id/bottom_bar"

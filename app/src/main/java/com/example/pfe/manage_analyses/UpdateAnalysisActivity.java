@@ -131,7 +131,7 @@ public class UpdateAnalysisActivity extends AppCompatActivity {
                 Class.forName("com.mysql.jdbc.Driver");
                 Connection connection = DriverManager.getConnection(url, user, password);
                 //JSONObject object = parser.makeHttpRequest("http://192.168.1.16/healthbuddy/medicine/updateMedicine.php", "GET", map);
-                JSONObject object = parser.makeHttpRequest("http://192.168.43.205/healthbuddy/analyses/updateAnalyses.php", "GET", map);
+                JSONObject object = parser.makeHttpRequest("http://192.168.43.205/healthbuddy/analysis/updateAnalysis.php", "GET", map);
                 success = object.getInt("success");
                 connection.close();
             } catch (ClassNotFoundException | SQLException e) {

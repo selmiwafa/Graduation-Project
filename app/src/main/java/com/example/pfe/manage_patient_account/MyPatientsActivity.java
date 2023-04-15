@@ -27,6 +27,8 @@ import androidx.drawerlayout.widget.DrawerLayout;
 
 import com.example.pfe.HomepageActivity;
 import com.example.pfe.JSONParser;
+import com.example.pfe.localisation.LocateDoctorsActivity;
+import com.example.pfe.localisation.LocatePharmaciesActivity;
 import com.example.pfe.manage_analyses.AddAnalysisActivity;
 import com.example.pfe.manage_analyses.MyAnalysesActivity;
 import com.example.pfe.manage_medicine.AddMedicineActivity;
@@ -220,15 +222,15 @@ public class MyPatientsActivity extends AppCompatActivity implements NavigationV
                 intent = new Intent(MyPatientsActivity.this, AddAnalysisActivity.class);
                 startActivity(intent);
                 break;
-
             case (R.id.locate_doctors):
-                //intent = new Intent(InventoryActivity.this, AddPrescriptionActivity.class);
-                //startActivity(intent);
+                intent = new Intent(MyPatientsActivity.this, LocateDoctorsActivity.class);
+                startActivity(intent);
                 break;
             case (R.id.locate_pharmacies):
-                //intent = new Intent(InventoryActivity.this, AddPrescriptionActivity.class);
-                //startActivity(intent);
+                intent = new Intent(MyPatientsActivity.this, LocatePharmaciesActivity.class);
+                startActivity(intent);
                 break;
+
             case (R.id.make_doctor_appointment):
                 //intent = new Intent(InventoryActivity.this, AddPrescriptionActivity.class);
                 //startActivity(intent);

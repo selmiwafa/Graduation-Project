@@ -1,8 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
-<manifest xmlns:android="http://schemas.android.com/apk/res/android" >
+<manifest xmlns:tools="http://schemas.android.com/tools"
+    xmlns:android="http://schemas.android.com/apk/res/android">
 
     <uses-permission android:name="android.permission.CAMERA" />
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+
 
     <application
         android:allowBackup="true"
@@ -12,9 +16,38 @@
         android:roundIcon="@mipmap/healthbuddy_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
-        android:usesCleartextTraffic="true" >
+        android:usesCleartextTraffic="true">
+        <meta-data
+            android:name="osmdroid.basePath"
+            android:value="/mnt/sdcard/osmdroid"/>
+        <meta-data
+            android:name="osmdroid.tileProvider"
+            android:value="GEO"/>
+        <meta-data
+            android:name="osmdroid.mapsforge.file"
+            android:value="map_file_name.map"/>
+        <meta-data
+            android:name="osmdroid.mapsforge.useMapView"
+            android:value="false"/>
         <activity
-            android:name=".manage_medicine.UpdateMedicineActivity"
+            android:name=".manage_prescriptions.AddPresMedDetails"
+            android:exported="false" />
+        <activity
+            android:name=".manage_prescriptions.PresMedListActivity"
+            android:exported="false" />
+
+        <meta-data
+            android:name="com.google.android.geo.API_KEY"
+            android:value="AIzaSyAd-VjF4BpkSGc-xK8RRj0yncnGosP-62g" />
+
+        <activity
+            android:name=".localisation.LocatePharmaciesActivity"
+            android:exported="false" />
+        <activity
+            android:name=".localisation.LocateDoctorsActivity"
+            android:exported="false" />
+        <activity
+            android:name=".manage_analyses.UpdateAnalysisActivity"
             android:exported="false" />
         <activity
             android:name=".manage_analyses.DeleteAnalysisActivity"
@@ -27,9 +60,6 @@
             android:exported="false" />
         <activity
             android:name=".manage_prescriptions.AddPresMedicineActivity"
-            android:exported="false" />
-        <activity
-            android:name=".manage_prescriptions.MedicinePresListActivity"
             android:exported="false" />
         <activity
             android:name=".manage_medicine.UpdateMedicineActivity"
@@ -94,7 +124,7 @@
         <activity
             android:name=".manage_user_account.LoginActivity"
             android:exported="true"
-            android:windowSoftInputMode="adjustResize" >
+            android:windowSoftInputMode="adjustResize">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

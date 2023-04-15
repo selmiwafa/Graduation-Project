@@ -123,6 +123,7 @@ public class AddPatientActivity extends AppCompatActivity implements AdapterView
         protected String doInBackground(String... strings) {
 
             HashMap<String, String> map = new HashMap<>();
+            map.put("patient_id", edName.getText().toString()+edAge.getText().toString()+relationship);
             map.put("patient_name", edName.getText().toString());
             map.put("relationship", relationship);
             map.put("patient_age", edAge.getText().toString());

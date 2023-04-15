@@ -1,12 +1,5 @@
 package com.example.pfe.manage_analyses;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.ActionBarDrawerToggle;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
-import androidx.core.view.GravityCompat;
-import androidx.drawerlayout.widget.DrawerLayout;
-
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
@@ -14,12 +7,19 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.WindowManager;
 
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.ActionBarDrawerToggle;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
+import androidx.core.view.GravityCompat;
+import androidx.drawerlayout.widget.DrawerLayout;
+
 import com.example.pfe.HomepageActivity;
 import com.example.pfe.R;
+import com.example.pfe.localisation.LocateDoctorsActivity;
 import com.example.pfe.manage_medicine.AddMedicineActivity;
 import com.example.pfe.manage_medicine.BarcodeActivity;
 import com.example.pfe.manage_medicine.InventoryActivity;
-import com.example.pfe.manage_medicine.MedicineList;
 import com.example.pfe.manage_patient_account.MyPatientsActivity;
 import com.example.pfe.manage_prescriptions.AddPrescriptionActivity;
 import com.example.pfe.manage_prescriptions.MyPrescriptionsActivity;
@@ -98,15 +98,15 @@ public class MyAnalysesActivity extends AppCompatActivity implements NavigationV
                 intent = new Intent(MyAnalysesActivity.this, AddAnalysisActivity.class);
                 startActivity(intent);
                 break;
-
             case (R.id.locate_doctors):
-                //intent = new Intent(InventoryActivity.this, AddPrescriptionActivity.class);
-                //startActivity(intent);
+                intent = new Intent(MyAnalysesActivity.this, LocateDoctorsActivity.class);
+                startActivity(intent);
                 break;
             case (R.id.locate_pharmacies):
-                //intent = new Intent(InventoryActivity.this, AddPrescriptionActivity.class);
-                //startActivity(intent);
+                intent = new Intent(MyAnalysesActivity.this, AddPrescriptionActivity.class);
+                startActivity(intent);
                 break;
+
             case (R.id.make_doctor_appointment):
                 //intent = new Intent(InventoryActivity.this, AddPrescriptionActivity.class);
                 //startActivity(intent);
