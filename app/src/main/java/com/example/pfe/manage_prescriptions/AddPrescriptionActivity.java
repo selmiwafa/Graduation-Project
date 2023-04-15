@@ -8,10 +8,12 @@ import android.os.Bundle;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.pfe.R;
+import com.example.pfe.SharedPrefManager;
 
 import java.util.Calendar;
 
@@ -52,12 +54,17 @@ public class AddPrescriptionActivity extends AppCompatActivity {
         this.finish();
     }
     public void next(View view){
-        Intent intent = new Intent(AddPrescriptionActivity.this, PresMedListActivity.class);
-        intent.putExtra("id",id);
-        intent.putExtra("name",edPresName.getText().toString());
-        intent.putExtra("start_date",edStartDate.getText().toString());
-        intent.putExtra("end_date",edEndDate.getText().toString());
-        startActivity(intent);
+        if (edPresName.getText().toString().isEmpty() ||
+                edStartDate.getText().toString().isEmpty()) {
+            Toast.makeText(this, "Fill all required fields!", Toast.LENGTH_SHORT).show();
+        } else
+        {
+            SharedPrefManager.getInstance(getApplicationContext()).setCurrentPres(id,edPresName.getText().toString(),edStartDate.getText().toString(),edEndDate.getText().toString());
+            Intent intent = new Intent(AddPrescriptionActivity.this, PresMedListActivity.class);
+            startActivity(intent);
+
+
+        }
     }
     public void pickDate(){
         int y = Calendar.getInstance().get(Calendar.YEAR) ;

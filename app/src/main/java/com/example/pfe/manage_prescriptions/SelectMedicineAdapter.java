@@ -6,7 +6,6 @@ import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageButton;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -19,7 +18,6 @@ import java.util.List;
 
 public class SelectMedicineAdapter extends RecyclerView.Adapter<SelectMedicineAdapter.ViewHolder>{
     private final List<Medicine> medicineList;
-    Medicine medicine;
     private OnItemClickListener mListener;
     Context mContext;
 
@@ -38,7 +36,7 @@ public class SelectMedicineAdapter extends RecyclerView.Adapter<SelectMedicineAd
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        medicine = medicineList.get(position);
+        Medicine medicine = medicineList.get(position);
 
         holder.medName.setText(medicine.getMed_name());
         holder.barcode.setText(medicine.getBarcode());
@@ -101,7 +99,6 @@ public class SelectMedicineAdapter extends RecyclerView.Adapter<SelectMedicineAd
     public class ViewHolder extends RecyclerView.ViewHolder {
         private final TextView medName;
         private final TextView barcode;
-        public ImageButton deleteBtn;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);

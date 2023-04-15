@@ -9,6 +9,9 @@ import com.example.pfe.manage_patient_account.Patient;
 import com.example.pfe.manage_user_account.LoginActivity;
 import com.example.pfe.manage_user_account.User;
 
+import java.util.ArrayList;
+import java.util.List;
+
 
 public class SharedPrefManager {
 
@@ -27,6 +30,7 @@ public class SharedPrefManager {
     private static final String KEY_P2_AGE = "keyp2age";
     private static final String KEY_P2_RELATIONSHIP = "keyp2relationship";
     private static final int KEY_NUMBER_PATIENTS = 0;
+    private static final String PRES_ID = "presid",PRES_NAME = "presname",PRES_START = "start",PRES_END = "end";
 
     @SuppressLint("StaticFieldLeak")
     private static SharedPrefManager mInstance;
@@ -42,6 +46,24 @@ public class SharedPrefManager {
             mInstance = new SharedPrefManager(context);
         }
         return mInstance;
+    }
+    public void setCurrentPres(String id, String name, String start, String end){
+        SharedPreferences sharedPreferences = mCtx.getSharedPreferences(SHARED_PREF_NAME, Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putString(PRES_ID, id);
+        editor.putString(PRES_NAME, name);
+        editor.putString(PRES_START, start);
+        editor.putString(PRES_END, end);
+        editor.apply();
+    }
+    public List<String> getCurrentPres () {
+        SharedPreferences sharedPreferences = mCtx.getSharedPreferences(SHARED_PREF_NAME, Context.MODE_PRIVATE);
+        List<String> list = new ArrayList<>();
+        list.add(sharedPreferences.getString(PRES_ID, null));
+        list.add(sharedPreferences.getString(PRES_NAME, null));
+        list.add(sharedPreferences.getString(PRES_START, null));
+        list.add(sharedPreferences.getString(PRES_END, null));
+        return list;
     }
 
     public void userLogin(User user) {

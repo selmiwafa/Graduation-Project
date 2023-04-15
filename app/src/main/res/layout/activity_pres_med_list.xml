@@ -45,6 +45,8 @@
             android:background="@android:color/transparent"
             android:elevation="0dp"
             android:clickable="true"
+            android:focusable="true"
+            android:onClick="save"
             android:contentDescription="@string/user_image" />
         <TextView
             android:id="@+id/addPresText"

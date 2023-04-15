@@ -2,9 +2,11 @@ package com.example.pfe.manage_prescriptions;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -20,6 +22,8 @@ public class AddPresMedDetails extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_pres_med_details);
+
+
         Bundle extras = getIntent().getExtras();
         if (extras != null) {
             barcode = extras.getString("barcode");
@@ -33,20 +37,32 @@ public class AddPresMedDetails extends AppCompatActivity {
     }
 
     public void savePresMed(View view){
-        Intent intent = new Intent(this, PresMedListActivity.class);
-        intent.putExtra("barcode",barcode);
-        intent.putExtra("med_name",name);
-        intent.putExtra("quantity",quantity);
-        intent.putExtra("exp_date",exp_date);
-        intent.putExtra("description",description);
+        if (edDose.getText().toString().isEmpty() ||
+                edFrequency.getText().toString().isEmpty() ||
+                edPeriod.getText().toString().isEmpty() ||
+                edTpw.getText().toString().isEmpty() ) {
+            Toast.makeText(this, "Fill required fields!", Toast.LENGTH_LONG).show();
+        } else
+        {
+            Intent intent = new Intent(this, PresMedListActivity.class);
+            intent.putExtra("barcode", barcode);
+            intent.putExtra("med_name", name);
+            intent.putExtra("quantity", quantity);
+            intent.putExtra("exp_date", exp_date);
+            intent.putExtra("description", description);
 
-        intent.putExtra("dose",edDose.getText().toString());
-        intent.putExtra("frequency",edFrequency.getText().toString());
-        intent.putExtra("period",edPeriod.getText().toString());
-        intent.putExtra("tpw",edTpw.getText().toString());
-        intent.putExtra("other",edOther.getText().toString());
+            intent.putExtra("dose", edDose.getText().toString());
+            intent.putExtra("frequency", edFrequency.getText().toString());
+            intent.putExtra("period", edPeriod.getText().toString());
+            intent.putExtra("tpw", edTpw.getText().toString());
+            String other = edOther.getText().toString();
+            if (TextUtils.isEmpty(other)) {
+                other = "";
+            }
+            intent.putExtra("other", other);
 
-        this.startActivity(intent);
+            this.startActivity(intent);
+        }
     }
     public void  init(){
         edDose = findViewById(R.id.edDose);
