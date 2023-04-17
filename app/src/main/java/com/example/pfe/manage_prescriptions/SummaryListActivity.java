@@ -14,10 +14,13 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.pfe.JSONParser;
 import com.example.pfe.R;
 import com.example.pfe.SharedPrefManager;
+import com.example.pfe.manage_medicine.Medicine;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -29,7 +32,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
-public class PresMedListActivity extends AppCompatActivity {
+public class SummaryListActivity extends AppCompatActivity {
 
     ProgressDialog dialog;
     Button saveBtn;
@@ -47,7 +50,10 @@ public class PresMedListActivity extends AppCompatActivity {
     int quantity;
     String exp_date;
     String description;
-
+    ArrayList<Medicine> medicineList;
+    private RecyclerView mRecyclerView;
+    SummaryAdapter adapter;
+    LinearLayoutManager linearlayoutmanager;
     int dose;
     int frequency;
     int period;
@@ -61,46 +67,23 @@ public class PresMedListActivity extends AppCompatActivity {
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS, WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS);
         getWindow().setStatusBarColor(Color.TRANSPARENT);
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE);
-        setContentView(R.layout.activity_pres_med_list);
+        setContentView(R.layout.activity_summary_list);
         setSummary();
-        Bundle extras = getIntent().getExtras();
 
-        if (extras != null) {
-            barcode = extras.getString("barcode");
-            name = extras.getString("med_name");
 
-            String doseString = extras.getString("dose");
-            if (doseString != null) {
-                dose = Integer.parseInt(doseString);
-            }
+        summaryList = SharedPrefManager.getInstance(getApplicationContext()).getSummaryList();
 
-            String frequencyString = extras.getString("frequency");
-            if (frequencyString != null) {
-                frequency = Integer.parseInt(frequencyString);
-            }
+        mRecyclerView = findViewById(R.id.listSummaryMedicine);
 
-            String periodString = extras.getString("period");
-            if (periodString != null) {
-                period = Integer.parseInt(periodString);
-            }
 
-            String tpwString = extras.getString("tpw");
-            if (tpwString != null) {
-                tpw = Integer.parseInt(tpwString);
-            }
-
-            other = extras.getString("other");
-        }
-        // Get the existing summary list from the fragment
-        FragmentSummaryList fragmentSummaryList = (FragmentSummaryList) getSupportFragmentManager().findFragmentById(R.id.fragment_container_summary);
-         summaryList = fragmentSummaryList.summaryList;
-
-        // Add the new PresMedicine object to the end of the list
-        PresMedicine presMed = new PresMedicine(barcode, name, dose, frequency, period, tpw, other);
-        summaryList.add(presMed);
-        if (fragmentSummaryList.adapter != null) {
-            fragmentSummaryList.adapter.notifyDataSetChanged();
-        }
+        medicineList = SharedPrefManager.getInstance(getApplicationContext()).getMedicineList();
+        adapter = new SummaryAdapter(SummaryListActivity.this, summaryList);
+        mRecyclerView.setAdapter(adapter);
+        adapter.setOnItemClickListener(medicine -> {
+            Toast.makeText(SummaryListActivity.this, "Item selected", Toast.LENGTH_SHORT).show();
+        });
+        linearlayoutmanager = new LinearLayoutManager(SummaryListActivity.this);
+        mRecyclerView.setLayoutManager(linearlayoutmanager);
     }
     public void setSummary(){
         edPres_name = findViewById(R.id.pres_name);
@@ -118,7 +101,7 @@ public class PresMedListActivity extends AppCompatActivity {
         new Add().execute();
     }
     public void openAddPage(View view){
-        startActivity(new Intent(PresMedListActivity.this, AddPresMedicineActivity.class));
+        startActivity(new Intent(SummaryListActivity.this, SelectMedicineActivity.class));
     }
 
     @SuppressLint("StaticFieldLeak")
@@ -126,7 +109,7 @@ public class PresMedListActivity extends AppCompatActivity {
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
-            dialog = new ProgressDialog(PresMedListActivity.this);
+            dialog = new ProgressDialog(SummaryListActivity.this);
             dialog.setMessage("Please wait");
             dialog.show();
         }
@@ -134,15 +117,14 @@ public class PresMedListActivity extends AppCompatActivity {
         @Override
         protected String doInBackground(String... strings) {
             HashMap<String, String> map = new HashMap<>();
-            //for (int i = 0; i< summaryList.size(); i++) {
-            int i = 0;
-                map.put("barcode", summaryList.get(i).getBarcode());
-                map.put("dose", String.valueOf(summaryList.get(i).getDose()));
-                map.put("frequency", String.valueOf(summaryList.get(i).getFrequency()));
-                map.put("period", String.valueOf(summaryList.get(i).getPeriod()));
-                map.put("tpw", String.valueOf(summaryList.get(i).getTpw()));
-                map.put("other", summaryList.get(i).getOther());
-            //}
+            for (PresMedicine presMedicine : summaryList) {
+                map.put("barcode", presMedicine.getBarcode());
+                map.put("dose", String.valueOf(presMedicine.getDose()));
+                map.put("frequency", String.valueOf(presMedicine.getFrequency()));
+                map.put("period", String.valueOf(presMedicine.getPeriod()));
+                map.put("tpw", String.valueOf(presMedicine.getTpw()));
+                map.put("other", presMedicine.getOther());
+            }
 
             map.put("pres_id", list.get(0));
             map.put("pres_name", list.get(1));
@@ -172,10 +154,13 @@ public class PresMedListActivity extends AppCompatActivity {
             dialog.cancel();
 
             if (success == 1) {
-                Toast.makeText(PresMedListActivity.this, "Added successfully", Toast.LENGTH_LONG).show();
-                startActivity(new Intent(PresMedListActivity.this, MyPrescriptionsActivity.class));
+                SharedPrefManager.getInstance(getApplicationContext()).deleteSummary();
+                SharedPrefManager.getInstance(getApplicationContext()).deleteCurrentPres();
+
+                Toast.makeText(SummaryListActivity.this, "Added successfully", Toast.LENGTH_LONG).show();
+                startActivity(new Intent(SummaryListActivity.this, MyPrescriptionsActivity.class));
             } else {
-                Toast.makeText(PresMedListActivity.this, "Error adding prescription!", Toast.LENGTH_LONG).show();
+                Toast.makeText(SummaryListActivity.this, "Error adding prescription!", Toast.LENGTH_LONG).show();
             }
         }
     }

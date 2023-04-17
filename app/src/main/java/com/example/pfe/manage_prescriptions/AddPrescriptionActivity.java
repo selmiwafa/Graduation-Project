@@ -49,6 +49,9 @@ public class AddPrescriptionActivity extends AppCompatActivity {
         };
         edPresName = findViewById(R.id.prescription_name_edit_text);
         id = edPresName.getText().toString()+edStartDate.getText().toString();
+        if (edEndDate.getText().toString().isEmpty()) {
+            edEndDate.setText("");
+        }
     }
     public void back(View view){
         this.finish();
@@ -60,7 +63,7 @@ public class AddPrescriptionActivity extends AppCompatActivity {
         } else
         {
             SharedPrefManager.getInstance(getApplicationContext()).setCurrentPres(id,edPresName.getText().toString(),edStartDate.getText().toString(),edEndDate.getText().toString());
-            Intent intent = new Intent(AddPrescriptionActivity.this, PresMedListActivity.class);
+            Intent intent = new Intent(AddPrescriptionActivity.this, SummaryListActivity.class);
             startActivity(intent);
 
 

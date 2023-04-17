@@ -11,6 +11,9 @@ import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.pfe.R;
+import com.example.pfe.SharedPrefManager;
+
+import java.util.ArrayList;
 
 public class AddPresMedDetails extends AppCompatActivity {
     EditText edDose,edFrequency,edOther;
@@ -23,14 +26,10 @@ public class AddPresMedDetails extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_pres_med_details);
 
-
         Bundle extras = getIntent().getExtras();
         if (extras != null) {
             barcode = extras.getString("barcode");
             name = extras.getString("med_name");
-            quantity = extras.getInt("quantity");
-            exp_date = extras.getString("exp_date");
-            description = extras.getString("description");
         }
         init();
 
@@ -44,23 +43,25 @@ public class AddPresMedDetails extends AppCompatActivity {
             Toast.makeText(this, "Fill required fields!", Toast.LENGTH_LONG).show();
         } else
         {
-            Intent intent = new Intent(this, PresMedListActivity.class);
-            intent.putExtra("barcode", barcode);
-            intent.putExtra("med_name", name);
-            intent.putExtra("quantity", quantity);
-            intent.putExtra("exp_date", exp_date);
-            intent.putExtra("description", description);
-
-            intent.putExtra("dose", edDose.getText().toString());
-            intent.putExtra("frequency", edFrequency.getText().toString());
-            intent.putExtra("period", edPeriod.getText().toString());
-            intent.putExtra("tpw", edTpw.getText().toString());
+            int dose = Integer.parseInt(edDose.getText().toString());
+            int frequency = Integer.parseInt(edFrequency.getText().toString());
+            int period = Integer.parseInt(edPeriod.getText().toString());
+            int tpw = Integer.parseInt(edTpw.getText().toString());
             String other = edOther.getText().toString();
             if (TextUtils.isEmpty(other)) {
                 other = "";
             }
-            intent.putExtra("other", other);
+            ArrayList<PresMedicine> presMedicines;
+            PresMedicine presMedicine = new PresMedicine(barcode,name,dose,frequency,period,tpw,other);
+            if (SharedPrefManager.getInstance(getApplicationContext()).getSummaryList() == null) {
+                presMedicines = new ArrayList<>();
+            } else {
+                presMedicines = SharedPrefManager.getInstance(getApplicationContext()).getSummaryList();
+            }
+            presMedicines.add(presMedicine);
+            SharedPrefManager.saveSummaryList(presMedicines);
 
+            Intent intent = new Intent(this, SummaryListActivity.class);
             this.startActivity(intent);
         }
     }

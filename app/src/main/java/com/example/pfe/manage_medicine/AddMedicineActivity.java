@@ -1,7 +1,5 @@
 package com.example.pfe.manage_medicine;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.annotation.SuppressLint;
 import android.app.DatePickerDialog;
 import android.app.ProgressDialog;
@@ -18,6 +16,8 @@ import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.appcompat.app.AppCompatActivity;
+
 import com.example.pfe.JSONParser;
 import com.example.pfe.R;
 import com.example.pfe.SharedPrefManager;
@@ -28,10 +28,12 @@ import org.json.JSONObject;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.HashMap;
 
 public class AddMedicineActivity extends AppCompatActivity {
+    int minteger;
     String barcode;
     EditText edBarcode, edExpDate, edMedName, edDesc;
     TextView edQuantity;
@@ -44,7 +46,7 @@ public class AddMedicineActivity extends AppCompatActivity {
     String user = "root";
     String password = "";
     int success;
-    int minteger;
+
     DatePickerDialog.OnDateSetListener setListener;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -118,8 +120,8 @@ public class AddMedicineActivity extends AppCompatActivity {
         else if (quantity == "0") {
             Toast.makeText(getApplicationContext().getApplicationContext(), "Quantity should be more than 0!", Toast.LENGTH_LONG).show();
         }
-            new Add().execute();
-        }
+        new Add().execute();
+    }
 
 
     @SuppressLint("StaticFieldLeak")
@@ -148,6 +150,13 @@ public class AddMedicineActivity extends AppCompatActivity {
                 JSONObject object = parser.makeHttpRequest("http://192.168.43.205/healthbuddy/medicine/addMedicine.php", "GET", map);
                 success = object.getInt("success");
                 connection.close();
+                ArrayList<Medicine> medicineArrayList = SharedPrefManager.getInstance(getApplicationContext()).getMedicineList();
+                medicineArrayList.add(new Medicine(edBarcode.getText().toString(),
+                        edMedName.getText().toString(),
+                        Integer.parseInt(edQuantity.getText().toString()),
+                        edDesc.getText().toString(),
+                        edExpDate.getText().toString()));
+                SharedPrefManager.saveMedicineList(medicineArrayList);
             } catch (ClassNotFoundException | SQLException e) {
                 e.printStackTrace();
             } catch (JSONException e) {
@@ -170,7 +179,7 @@ public class AddMedicineActivity extends AppCompatActivity {
             }
         }
     }
-    public void back(View view) {
-        this.finish();
+    public void back(View view){
+        finish();
     }
 }

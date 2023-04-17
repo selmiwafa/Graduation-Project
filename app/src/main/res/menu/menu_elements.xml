@@ -99,6 +99,10 @@
         <menu>
             <group android:checkableBehavior="single">
                 <item
+                    android:title="My appointments"
+                    android:icon="@drawable/folder"
+                    android:id="@+id/my_appointments" />
+                <item
                     android:title="Make a doctor appointment reminder"
                     android:icon="@drawable/calendar"
                     android:id="@+id/make_doctor_appointment" />
@@ -122,6 +126,10 @@
                     android:id="@+id/propose_donation"
                     android:icon="@drawable/check_circle"
                     android:title="Propose a donation" />
+                <item
+                    android:title="My donations"
+                    android:icon="@drawable/help"
+                    android:id="@+id/my_donations" />
             </group>
         </menu>
     </item>

@@ -1,9 +1,6 @@
 package com.example.pfe.manage_medicine;
 
-import android.annotation.SuppressLint;
 import android.app.ProgressDialog;
-import android.content.Intent;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -19,21 +16,12 @@ import com.example.pfe.JSONParser;
 import com.example.pfe.R;
 import com.example.pfe.SharedPrefManager;
 
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
-
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
 
 public class MedicineList extends Fragment {
     private RecyclerView mRecyclerView;
     JSONParser parser = new JSONParser();
-    List<Medicine> medicineList;
+    ArrayList<Medicine> medicineList;
     MedicineAdapter adapter;
     LinearLayoutManager linearlayoutmanager;
     String url = "jdbc:mysql://192.168.43.205:3306/healthbuddy";
@@ -46,15 +34,22 @@ public class MedicineList extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_medicine_list, container, false);
+        medicineList = SharedPrefManager.getInstance(getContext()).getMedicineList();
         mRecyclerView = rootView.findViewById(R.id.listMedicine);
-        new Select().execute();
+        adapter = new MedicineAdapter(getActivity(), medicineList);
+        mRecyclerView.setAdapter(adapter);
+        adapter.setOnItemClickListener(medicine -> {
+            Toast.makeText(getContext(), "Item selected", Toast.LENGTH_SHORT).show();
+        });
+        linearlayoutmanager = new LinearLayoutManager(getContext());
+        mRecyclerView.setLayoutManager(linearlayoutmanager);
+        //new Select().execute();
         return rootView;
     }
 
 
-    @SuppressLint("StaticFieldLeak")
+    /*@SuppressLint("StaticFieldLeak")
     class Select extends AsyncTask<String, String, String> {
-
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
@@ -121,7 +116,7 @@ public class MedicineList extends Fragment {
                 Toast.makeText(getContext(), "Error selecting medicine!", Toast.LENGTH_LONG).show();
             }
         }
-    }
+    }*/
 
 
 }

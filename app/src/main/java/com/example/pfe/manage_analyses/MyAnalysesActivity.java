@@ -14,6 +14,9 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 
+import com.example.pfe.appointments.MyAppointmentsActivity;
+import com.example.pfe.appointments.analysis_appointments.AnalysisAppointmentActivity;
+import com.example.pfe.appointments.doctor_appointments.DoctorAppointmentActivity;
 import com.example.pfe.HomepageActivity;
 import com.example.pfe.R;
 import com.example.pfe.localisation.LocateDoctorsActivity;
@@ -106,14 +109,17 @@ public class MyAnalysesActivity extends AppCompatActivity implements NavigationV
                 intent = new Intent(MyAnalysesActivity.this, AddPrescriptionActivity.class);
                 startActivity(intent);
                 break;
-
+            case (R.id.my_appointments):
+                intent = new Intent(MyAnalysesActivity.this, MyAppointmentsActivity.class);
+                startActivity(intent);
+                break;
             case (R.id.make_doctor_appointment):
-                //intent = new Intent(InventoryActivity.this, AddPrescriptionActivity.class);
-                //startActivity(intent);
+                intent = new Intent(MyAnalysesActivity.this, DoctorAppointmentActivity.class);
+                startActivity(intent);
                 break;
             case (R.id.make_analysis_appointment):
-                //intent = new Intent(InventoryActivity.this, AddPrescriptionActivity.class);
-                //startActivity(intent);
+                intent = new Intent(MyAnalysesActivity.this, AnalysisAppointmentActivity.class);
+                startActivity(intent);
                 break;
             case (R.id.request_donation):
                 //intent = new Intent(InventoryActivity.this, AddPrescriptionActivity.class);

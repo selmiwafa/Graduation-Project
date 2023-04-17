@@ -1,7 +1,5 @@
 package com.example.pfe.manage_analyses;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.annotation.SuppressLint;
 import android.app.DatePickerDialog;
 import android.app.ProgressDialog;
@@ -15,14 +13,13 @@ import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
-import android.widget.TextView;
 import android.widget.Toast;
+
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.pfe.JSONParser;
 import com.example.pfe.R;
 import com.example.pfe.SharedPrefManager;
-import com.example.pfe.manage_medicine.AddMedicineActivity;
-import com.example.pfe.manage_medicine.InventoryActivity;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -30,6 +27,7 @@ import org.json.JSONObject;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.HashMap;
 
@@ -121,6 +119,11 @@ public class AddAnalysisActivity extends AppCompatActivity {
                 JSONObject object = parser.makeHttpRequest("http://192.168.43.205/healthbuddy/analysis/addAnalysis.php", "GET", map);
                 success = object.getInt("success");
                 connection.close();
+                ArrayList<Analysis> analysisArrayList = SharedPrefManager.getInstance(getApplicationContext()).getAnalysisList();
+                analysisArrayList.add(new Analysis(edAnalysisName.getText().toString(),
+                        edAnalysisDate.getText().toString(),
+                        edResult.getText().toString()));
+                SharedPrefManager.saveAnalysisList(analysisArrayList);
             } catch (ClassNotFoundException | SQLException e) {
                 e.printStackTrace();
             } catch (JSONException e) {

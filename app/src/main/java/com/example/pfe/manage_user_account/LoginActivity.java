@@ -6,7 +6,6 @@ import android.app.ProgressDialog;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.AsyncTask;
-import android.os.Build;
 import android.os.Bundle;
 import android.util.Patterns;
 import android.view.View;
@@ -20,6 +19,10 @@ import com.example.pfe.HomepageActivity;
 import com.example.pfe.JSONParser;
 import com.example.pfe.R;
 import com.example.pfe.SharedPrefManager;
+import com.example.pfe.appointments.Appointment;
+import com.example.pfe.donations.Donation;
+import com.example.pfe.manage_analyses.Analysis;
+import com.example.pfe.manage_medicine.Medicine;
 import com.example.pfe.manage_patient_account.Patient;
 
 import org.json.JSONArray;
@@ -29,6 +32,7 @@ import org.json.JSONObject;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.HashMap;
 
 public class LoginActivity extends AppCompatActivity {
@@ -89,53 +93,110 @@ public class LoginActivity extends AppCompatActivity {
             map.put("email", edEmailLogin.getText().toString());
             map.put("password", edPasswordLogin.getText().toString());
             try {
-            Class.forName("com.mysql.jdbc.Driver");
-            Connection connection = DriverManager.getConnection(url, user, password);
-            //JSONObject object = parser.makeHttpRequest("http://192.168.1.16/healthbuddy/user/log.php", "GET", map);
-            JSONObject object = parser.makeHttpRequest("http://192.168.43.205/healthbuddy/user/log.php", "GET", map);
-            success = object.getInt("success");
-            message = object.getString("message");
-            number = object.getInt("number");
-            while (success == 1) {
-                JSONArray userJson = object.getJSONArray("user");
-                JSONObject jsonObject = userJson.getJSONObject(0);
-                User user = new User(
-                        jsonObject.getString("email"),
-                        jsonObject.getString("name"),
-                        jsonObject.getString("birthdate"),
-                        jsonObject.getString("password"),
-                        jsonObject.getString("adress")
-                );
-                SharedPrefManager.getInstance(getApplicationContext()).userLogin(user);
-                if (number == 1) {
-                    SharedPrefManager.getInstance(getApplicationContext()).setKeyNumberPatients(1);
-                    JSONArray patientsJson = object.getJSONArray("patients");
-                    JSONObject patientJson = patientsJson.getJSONObject(0);
-                    Patient patient = new Patient(
-                            patientJson.getString("patient_name"),
-                            patientJson.getInt("patient_age"),
-                            patientJson.getString("relationship")
+                Class.forName("com.mysql.jdbc.Driver");
+                Connection connection = DriverManager.getConnection(url, user, password);
+                //JSONObject object = parser.makeHttpRequest("http://192.168.1.16/healthbuddy/user/log.php", "GET", map);
+                JSONObject object = parser.makeHttpRequest("http://192.168.43.205/healthbuddy/user/log.php", "GET", map);
+                success = object.getInt("success");
+                message = object.getString("message");
+                number = object.getInt("number_patients");
+                while (success == 1) {
+                    JSONArray userJson = object.getJSONArray("user");
+                    JSONObject jsonObject = userJson.getJSONObject(0);
+                    User user = new User(
+                            jsonObject.getString("email"),
+                            jsonObject.getString("name"),
+                            jsonObject.getString("birthdate"),
+                            jsonObject.getString("password"),
+                            jsonObject.getString("adress")
                     );
-                    SharedPrefManager.getInstance(getApplicationContext()).addPatient1(patient);
-                } else if (number >= 2) {
-                    SharedPrefManager.getInstance(getApplicationContext()).setKeyNumberPatients(2);
-                    JSONArray patientsJson = object.getJSONArray("patients");
-                    JSONObject patient1Json = patientsJson.getJSONObject(0);
-                    Patient patient1 = new Patient(
-                            patient1Json.getString("patient_name"),
-                            patient1Json.getInt("patient_age"),
-                            patient1Json.getString("relationship")
-                    );
-                    JSONObject patient2Json = patientsJson.getJSONObject(1);
-                    Patient patient2 = new Patient(
-                            patient2Json.getString("patient_name"),
-                            patient2Json.getInt("patient_age"),
-                            patient2Json.getString("relationship")
-                    );
-                    SharedPrefManager.getInstance(getApplicationContext()).addPatient1(patient1);
-                    SharedPrefManager.getInstance(getApplicationContext()).addPatient2(patient2);
-                }
-                break;
+                    SharedPrefManager.getInstance(getApplicationContext()).userLogin(user);
+                    if (number == 1) {
+                        SharedPrefManager.getInstance(getApplicationContext()).setKeyNumberPatients(1);
+                        JSONArray patientsJson = object.getJSONArray("patients");
+                        JSONObject patientJson = patientsJson.getJSONObject(0);
+                        Patient patient = new Patient(
+                                patientJson.getString("patient_name"),
+                                patientJson.getInt("patient_age"),
+                                patientJson.getString("relationship")
+                        );
+                        SharedPrefManager.getInstance(getApplicationContext()).addPatient1(patient);
+                    } else if (number >= 2) {
+                        SharedPrefManager.getInstance(getApplicationContext()).setKeyNumberPatients(2);
+                        JSONArray patientsJson = object.getJSONArray("patients");
+                        JSONObject patient1Json = patientsJson.getJSONObject(0);
+                        Patient patient1 = new Patient(
+                                patient1Json.getString("patient_name"),
+                                patient1Json.getInt("patient_age"),
+                                patient1Json.getString("relationship")
+                        );
+                        JSONObject patient2Json = patientsJson.getJSONObject(1);
+                        Patient patient2 = new Patient(
+                                patient2Json.getString("patient_name"),
+                                patient2Json.getInt("patient_age"),
+                                patient2Json.getString("relationship")
+                        );
+                        int number2 = object.getInt("number_medicine");
+                        ArrayList<Medicine> medicineList = new ArrayList<>();
+                        JSONArray medicineJson = object.getJSONArray("medicine");
+                        for (int i = 0; i < number2; i++) {
+                            JSONObject jsonObject2 = medicineJson.getJSONObject(i);
+                            Medicine medicine = new Medicine(
+                                    jsonObject2.getString("barcode"),
+                                    jsonObject2.getString("med_name"),
+                                    jsonObject2.getInt("quantity"),
+                                    jsonObject2.getString("description"),
+                                    jsonObject2.getString("exp_date")
+                            );
+                            medicineList.add(medicine);
+                        }
+                        int number3 = object.getInt("number_analyses");
+                        ArrayList<Analysis> analysisArrayList = new ArrayList<>();
+                        JSONArray analysisJson = object.getJSONArray("user_analyses");
+                        for (int i = 0; i < number3; i++) {
+                            JSONObject jsonObject2 = analysisJson.getJSONObject(i);
+                            Analysis analysis = new Analysis(
+                                    jsonObject2.getString("analysis_name"),
+                                    jsonObject2.getString("analysis_date"),
+                                    jsonObject2.getString("result")
+                            );
+                            analysisArrayList.add(analysis);
+                        }
+
+                        int number4 = object.getInt("number_donations");
+                        ArrayList<Donation> donations = new ArrayList<>();
+                        JSONArray donationJson = object.getJSONArray("donations");
+                        for (int i = 0; i < number4; i++) {
+                            JSONObject jsonObject3 = donationJson.getJSONObject(i);
+                            Donation donation = new Donation(
+                                    jsonObject3.getString("id"),
+                                    jsonObject3.getString("barcode"),
+                                    Integer.parseInt(jsonObject3.getString("quantity")),
+                                    jsonObject3.getString("date"));
+                            donations.add(donation);
+                        }
+
+                        int number5 = object.getInt("number_apps");
+                        ArrayList<Appointment> appointments = new ArrayList<>();
+                        JSONArray appointmentJson = object.getJSONArray("appointments");
+                        for (int i = 0; i < number5; i++) {
+                            JSONObject jsonObject4 = appointmentJson.getJSONObject(i);
+                            Appointment appointment = new Appointment(
+                                    jsonObject4.getString("app_name"),
+                                    jsonObject4.getString("app_date"),
+                                    jsonObject4.getString("app_time"),
+                                    jsonObject4.getString("app_type"));
+                            appointments.add(appointment);
+                        }
+
+                        SharedPrefManager.saveAppointmentList(appointments);
+                        SharedPrefManager.saveDonationList(donations);
+                        SharedPrefManager.saveAnalysisList(analysisArrayList);
+                        SharedPrefManager.saveMedicineList(medicineList);
+                        SharedPrefManager.getInstance(getApplicationContext()).addPatient1(patient1);
+                        SharedPrefManager.getInstance(getApplicationContext()).addPatient2(patient2);
+                    }
+                    break;
                 }
                 connection.close();
             } catch (ClassNotFoundException | SQLException e) {
@@ -184,12 +245,7 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     public static void restartActivity(Activity activity) {
-        if (Build.VERSION.SDK_INT >= 11) {
-            activity.recreate();
-        } else {
-            activity.finish();
-            activity.startActivity(activity.getIntent());
-        }
+        activity.recreate();
     }
 
 }

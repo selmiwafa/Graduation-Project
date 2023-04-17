@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".manage_prescriptions.AddPresMedicineActivity">
+    tools:context=".manage_prescriptions.SelectMedicineActivity">
     <RelativeLayout
 
         android:layout_width="match_parent"
@@ -35,19 +35,6 @@
                 android:layout_marginTop="12dp"
                 android:src="@drawable/hbtext"
                 android:contentDescription="@string/logo" />
-            <ImageButton
-                android:id="@+id/addButton"
-                android:layout_width="40dp"
-                android:layout_height="40dp"
-                android:src="@drawable/arrow_right"
-                android:layout_alignParentEnd="true"
-                android:layout_marginEnd="15dp"
-                android:layout_marginTop="12dp"
-                android:background="@android:color/transparent"
-                android:elevation="0dp"
-                android:onClick="openPresMedDetails"
-                android:clickable="true"
-                android:contentDescription="@string/user_image" />
             <TextView
                 android:id="@+id/addPresText"
                 android:layout_width="280dp"
@@ -58,14 +45,12 @@
                 android:textSize="25sp"
                 android:gravity="center"
                 android:layout_marginTop="30dp" />
-            <androidx.fragment.app.FragmentContainerView
-                android:id="@+id/select_fragment_container"
-                android:name="com.example.pfe.manage_prescriptions.SelectMedicineFragment"
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/selectlistMedicine"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                tools:layout="@layout/fragment_medicine_list"
                 android:layout_marginTop="35dp"
-                android:layout_below="@id/addPresText"/>
+                android:layout_below="@id/addPresText"
+                android:layout_height="wrap_content"/>
         </RelativeLayout>
 
     </RelativeLayout>

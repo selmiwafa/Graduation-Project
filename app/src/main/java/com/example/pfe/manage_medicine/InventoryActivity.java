@@ -1,12 +1,5 @@
 package com.example.pfe.manage_medicine;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.ActionBarDrawerToggle;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
-import androidx.core.view.GravityCompat;
-import androidx.drawerlayout.widget.DrawerLayout;
-
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
@@ -14,14 +7,27 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.WindowManager;
 
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.ActionBarDrawerToggle;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
+import androidx.core.view.GravityCompat;
+import androidx.drawerlayout.widget.DrawerLayout;
+
 import com.example.pfe.HomepageActivity;
+import com.example.pfe.R;
+import com.example.pfe.appointments.MyAppointmentsActivity;
+import com.example.pfe.appointments.analysis_appointments.AnalysisAppointmentActivity;
+import com.example.pfe.appointments.doctor_appointments.DoctorAppointmentActivity;
+import com.example.pfe.diet.DietActivity;
+import com.example.pfe.donations.MyDonationsActivity;
+import com.example.pfe.donations.ProposeDonationActivity;
+import com.example.pfe.donations.RequestDonationActivity;
 import com.example.pfe.localisation.LocateDoctorsActivity;
 import com.example.pfe.localisation.LocatePharmaciesActivity;
 import com.example.pfe.manage_analyses.AddAnalysisActivity;
 import com.example.pfe.manage_analyses.MyAnalysesActivity;
-import com.example.pfe.manage_patient_account.AddPatientActivity;
 import com.example.pfe.manage_patient_account.MyPatientsActivity;
-import com.example.pfe.R;
 import com.example.pfe.manage_prescriptions.AddPrescriptionActivity;
 import com.example.pfe.manage_prescriptions.MyPrescriptionsActivity;
 import com.google.android.material.navigation.NavigationView;
@@ -108,26 +114,33 @@ public class InventoryActivity extends AppCompatActivity implements NavigationVi
                 intent = new Intent(InventoryActivity.this, LocatePharmaciesActivity.class);
                 startActivity(intent);
                 break;
-
+            case (R.id.my_appointments):
+                intent = new Intent(InventoryActivity.this, MyAppointmentsActivity.class);
+                startActivity(intent);
+                break;
             case (R.id.make_doctor_appointment):
-                //intent = new Intent(InventoryActivity.this, AddPrescriptionActivity.class);
-                //startActivity(intent);
+                intent = new Intent(InventoryActivity.this, DoctorAppointmentActivity.class);
+                startActivity(intent);
                 break;
             case (R.id.make_analysis_appointment):
-                //intent = new Intent(InventoryActivity.this, AddPrescriptionActivity.class);
-                //startActivity(intent);
+                intent = new Intent(InventoryActivity.this, AnalysisAppointmentActivity.class);
+                startActivity(intent);
                 break;
             case (R.id.request_donation):
-                //intent = new Intent(InventoryActivity.this, AddPrescriptionActivity.class);
-                //startActivity(intent);
+                intent = new Intent(InventoryActivity.this, RequestDonationActivity.class);
+                startActivity(intent);
+                break;
+            case (R.id.my_donations):
+                intent = new Intent(InventoryActivity.this, MyDonationsActivity.class);
+                startActivity(intent);
                 break;
             case (R.id.propose_donation):
-                //intent = new Intent(InventoryActivity.this, AddPrescriptionActivity.class);
-                //startActivity(intent);
+                intent = new Intent(InventoryActivity.this, ProposeDonationActivity.class);
+                startActivity(intent);
                 break;
             case (R.id.propose_diet):
-                //intent = new Intent(InventoryActivity.this, AddPrescriptionActivity.class);
-                //startActivity(intent);
+                intent = new Intent(InventoryActivity.this, DietActivity.class);
+                startActivity(intent);
                 break;
         }
         drawerLayout.closeDrawer(GravityCompat.START);

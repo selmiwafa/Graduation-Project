@@ -19,9 +19,6 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.pfe.JSONParser;
 import com.example.pfe.R;
 import com.example.pfe.SharedPrefManager;
-import com.example.pfe.manage_medicine.InventoryActivity;
-import com.example.pfe.manage_medicine.Medicine;
-import com.example.pfe.manage_medicine.UpdateMedicineActivity;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -35,7 +32,7 @@ import java.util.List;
 public class AnalysisAdapter extends RecyclerView.Adapter<AnalysisAdapter.ViewHolder> {
     private final List<Analysis> analysisList;
     int itemPosition;
-    Analysis analysis;
+    Analysis pos;
     JSONParser parser = new JSONParser();
     private AnalysisAdapter.OnItemClickListener mListener;
     String url = "jdbc:mysql://192.168.43.205:3306/healthbuddy";
@@ -111,6 +108,7 @@ public class AnalysisAdapter extends RecyclerView.Adapter<AnalysisAdapter.ViewHo
     public void deleteItem(Analysis analysis) {
         if (analysisList != null){
             analysisList.remove(analysis);
+            SharedPrefManager.getInstance(mContext).deleteAnalysis(analysis.getAnalysis_name());
             notifyDataSetChanged();
         }
     }

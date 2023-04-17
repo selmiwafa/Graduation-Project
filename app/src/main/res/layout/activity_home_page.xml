@@ -45,7 +45,59 @@
             android:clickable="true"
             android:onClick="createUserDialog"
             android:contentDescription="@string/user_image" />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/logo"
+            android:gravity="center"
+            android:layout_marginTop="30dp"
+            android:orientation="vertical">
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center">
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:layout_marginStart="10dp"
+                    android:gravity="left">
+                    <TextView
+                        android:id="@+id/myTextView"
+                        android:layout_width="wrap_content"
+                        android:layout_height="50dp"
+                        android:text="Hello,"
+                        android:gravity="bottom"
+                        android:textSize="40sp"
+                        android:fontFamily="@fonts/DynaPuff" />
+                    <TextView
+                        android:id="@+id/nameTv"
+                        android:layout_width="wrap_content"
+                        android:layout_height="50dp"
+                        android:text="user"
+                        android:gravity="bottom"
+                        android:textSize="30sp"
+                        android:fontFamily="@fonts/DynaPuff" />
+                </LinearLayout>
 
+                <ImageView
+                    android:id="@+id/gif_imageview"
+                    android:layout_width="wrap_content"
+                    android:layout_height="100dp" />
+            </LinearLayout>
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="2dp"
+                android:layout_marginStart="40dp"
+                android:layout_marginEnd="40dp"
+                android:background="@android:color/black" />
+            <androidx.viewpager.widget.ViewPager
+                android:id="@+id/viewPager"
+                android:layout_width="match_parent"
+                android:layout_height="150dp" />
+
+        </LinearLayout>
 
     </RelativeLayout>
 

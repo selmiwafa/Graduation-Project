@@ -1,8 +1,6 @@
 package com.example.pfe.manage_analyses;
 
-import android.annotation.SuppressLint;
 import android.app.ProgressDialog;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -17,21 +15,12 @@ import com.example.pfe.JSONParser;
 import com.example.pfe.R;
 import com.example.pfe.SharedPrefManager;
 
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
-
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
 public class AnalysisListFragment extends Fragment {
 
     private RecyclerView mRecyclerView;
     JSONParser parser = new JSONParser();
-    List<Analysis> analysisList;
+    ArrayList<Analysis> analysisList;
     AnalysisAdapter adapter;
     LinearLayoutManager linearlayoutmanager;
     String url = "jdbc:mysql://192.168.43.205:3306/healthbuddy";
@@ -43,12 +32,21 @@ public class AnalysisListFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_analysis_list, container, false);
+        analysisList = SharedPrefManager.getInstance(getContext()).getAnalysisList();
         mRecyclerView = rootView.findViewById(R.id.listAnalysis);
-        new Select().execute();
+        adapter = new AnalysisAdapter(getActivity(), analysisList);
+        mRecyclerView.setAdapter(adapter);
+
+        adapter.setOnItemClickListener(analysis -> {
+            Toast.makeText(getContext(), "Item selected", Toast.LENGTH_SHORT).show();
+        });
+        linearlayoutmanager = new LinearLayoutManager(getContext());
+        mRecyclerView.setLayoutManager(linearlayoutmanager);
+        //new Select().execute();
         return rootView;
     }
 
-    @SuppressLint("StaticFieldLeak")
+    /*@SuppressLint("StaticFieldLeak")
     class Select extends AsyncTask<String, String, String> {
         @Override
         protected void onPreExecute() {
@@ -95,18 +93,12 @@ public class AnalysisListFragment extends Fragment {
         protected void onPostExecute(String s) {
             super.onPostExecute(s);
             dialog.cancel();
-            adapter = new AnalysisAdapter(getActivity(), analysisList);
-            mRecyclerView.setAdapter(adapter);
-            adapter.setOnItemClickListener(analysis -> {
-                Toast.makeText(getContext(), "Item selected", Toast.LENGTH_SHORT).show();
-            });
-            linearlayoutmanager = new LinearLayoutManager(getContext());
-            mRecyclerView.setLayoutManager(linearlayoutmanager);
+
             if (success == 1) {
                 Toast.makeText(getContext(), "Selected successfully", Toast.LENGTH_LONG).show();
             } else {
                 Toast.makeText(getContext(), "Error selecting analysis!", Toast.LENGTH_LONG).show();
             }
         }
-    }
+    }*/
 }

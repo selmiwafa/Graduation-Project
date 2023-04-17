@@ -1,8 +1,5 @@
 package com.example.pfe.manage_medicine;
 
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.recyclerview.widget.LinearLayoutManager;
-
 import android.annotation.SuppressLint;
 import android.app.DatePickerDialog;
 import android.app.ProgressDialog;
@@ -19,11 +16,12 @@ import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.appcompat.app.AppCompatActivity;
+
 import com.example.pfe.JSONParser;
 import com.example.pfe.R;
 import com.example.pfe.SharedPrefManager;
 
-import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -162,6 +160,14 @@ public class UpdateMedicineActivity extends AppCompatActivity {
                 //JSONObject object = parser.makeHttpRequest("http://192.168.1.16/healthbuddy/medicine/updateMedicine.php", "GET", map);
                 JSONObject object = parser.makeHttpRequest("http://192.168.43.205/healthbuddy/medicine/updateMedicine.php", "GET", map);
                 success = object.getInt("success");
+                SharedPrefManager.getInstance(UpdateMedicineActivity.this).deleteMedicine(barcode);
+                ArrayList<Medicine> medicineArrayList = SharedPrefManager.getInstance(UpdateMedicineActivity.this).getMedicineList();
+                medicineArrayList.add(new Medicine(edBarcode.getText().toString(),
+                        edMedName.getText().toString(),
+                        Integer.parseInt(edQuantity.getText().toString()),
+                        edDesc.getText().toString(),
+                        edExpDate.getText().toString()));
+                SharedPrefManager.saveMedicineList(medicineArrayList);
                 connection.close();
             } catch (ClassNotFoundException | SQLException e) {
                 e.printStackTrace();
@@ -185,6 +191,7 @@ public class UpdateMedicineActivity extends AppCompatActivity {
         }
     }
     public void delete(View view) {
+        SharedPrefManager.getInstance(UpdateMedicineActivity.this).deleteMedicine(barcode);
         new Delete().execute();
     }
     @SuppressLint("StaticFieldLeak")

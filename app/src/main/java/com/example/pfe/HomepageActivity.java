@@ -4,20 +4,39 @@ import static com.example.pfe.R.layout.user_details;
 
 import android.content.Intent;
 import android.graphics.Color;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.WindowManager;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
+import androidx.viewpager.widget.ViewPager;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.DataSource;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
+import com.bumptech.glide.load.engine.GlideException;
+import com.bumptech.glide.load.resource.gif.GifDrawable;
+import com.bumptech.glide.request.RequestListener;
+import com.bumptech.glide.request.target.Target;
+import com.example.pfe.appointments.MyAppointmentsActivity;
+import com.example.pfe.appointments.analysis_appointments.AnalysisAppointmentActivity;
+import com.example.pfe.appointments.doctor_appointments.DoctorAppointmentActivity;
+import com.example.pfe.diet.DietActivity;
+import com.example.pfe.donations.MyDonationsActivity;
+import com.example.pfe.donations.ProposeDonationActivity;
+import com.example.pfe.donations.RequestDonationActivity;
+import com.example.pfe.homepage_animation.MyPagerAdapter;
 import com.example.pfe.localisation.LocateDoctorsActivity;
 import com.example.pfe.localisation.LocatePharmaciesActivity;
 import com.example.pfe.manage_analyses.AddAnalysisActivity;
@@ -47,6 +66,34 @@ public class HomepageActivity extends AppCompatActivity implements NavigationVie
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE);
 
         createNavbar();
+        ImageView imageView = findViewById(R.id.gif_imageview);
+
+        Glide.with(this)
+                .load(R.raw.hello)
+                .diskCacheStrategy(DiskCacheStrategy.DATA)
+                .listener(new RequestListener<Drawable>() {
+                    @Override
+                    public boolean onLoadFailed(@Nullable GlideException e, Object model, Target<Drawable> target, boolean isFirstResource) {
+                        return false;
+                    }
+
+                    @Override
+                    public boolean onResourceReady(Drawable resource, Object model, Target<Drawable> target, DataSource dataSource, boolean isFirstResource) {
+                        if (resource instanceof GifDrawable) {
+                            GifDrawable gifDrawable = (GifDrawable) resource;
+                            gifDrawable.setLoopCount(GifDrawable.LOOP_FOREVER);
+                            gifDrawable.start();
+                        }
+                        return false;
+                    }
+                })
+                .into(imageView);
+        TextView userTv = findViewById(R.id.nameTv);
+        userTv.setText(SharedPrefManager.getInstance(getApplicationContext()).getUser().getName());
+
+        ViewPager viewPager = findViewById(R.id.viewPager);
+        MyPagerAdapter adapter = new MyPagerAdapter(getSupportFragmentManager());
+        viewPager.setAdapter(adapter);
     }
 
     public void logout(View view) {
@@ -56,7 +103,17 @@ public class HomepageActivity extends AppCompatActivity implements NavigationVie
     public void OpenManageAccount(View view) {
         startActivity(new Intent(HomepageActivity.this, ManageAccountActivity.class));
     }
+    public void createUserDialog(View view) {
+        AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(this);
+        final View contactPopupView = getLayoutInflater().inflate(user_details, null);
+        dialogBuilder.setView(contactPopupView);
+        dialog = dialogBuilder.create();
+        dialog.show();
+        username = dialog.findViewById(R.id.username);
+        detail_email = dialog.findViewById(R.id.detail_email);
+        showInfo(username, detail_email);
 
+    }
     public void createNavbar() {
         drawerLayout = findViewById(R.id.drawerlayout);
         navigationView = findViewById(R.id.nav_menu);
@@ -71,17 +128,7 @@ public class HomepageActivity extends AppCompatActivity implements NavigationVie
         toggle.syncState();
     }
 
-    public void createUserDialog(View view) {
-        AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(this);
-        final View contactPopupView = getLayoutInflater().inflate(user_details, null);
-        dialogBuilder.setView(contactPopupView);
-        dialog = dialogBuilder.create();
-        dialog.show();
-        username = dialog.findViewById(R.id.username);
-        detail_email = dialog.findViewById(R.id.detail_email);
-        showInfo(username, detail_email);
 
-    }
 
     public void cancel(View view) {
         dialog.dismiss();
@@ -146,26 +193,33 @@ public class HomepageActivity extends AppCompatActivity implements NavigationVie
                 intent = new Intent(HomepageActivity.this, LocatePharmaciesActivity.class);
                 startActivity(intent);
                 break;
-
+            case (R.id.my_appointments):
+                intent = new Intent(HomepageActivity.this, MyAppointmentsActivity.class);
+                startActivity(intent);
+                break;
             case (R.id.make_doctor_appointment):
-                //intent = new Intent(InventoryActivity.this, AddPrescriptionActivity.class);
-                //startActivity(intent);
+                intent = new Intent(HomepageActivity.this, DoctorAppointmentActivity.class);
+                startActivity(intent);
                 break;
             case (R.id.make_analysis_appointment):
-                //intent = new Intent(InventoryActivity.this, AddPrescriptionActivity.class);
-                //startActivity(intent);
+                intent = new Intent(HomepageActivity.this, AnalysisAppointmentActivity.class);
+                startActivity(intent);
                 break;
             case (R.id.request_donation):
-                //intent = new Intent(InventoryActivity.this, AddPrescriptionActivity.class);
-                //startActivity(intent);
+                intent = new Intent(HomepageActivity.this, RequestDonationActivity.class);
+                startActivity(intent);
+                break;
+            case (R.id.my_donations):
+                intent = new Intent(HomepageActivity.this, MyDonationsActivity.class);
+                startActivity(intent);
                 break;
             case (R.id.propose_donation):
-                //intent = new Intent(InventoryActivity.this, AddPrescriptionActivity.class);
-                //startActivity(intent);
+                intent = new Intent(HomepageActivity.this, ProposeDonationActivity.class);
+                startActivity(intent);
                 break;
             case (R.id.propose_diet):
-                //intent = new Intent(InventoryActivity.this, AddPrescriptionActivity.class);
-                //startActivity(intent);
+                intent = new Intent(HomepageActivity.this, DietActivity.class);
+                startActivity(intent);
                 break;
 
         }

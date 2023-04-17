@@ -22,6 +22,13 @@ import androidx.drawerlayout.widget.DrawerLayout;
 
 import com.example.pfe.HomepageActivity;
 import com.example.pfe.R;
+import com.example.pfe.appointments.MyAppointmentsActivity;
+import com.example.pfe.appointments.analysis_appointments.AnalysisAppointmentActivity;
+import com.example.pfe.appointments.doctor_appointments.DoctorAppointmentActivity;
+import com.example.pfe.diet.DietActivity;
+import com.example.pfe.donations.MyDonationsActivity;
+import com.example.pfe.donations.ProposeDonationActivity;
+import com.example.pfe.donations.RequestDonationActivity;
 import com.example.pfe.manage_analyses.AddAnalysisActivity;
 import com.example.pfe.manage_medicine.AddMedicineActivity;
 import com.example.pfe.manage_medicine.BarcodeActivity;
@@ -235,26 +242,33 @@ public class LocateDoctorsActivity extends AppCompatActivity implements Navigati
                 intent = new Intent(LocateDoctorsActivity.this, LocatePharmaciesActivity.class);
                 startActivity(intent);
                 break;
-
+            case (R.id.my_appointments):
+                intent = new Intent(LocateDoctorsActivity.this, MyAppointmentsActivity.class);
+                startActivity(intent);
+                break;
             case (R.id.make_doctor_appointment):
-                //intent = new Intent(InventoryActivity.this, AddPrescriptionActivity.class);
-                //startActivity(intent);
+                intent = new Intent(LocateDoctorsActivity.this, DoctorAppointmentActivity.class);
+                startActivity(intent);
                 break;
             case (R.id.make_analysis_appointment):
-                //intent = new Intent(InventoryActivity.this, AddPrescriptionActivity.class);
-                //startActivity(intent);
+                intent = new Intent(LocateDoctorsActivity.this, AnalysisAppointmentActivity.class);
+                startActivity(intent);
                 break;
             case (R.id.request_donation):
-                //intent = new Intent(InventoryActivity.this, AddPrescriptionActivity.class);
-                //startActivity(intent);
+                intent = new Intent(LocateDoctorsActivity.this, RequestDonationActivity.class);
+                startActivity(intent);
+                break;
+            case (R.id.my_donations):
+                intent = new Intent(LocateDoctorsActivity.this, MyDonationsActivity.class);
+                startActivity(intent);
                 break;
             case (R.id.propose_donation):
-                //intent = new Intent(InventoryActivity.this, AddPrescriptionActivity.class);
-                //startActivity(intent);
+                intent = new Intent(LocateDoctorsActivity.this, ProposeDonationActivity.class);
+                startActivity(intent);
                 break;
             case (R.id.propose_diet):
-                //intent = new Intent(InventoryActivity.this, AddPrescriptionActivity.class);
-                //startActivity(intent);
+                intent = new Intent(LocateDoctorsActivity.this, DietActivity.class);
+                startActivity(intent);
                 break;
         }
         drawerLayout.closeDrawer(GravityCompat.START);

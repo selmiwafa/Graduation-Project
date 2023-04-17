@@ -2,7 +2,6 @@ package com.example.pfe.manage_prescriptions;
 
 import android.app.AlertDialog;
 import android.content.Context;
-import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,6 +12,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.pfe.R;
+import com.example.pfe.SharedPrefManager;
 
 import java.util.List;
 
@@ -23,30 +23,17 @@ public class SummaryAdapter extends RecyclerView.Adapter<SummaryAdapter.ViewHold
     private OnItemClickListener mListener;
     String name;
     Context mContext;
-    String barcode ;
-    String medName;
-    int quantity;
-    String exp_date;
-    String description;
-    Intent intent;
-    String dose;
-    String frequency;
-    String period;
-    String tpw;
-    String other;
     public SummaryAdapter(Context context, List<PresMedicine> summaryList)
     {
         this.summaryList = summaryList;
         mContext = context;
     }
-
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.summary_item, parent, false);
         return new ViewHolder(view);
     }
-
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         presMedicine = summaryList.get(position);
@@ -56,6 +43,7 @@ public class SummaryAdapter extends RecyclerView.Adapter<SummaryAdapter.ViewHold
         holder.barcode.setText(presMedicine.getBarcode());
         holder.deleteBtn.setOnClickListener(v -> {
             itemPosition = holder.getAdapterPosition();
+            SharedPrefManager.getInstance(mContext).deleteSummaryItem(presMedicine.getBarcode());
             deleteItem(presMedicine);
         });
         holder.itemView.setOnClickListener(v -> {

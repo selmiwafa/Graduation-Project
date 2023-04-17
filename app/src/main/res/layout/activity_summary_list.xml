@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".manage_prescriptions.PresMedListActivity">
+    tools:context=".manage_prescriptions.SummaryListActivity">
 <RelativeLayout
 
     android:layout_width="match_parent"
@@ -129,12 +129,10 @@
             android:gravity="center"
             android:layout_marginTop="20dp" />
 
-        <androidx.fragment.app.FragmentContainerView
-            android:id="@+id/fragment_container_summary"
-            android:name="com.example.pfe.manage_prescriptions.FragmentSummaryList"
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/listSummaryMedicine"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            tools:layout="@layout/fragment_summary_list"
             android:layout_marginTop="25dp"
             android:layout_below="@id/list"/>
     </RelativeLayout>

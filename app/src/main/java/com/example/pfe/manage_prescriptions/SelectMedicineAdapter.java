@@ -67,9 +67,6 @@ public class SelectMedicineAdapter extends RecyclerView.Adapter<SelectMedicineAd
                             Intent intent = new Intent(mContext, AddPresMedDetails.class);
                             intent.putExtra("barcode",medicine.getBarcode());
                             intent.putExtra("med_name",medicine.getMed_name());
-                            intent.putExtra("quantity",medicine.getQuantity());
-                            intent.putExtra("exp_date",medicine.getExp_date());
-                            intent.putExtra("description",medicine.getDescription());
                             mContext.startActivity(intent);
                         })
                         .setNegativeButton("Cancel", (dialog, which) -> dialog.dismiss())

@@ -4,7 +4,6 @@ import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.view.LayoutInflater;
@@ -33,6 +32,7 @@ import java.util.List;
 public class MedicineAdapter extends RecyclerView.Adapter<MedicineAdapter.ViewHolder>  {
     private final List<Medicine> medicineList;
     int itemPosition;
+    String barcode;
     Medicine medicine;
     JSONParser parser = new JSONParser();
     private OnItemClickListener mListener;
@@ -60,7 +60,7 @@ public class MedicineAdapter extends RecyclerView.Adapter<MedicineAdapter.ViewHo
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         Medicine medicine = medicineList.get(position);
-
+        barcode = medicine.getBarcode();
         holder.medName.setText(medicine.getMed_name());
         holder.barcode.setText(medicine.getBarcode());
         holder.deleteBtn.setOnClickListener(v -> {
@@ -114,6 +114,7 @@ public class MedicineAdapter extends RecyclerView.Adapter<MedicineAdapter.ViewHo
     public void deleteItem(Medicine medicine) {
         if (medicineList != null){
             medicineList.remove(medicine);
+            SharedPrefManager.getInstance(mContext).deleteMedicine(medicine.getBarcode());
             notifyDataSetChanged();
         }
     }
@@ -165,7 +166,7 @@ public class MedicineAdapter extends RecyclerView.Adapter<MedicineAdapter.ViewHo
         protected String doInBackground(String... strings) {
 
             HashMap<String, String> map = new HashMap<>();
-            map.put("barcode", medicine.getBarcode());
+            map.put("barcode", barcode);
             map.put("user", SharedPrefManager.getInstance(mContext).getUser().getEmail());
 
             try {
