@@ -5,12 +5,14 @@ include ("db_connect.php");
 $response=array();
 
 if(
+   isset($_GET["patient_id"]) &&
    isset($_GET["patient_name"]) &&
    isset($_GET["relationship"]) &&
    isset($_GET["patient_age"] ) &&
    isset($_GET["user"])
    )
    {
+      $id=$_GET["patient_id"];
       $name=$_GET["patient_name"];
       $relationship=$_GET["relationship"];
       $age=$_GET["patient_age"];
@@ -20,13 +22,14 @@ if(
       $number=mysqli_num_rows($req1);
       if($number<2)
       {
-         $req=mysqli_query($cnx,"insert into patients(patient_name,relationship,patient_age,user) values ('$name','$relationship','$age','$user')");
+         $req=mysqli_query($cnx,"insert into patients(patient_id,patient_name,relationship,patient_age,user) values ('$id','$name','$relationship','$age','$user')");
          if($req)
          {
             $req2=mysqli_query($cnx,"select * from patients where user='$user'");
             $tmp=array();
             $response["patients"]=array();
             while($cur=mysqli_fetch_array($req2)){
+               $tmp["patient_id"]=$cur["patient_id"];
                $tmp["patient_name"]=$cur["patient_name"];
                $tmp["patient_age"]=$cur["patient_age"];
                $tmp["relationship"]=$cur["relationship"];

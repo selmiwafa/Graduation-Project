@@ -1,11 +1,13 @@
 <?php
 include ("db_connect.php");
 $response=array();
-if(isset($_GET["email"]))
+if(isset($_GET["user"])
+    && isset($_GET["patient_name"]))
 {
-    $email=$_GET["email"];
-
-    $req=mysqli_query($cnx,"delete from user where email='$email'");
+    $user=$_GET["user"];
+    $patient_name=$_GET["patient_name"];
+    
+    $req=mysqli_query($cnx,"delete from patients where (user='$user' && patient_name='$patient_name')");
     if($req)
     {
         $response["success"]=1;
