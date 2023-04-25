@@ -48,7 +48,6 @@ public class AddPrescriptionActivity extends AppCompatActivity {
             int d = Calendar.getInstance().get(Calendar.DAY_OF_MONTH);
         };
         edPresName = findViewById(R.id.prescription_name_edit_text);
-        id = edPresName.getText().toString()+edStartDate.getText().toString();
         if (edEndDate.getText().toString().isEmpty()) {
             edEndDate.setText("");
         }
@@ -62,7 +61,7 @@ public class AddPrescriptionActivity extends AppCompatActivity {
             Toast.makeText(this, "Fill all required fields!", Toast.LENGTH_SHORT).show();
         } else
         {
-            SharedPrefManager.getInstance(getApplicationContext()).setCurrentPres(id,edPresName.getText().toString(),edStartDate.getText().toString(),edEndDate.getText().toString());
+            SharedPrefManager.getInstance(getApplicationContext()).setCurrentPres(edPresName.getText().toString()+edStartDate.getText().toString(),edPresName.getText().toString(),edStartDate.getText().toString(),edEndDate.getText().toString());
             Intent intent = new Intent(AddPrescriptionActivity.this, SummaryListActivity.class);
             startActivity(intent);
 

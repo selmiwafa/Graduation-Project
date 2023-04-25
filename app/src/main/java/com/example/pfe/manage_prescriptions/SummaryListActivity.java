@@ -8,8 +8,6 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.View;
 import android.view.WindowManager;
-import android.widget.Button;
-import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -21,6 +19,7 @@ import com.example.pfe.JSONParser;
 import com.example.pfe.R;
 import com.example.pfe.SharedPrefManager;
 import com.example.pfe.manage_medicine.Medicine;
+import com.google.gson.Gson;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -30,36 +29,22 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 
 public class SummaryListActivity extends AppCompatActivity {
 
     ProgressDialog dialog;
-    Button saveBtn;
-    ImageButton topSaveBtn;
     JSONParser parser = new JSONParser();
     String url = "jdbc:mysql://192.168.43.205:3306/healthbuddy";
     //String url = "jdbc:mysql://192.168.1.16:3306/healthbuddy";
     String user = "root";
     String password = "";
     int success;
-    String pres_id, pres_name, pres_start, pres_end;
     TextView edPres_name, start_date, end_date;
-    String barcode ;
-    String name;
-    int quantity;
-    String exp_date;
-    String description;
     ArrayList<Medicine> medicineList;
     private RecyclerView mRecyclerView;
     SummaryAdapter adapter;
     LinearLayoutManager linearlayoutmanager;
-    int dose;
-    int frequency;
-    int period;
-    int tpw;
-    String other;
-    List<String> list;
+    Prescription prescription;
     ArrayList<PresMedicine> summaryList;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -90,10 +75,10 @@ public class SummaryListActivity extends AppCompatActivity {
         start_date = findViewById(R.id.start_date);
         end_date = findViewById(R.id.end_date);
 
-        list = SharedPrefManager.getInstance(getApplicationContext()).getCurrentPres();
-        edPres_name.setText(list.get(1));
-        start_date.setText(list.get(2));
-        end_date.setText(list.get(3));
+        prescription = SharedPrefManager.getInstance(getApplicationContext()).getCurrentPres();
+        edPres_name.setText(prescription.getName());
+        start_date.setText(prescription.getStart());
+        end_date.setText(prescription.getEnd());
 
     }
 
@@ -116,27 +101,26 @@ public class SummaryListActivity extends AppCompatActivity {
 
         @Override
         protected String doInBackground(String... strings) {
+            HashMap<String, Object> params = new HashMap<>();
+
             HashMap<String, String> map = new HashMap<>();
-            for (PresMedicine presMedicine : summaryList) {
-                map.put("barcode", presMedicine.getBarcode());
-                map.put("dose", String.valueOf(presMedicine.getDose()));
-                map.put("frequency", String.valueOf(presMedicine.getFrequency()));
-                map.put("period", String.valueOf(presMedicine.getPeriod()));
-                map.put("tpw", String.valueOf(presMedicine.getTpw()));
-                map.put("other", presMedicine.getOther());
-            }
+            map.put("pres_id", prescription.getId());
+            map.put("pres_name", prescription.getName());
+            map.put("pres_start", prescription.getStart());
+            map.put("pres_end", prescription.getEnd());
+            map.put("owner_id", SharedPrefManager.getInstance(getApplicationContext()).getUser().getEmail());
+            map.put("owner_type", "user");
 
-            map.put("pres_id", list.get(0));
-            map.put("pres_name", list.get(1));
-            map.put("pres_start", list.get(2));
-            map.put("pres_end", list.get(3));
+            Gson gson = new Gson();
+            String summaryListJson = gson.toJson(summaryList);
+            params.put("summarylist", summaryListJson);
 
-            map.put("user", SharedPrefManager.getInstance(getApplicationContext()).getUser().getEmail());
+            params.putAll(map);
             try {
                 Class.forName("com.mysql.jdbc.Driver");
                 Connection connection = DriverManager.getConnection(url, user, password);
                 //JSONObject object = parser.makeHttpRequest("http://192.168.1.16/healthbuddy/medicine/addMedicine.php", "GET", map);
-                JSONObject object = parser.makeHttpRequest("http://192.168.43.205/healthbuddy/prescription/addPrescription.php", "GET", map);
+                JSONObject object = parser.makeHttpRequest("http://192.168.43.205/healthbuddy/prescription/addPrescription.php", "GET", params);
                 success = object.getInt("success");
                 connection.close();
             } catch (ClassNotFoundException | SQLException e) {
@@ -144,7 +128,6 @@ public class SummaryListActivity extends AppCompatActivity {
             } catch (JSONException e) {
                 throw new RuntimeException(e);
             }
-
             return null;
         }
 
@@ -152,11 +135,9 @@ public class SummaryListActivity extends AppCompatActivity {
         protected void onPostExecute(String s) {
             super.onPostExecute(s);
             dialog.cancel();
-
             if (success == 1) {
                 SharedPrefManager.getInstance(getApplicationContext()).deleteSummary();
                 SharedPrefManager.getInstance(getApplicationContext()).deleteCurrentPres();
-
                 Toast.makeText(SummaryListActivity.this, "Added successfully", Toast.LENGTH_LONG).show();
                 startActivity(new Intent(SummaryListActivity.this, MyPrescriptionsActivity.class));
             } else {

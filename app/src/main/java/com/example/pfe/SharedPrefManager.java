@@ -11,6 +11,7 @@ import com.example.pfe.manage_analyses.Analysis;
 import com.example.pfe.manage_medicine.Medicine;
 import com.example.pfe.manage_patient_account.Patient;
 import com.example.pfe.manage_prescriptions.PresMedicine;
+import com.example.pfe.manage_prescriptions.Prescription;
 import com.example.pfe.manage_user_account.LoginActivity;
 import com.example.pfe.manage_user_account.User;
 import com.google.gson.Gson;
@@ -18,7 +19,6 @@ import com.google.gson.reflect.TypeToken;
 
 import java.lang.reflect.Type;
 import java.util.ArrayList;
-import java.util.List;
 
 
 public class SharedPrefManager {
@@ -128,14 +128,12 @@ public class SharedPrefManager {
         editor.putString(PRES_END, end);
         editor.apply();
     }
-    public List<String> getCurrentPres () {
+    public Prescription getCurrentPres () {
         SharedPreferences sharedPreferences = mCtx.getSharedPreferences(SHARED_PREF_NAME, Context.MODE_PRIVATE);
-        List<String> list = new ArrayList<>();
-        list.add(sharedPreferences.getString(PRES_ID, null));
-        list.add(sharedPreferences.getString(PRES_NAME, null));
-        list.add(sharedPreferences.getString(PRES_START, null));
-        list.add(sharedPreferences.getString(PRES_END, null));
-        return list;
+        return new Prescription(
+                sharedPreferences.getString(PRES_NAME, null),
+                sharedPreferences.getString(PRES_START, null),
+                sharedPreferences.getString(PRES_END, null));
     }
     public void deleteCurrentPres() {
         SharedPreferences sharedPreferences = mCtx.getSharedPreferences(SHARED_PREF_NAME, Context.MODE_PRIVATE);
