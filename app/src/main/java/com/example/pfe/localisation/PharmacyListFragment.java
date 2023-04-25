@@ -15,27 +15,27 @@ import com.example.pfe.R;
 
 import java.util.ArrayList;
 
-public class ListFragment extends Fragment {
+public class PharmacyListFragment extends Fragment {
     private RecyclerView mRecyclerView;
-    ArrayList<Doctor> doctors;
-    DoctorAdapter adapter;
+    ArrayList<Pharmacy> pharmacies;
+    PharmacyAdapter adapter;
     LinearLayoutManager linearlayoutmanager;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View rootView = inflater.inflate(R.layout.fragment_doctors_list, container, false);
+        View rootView = inflater.inflate(R.layout.fragment_pharmacies_list, container, false);
 
 
 
-        mRecyclerView = rootView.findViewById(R.id.listAnalysis);
+        mRecyclerView = rootView.findViewById(R.id.listPharmacies);
         Bundle bundle = getArguments();
         Log.d("bund",bundle +"");
         if (bundle != null) {
-            doctors=bundle.getParcelableArrayList("doc");
-            Log.d("doc",doctors.get(0).getLatitude()+" "+doctors.get(0).getName());
+            pharmacies=bundle.getParcelableArrayList("phar");
+            Log.d("phar",pharmacies.get(0).getLatitude()+" "+pharmacies.get(0).getName());
 
         }
 
-        adapter = new DoctorAdapter(getActivity(), doctors);
+        adapter = new PharmacyAdapter(getActivity(), pharmacies);
         mRecyclerView.setAdapter(adapter);
         adapter.setOnItemClickListener(analysis -> {
             Toast.makeText(getContext(), "Item selected", Toast.LENGTH_SHORT).show();

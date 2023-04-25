@@ -5,32 +5,32 @@ import android.os.Parcelable;
 
 import androidx.annotation.NonNull;
 
-public class Doctor implements Parcelable {
+public class Pharmacy implements Parcelable {
     private String name, address;
     private double longitude,latitude;
-    public Doctor (String n, String a, double la, double lon){
+    public Pharmacy (String n, String a, double la, double lon){
         this.name = n;
         this.address = a;
         this.longitude = lon;
         this.latitude = la;
     }
 
-    protected Doctor(Parcel in) {
+    protected Pharmacy(Parcel in) {
         name = in.readString();
         address = in.readString();
         longitude = in.readDouble();
         latitude = in.readDouble();
     }
 
-    public static final Creator<Doctor> CREATOR = new Creator<Doctor>() {
+    public static final Creator<Pharmacy> CREATOR = new Creator<Pharmacy>() {
         @Override
-        public Doctor createFromParcel(Parcel in) {
-            return new Doctor(in);
+        public Pharmacy createFromParcel(Parcel in) {
+            return new Pharmacy(in);
         }
 
         @Override
-        public Doctor[] newArray(int size) {
-            return new Doctor[size];
+        public Pharmacy[] newArray(int size) {
+            return new Pharmacy[size];
         }
     };
 

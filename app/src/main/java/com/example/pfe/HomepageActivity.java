@@ -20,7 +20,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
-import androidx.viewpager.widget.ViewPager;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.DataSource;
@@ -36,7 +35,6 @@ import com.example.pfe.diet.DietActivity;
 import com.example.pfe.donations.MyDonationsActivity;
 import com.example.pfe.donations.ProposeDonationActivity;
 import com.example.pfe.donations.RequestDonationActivity;
-import com.example.pfe.homepage_animation.MyPagerAdapter;
 import com.example.pfe.localisation.LocateDoctorsActivity;
 import com.example.pfe.localisation.LocatePharmaciesActivity;
 import com.example.pfe.manage_analyses.AddAnalysisActivity;
@@ -91,9 +89,6 @@ public class HomepageActivity extends AppCompatActivity implements NavigationVie
         TextView userTv = findViewById(R.id.nameTv);
         userTv.setText(SharedPrefManager.getInstance(getApplicationContext()).getUser().getName());
 
-        ViewPager viewPager = findViewById(R.id.viewPager);
-        MyPagerAdapter adapter = new MyPagerAdapter(getSupportFragmentManager());
-        viewPager.setAdapter(adapter);
     }
 
     public void logout(View view) {
