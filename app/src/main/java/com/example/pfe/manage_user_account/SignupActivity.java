@@ -36,7 +36,7 @@ public class SignupActivity extends AppCompatActivity {
     private EditText edBirthdate;
     private EditText edPassword;
     private EditText edConfirmPass;
-    private EditText edAdress, edOwner;
+    private EditText edAdress, edNumber;
     private Button btnSignin;
     boolean verify;
     String url = "jdbc:mysql://192.168.43.205:3306/healthbuddy";
@@ -89,11 +89,11 @@ public class SignupActivity extends AppCompatActivity {
         String password = edPassword.getText().toString();
         String confirmPassword = edConfirmPass.getText().toString();
         String adress = edAdress.getText().toString();
-        String owner_type = edOwner.getText().toString();
+        String number = edNumber.getText().toString();
 
         confirmPassword(password, confirmPassword);
 
-        if (name.isEmpty() || email.isEmpty() || birthdate.isEmpty() || password.isEmpty() || confirmPassword.isEmpty() || adress.isEmpty()  || owner_type.isEmpty()) {
+        if (name.isEmpty() || email.isEmpty() || birthdate.isEmpty() || password.isEmpty() || confirmPassword.isEmpty() || adress.isEmpty()  || number.isEmpty()) {
             Toast.makeText(getApplicationContext().getApplicationContext(), "All fields required!", Toast.LENGTH_LONG).show();
         } else if (!isValidEmail(email)) {
             Toast.makeText(getApplicationContext().getApplicationContext(), "Invalid e-mail format!", Toast.LENGTH_LONG).show();
@@ -131,7 +131,7 @@ public class SignupActivity extends AppCompatActivity {
             map.put("birthdate", edBirthdate.getText().toString());
             map.put("password", edPassword.getText().toString());
             map.put("adress", edAdress.getText().toString());
-            map.put("owner_type", edOwner.getText().toString());
+            map.put("number", edNumber.getText().toString());
 
             try {
                 Class.forName("com.mysql.jdbc.Driver");
@@ -173,6 +173,7 @@ public class SignupActivity extends AppCompatActivity {
         edPassword = findViewById(R.id.edPassword);
         edConfirmPass = findViewById(R.id.edConfirmPass);
         edAdress = findViewById(R.id.edAdress);
+        edNumber = findViewById(R.id.edNumber);
         btnSignin = findViewById(R.id.btnSignin);
 
     }

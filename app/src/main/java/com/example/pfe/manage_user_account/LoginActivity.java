@@ -108,7 +108,8 @@ public class LoginActivity extends AppCompatActivity {
                             jsonObject.getString("name"),
                             jsonObject.getString("birthdate"),
                             jsonObject.getString("password"),
-                            jsonObject.getString("adress")
+                            jsonObject.getString("adress"),
+                            jsonObject.getString("number")
                     );
                     SharedPrefManager.getInstance(getApplicationContext()).userLogin(user);
                     if (number == 1) {

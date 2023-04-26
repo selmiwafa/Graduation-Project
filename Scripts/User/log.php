@@ -22,6 +22,7 @@ if(isset($_GET["email"]) && isset($_GET["password"]))
             $tmp["birthdate"]=$cur["birthdate"];
             $tmp["password"]=$cur["password"];
             $tmp["adress"]=$cur["adress"];
+            $tmp["number"]=$cur["number"];
 
             $req2=mysqli_query($cnx,"select * from patients where user='$email'");
  

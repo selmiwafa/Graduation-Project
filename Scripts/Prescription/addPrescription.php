@@ -6,56 +6,74 @@ $response = array();
 
 if (isset($_GET["pres_id"]) &&
    isset($_GET["pres_name"]) &&
-   isset($_GET["pres_start"] ) &&
-   isset($_GET["pres_end"]) )
-
+   isset($_GET["pres_start"]) &&
+   isset($_GET["pres_end"]) &&
+   isset($_GET["owner_type"]) &&
+   isset($_GET["owner_id"]))
 {
-    $pres_id = $_GET["pres_id"];
-    $pres_name = $_GET["pres_name"];
-    $pres_start_date = $_GET["pres_start"];
-    $pres_end_date = $_GET["pres_end"];
-
-    $barcode = $_GET["barcode"];
-    $dose = $_GET["dose"];
-    $period = $_GET["period"];
-    $tpw = $_GET["tpw"];
-    $frequency = $_GET["frequency"];
-    $other = $_GET["other"];
-
-   
-   $mysqli = new mysqli('192.168.43.205', 'root', '', 'healthbuddy');
-
-   $mysqli->begin_transaction();
-
-   $req = mysqli_query($mysqli, "INSERT INTO prescriptions (id, pres_name, start_date, end_date,user)
-   VALUES ('$pres_id','$pres_name', '$pres_start_date', '$pres_end_date','$user')");
-
-   $prescription_id = $mysqli->insert_id;
-
-   $req2 = mysqli_query($mysqli, "INSERT INTO prescription_details 
-   (barcode, pres_id,  dose, frequency, period, times_per_week, other_details)
-   VALUES ('$barcode', '$pres_id', '$dose', '$frequency', '$period', '$tpw', '$other')");
-
-   if ($req && $req2)
+   $owner_type=$_GET["owner_type"];
+   if($owner_type == "user")
    {
-      $mysqli->commit();
+      $pres_id = $_GET['pres_id'];
+      $pres_name = $_GET['pres_name'];
+      $pres_start = $_GET['pres_start'];
+      $pres_end = $_GET['pres_end'];
+      $owner_id = $_GET['owner_id'];
+      $mysqli = new mysqli('192.168.43.205', 'root', '', 'healthbuddy');
+      
+      $stmt = $mysqli->prepare("INSERT INTO prescriptions (id, pres_name, start_date, end_date, user) VALUES (?, ?, ?, ?, ?)");
+      $stmt->bind_param("sssss", $pres_id, $pres_name, $pres_start, $pres_end, $owner_id);
+      $stmt->execute();
+      
+      $summaryListJson = $_GET["summarylist"];
+      $summaryList = json_decode($summaryListJson, true);
 
+      foreach ($summaryList as $presMedicine) {
+         $barcode = $presMedicine["barcode"];
+         $dose = $presMedicine["dose"];
+         $period = $presMedicine["period"];
+         $tpw = $presMedicine["tpw"];
+         $frequency = $presMedicine["frequency"];
+         $other = $presMedicine["other"];
+
+         $stmt2 = $mysqli->prepare("INSERT INTO prescription_details (barcode, pres_id, dose, period, times_per_week, frequency, other_details) VALUES (?, ?, ?, ?, ?, ?, ?)");
+         $stmt2->bind_param("sssssss", $barcode, $pres_id, $dose, $period, $tpw, $frequency, $other);
+         $stmt2->execute();
+      }
+      
       $response["success"] = 1;
       $response["message"] = "Inserted!";
       echo json_encode($response);
    }
-   else
-   {
-      $mysqli->rollback();
+   else {
+      $pres_id = $_GET['pres_id'];
+      $pres_name = $_GET['pres_name'];
+      $pres_start = $_GET['pres_start'];
+      $pres_end = $_GET['pres_end'];
+      $owner_id = $_GET['owner_id'];
+      $mysqli = new mysqli('192.168.43.205', 'root', '', 'healthbuddy');
+      
+      $stmt = $mysqli->prepare("INSERT INTO prescriptions (id, pres_name, start_date, end_date, patient_id) VALUES (?, ?, ?, ?, ?)");
+      $stmt->bind_param("sssss", $pres_id, $pres_name, $pres_start, $pres_end, $owner_id);
+      $stmt->execute();
+      
+      $summaryListJson = $_GET["summarylist"];
+      $summaryList = json_decode($summaryListJson, true);
 
-      $response["success"] = 0;
-      $response["message"] = "Request error!";
-      echo json_encode($response);
+
+      foreach ($summaryList as $presMedicine) {
+         $barcode = $presMedicine["barcode"];
+         $dose = $presMedicine["dose"];
+         $period = $presMedicine["period"];
+         $tpw = $presMedicine["tpw"];
+         $frequency = $presMedicine["frequency"];
+         $other = $presMedicine["other"];
+
+         $stmt2 = $mysqli->prepare("INSERT INTO prescription_details (barcode, pres_id, dose, period, times_per_week, frequency, other_details) VALUES (?, ?, ?, ?, ?, ?, ?)");
+         $stmt2->bind_param("sssssss", $barcode, $pres_id, $dose, $period, $tpw, $frequency, $other);
+         $stmt2->execute();
+      }
    }
-
-   $mysqli->close();
-    
-   
 }
 else
 {

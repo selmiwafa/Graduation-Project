@@ -122,7 +122,32 @@
                 android:layout_marginEnd="40dp"
                 android:background="@android:color/black"
                 android:layout_below="@+id/birthdate" />
+            <EditText
+                android:id="@+id/number"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="30dp"
+                android:layout_marginTop="30dp"
+                android:layout_marginEnd="30dp"
+                android:autofillHints=""
+                android:background="@android:color/transparent"
+                android:hint="New phone number"
+                android:drawableEnd="@drawable/phone"
+                android:inputType="text"
+                android:padding="15dp"
+                android:layout_below="@+id/birthdate"
+                android:textColor="@android:color/black"
+                android:textColorHint="@android:color/black"
+                android:textStyle="bold"
+                tools:ignore="VisualLintTextFieldSize" />
 
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginStart="40dp"
+                android:layout_marginEnd="40dp"
+                android:background="@android:color/black"
+                android:layout_below="@+id/adress" />
             <EditText
                 android:id="@+id/adress"
                 android:layout_width="match_parent"
@@ -136,7 +161,7 @@
                 android:drawableEnd="@drawable/pin"
                 android:inputType="text"
                 android:padding="15dp"
-                android:layout_below="@+id/birthdate"
+                android:layout_below="@+id/number"
                 android:textColor="@android:color/black"
                 android:textColorHint="@android:color/black"
                 android:textStyle="bold"

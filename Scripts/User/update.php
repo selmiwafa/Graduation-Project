@@ -6,6 +6,7 @@ if(isset($_GET["email"]) &&
    isset($_GET["name"]) &&
    isset($_GET["birthdate"]) &&
    isset($_GET["password"]) && 
+   isset($_GET["number"]) && 
    isset($_GET["adress"] ))
   {
     $email=$_GET["email"];
@@ -13,8 +14,9 @@ if(isset($_GET["email"]) &&
     $birthdate=$_GET["birthdate"];
     $password=$_GET["password"];
     $adress=$_GET["adress"];
+    $number=$_GET["number"];
 
-    $req=mysqli_query($cnx,"update user set name='$name', birthdate='$birthdate',password='$password',adress='$adress' where email='$email'");
+    $req=mysqli_query($cnx,"update user set name='$name', birthdate='$birthdate',password='$password',adress='$adress',number='$number' where email='$email'");
     $selectreq=mysqli_query($cnx,"select * from user where email='$email'");
     $cur=mysqli_fetch_array($selectreq);
     if($req)
@@ -26,6 +28,7 @@ if(isset($_GET["email"]) &&
         $tmp["birthdate"]=$cur["birthdate"];
         $tmp["password"]=$cur["password"];
         $tmp["adress"]=$cur["adress"];
+        $tmp["number"]=$cur["number"];
 
         $response["success"]=1;
         $response["message"]="updated successfully!";

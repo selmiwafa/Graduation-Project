@@ -206,7 +206,31 @@
                     android:layout_marginStart="40dp"
                     android:layout_marginEnd="40dp"
                     android:background="#696969" />
+                <EditText
+                    android:id="@+id/edNumber"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="30dp"
+                    android:layout_marginTop="30dp"
+                    android:layout_marginEnd="30dp"
+                    android:autofillHints=""
+                    android:background="@android:color/transparent"
+                    android:drawableEnd="@drawable/phone"
+                    android:drawableTint="#696969"
+                    android:hint="Phone number"
+                    android:inputType="number"
+                    android:padding="15dp"
+                    android:textColor="#191919"
+                    android:textColorHint="#696969"
+                    android:textStyle="bold"
+                    tools:ignore="VisualLintTextFieldSize" />
 
+                <RelativeLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="1dp"
+                    android:layout_marginStart="40dp"
+                    android:layout_marginEnd="40dp"
+                    android:background="#696969" />
                 <EditText
                     android:id="@+id/edAdress"
                     android:layout_width="match_parent"

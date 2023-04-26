@@ -29,6 +29,7 @@ public class SharedPrefManager {
     private static final String KEY_NAME = "keyname";
     private static final String KEY_BIRTHDATE = "keybirthdate";
     private static final String KEY_ADRESS = "keyadress";
+    private static final String KEY_NUMBER = "keynumber";
     private static final String KEY_PASSWORD = "keypassword";
     private static final String KEY_P1_NAME = "keyp1name";
     private static final String KEY_P1_AGE = "keyp1age";
@@ -232,6 +233,7 @@ public class SharedPrefManager {
         editor.putString(KEY_BIRTHDATE, user.getBirthdate());
         editor.putString(KEY_PASSWORD, user.getPassword());
         editor.putString(KEY_ADRESS, user.getAdress());
+        editor.putString(KEY_NUMBER, user.getNumber());
         editor.apply();
     }
 
@@ -297,7 +299,8 @@ public class SharedPrefManager {
                 sharedPreferences.getString(KEY_NAME, null),
                 sharedPreferences.getString(KEY_BIRTHDATE, null),
                 sharedPreferences.getString(KEY_PASSWORD, null),
-                sharedPreferences.getString(KEY_ADRESS, null)
+                sharedPreferences.getString(KEY_ADRESS, null),
+                sharedPreferences.getString(KEY_NUMBER, null)
         );
     }
 

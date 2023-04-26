@@ -32,7 +32,7 @@ import java.util.HashMap;
 
 public class UpdateInfoActivity extends AppCompatActivity {
     ProgressDialog dialog;
-    EditText edName, edPassword, edBirthdate, edAdress;
+    EditText edName, edPassword, edBirthdate, edAdress, edNumber;
     Button btnUpdate;
     DatePickerDialog.OnDateSetListener setListener;
     JSONParser parser = new JSONParser();
@@ -104,11 +104,11 @@ public class UpdateInfoActivity extends AppCompatActivity {
             map.put("birthdate", edBirthdate.getText().toString());
             map.put("password", edPassword.getText().toString());
             map.put("adress", edAdress.getText().toString());
+            map.put("number", edNumber.getText().toString());
             try {
                 Class.forName("com.mysql.jdbc.Driver");
                 Connection connection = DriverManager.getConnection(url, user, password);
                 JSONObject object = parser.makeHttpRequest("http://192.168.43.205/healthbuddy/user/update.php", "GET", map);
-                //JSONObject object = parser.makeHttpRequest("http://192.168.1.16/healthbuddy/user/update.php", "GET", map);
                 success = object.getInt("success");
                 JSONArray userJson = object.getJSONArray("user");
                 JSONObject jsonObject = userJson.getJSONObject(0);
@@ -117,7 +117,8 @@ public class UpdateInfoActivity extends AppCompatActivity {
                         jsonObject.getString("name"),
                         jsonObject.getString("birthdate"),
                         jsonObject.getString("password"),
-                        jsonObject.getString("adress")
+                        jsonObject.getString("adress"),
+                        jsonObject.getString("number")
                 );
                 SharedPrefManager.getInstance(getApplicationContext()).userLogin(user);
                 connection.close();
@@ -146,10 +147,12 @@ public class UpdateInfoActivity extends AppCompatActivity {
         edBirthdate = findViewById(R.id.birthdate);
         edPassword = findViewById(R.id.password);
         edAdress = findViewById(R.id.adress);
+        edNumber = findViewById(R.id.number);
         btnUpdate = findViewById(R.id.update_infoBtn);
         edName.setText(SharedPrefManager.getInstance(getApplicationContext()).getUser().getName());
         edAdress.setText(SharedPrefManager.getInstance(getApplicationContext()).getUser().getAdress());
         edBirthdate.setText(SharedPrefManager.getInstance(getApplicationContext()).getUser().getBirthdate());
+        edNumber.setText(SharedPrefManager.getInstance(getApplicationContext()).getUser().getNumber());
     }
     public void backManage(View view) {
         startActivity(new Intent(UpdateInfoActivity.this, ManageAccountActivity.class));
