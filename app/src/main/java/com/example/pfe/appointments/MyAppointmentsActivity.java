@@ -44,6 +44,7 @@ import com.example.pfe.manage_user_account.ManageAccountActivity;
 import com.google.android.material.navigation.NavigationView;
 
 import java.util.ArrayList;
+import java.util.Objects;
 
 public class MyAppointmentsActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener{
     ArrayList<Appointment> appointments;
@@ -66,8 +67,9 @@ public class MyAppointmentsActivity extends AppCompatActivity implements Navigat
 
         mRecyclerView = findViewById(R.id.my_appointments_list);
 
-
         appointments = SharedPrefManager.getInstance(getApplicationContext()).getAppointmentList();
+        appointments.removeIf(app -> !Objects.equals(app.getOwner(), "user"));
+
         adapter = new AppointmentAdapter(MyAppointmentsActivity.this, appointments);
         mRecyclerView.setAdapter(adapter);
         adapter.setOnItemClickListener(medicine -> {

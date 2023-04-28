@@ -14,9 +14,12 @@ import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.WindowManager;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -25,13 +28,16 @@ import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.core.app.NotificationManagerCompat;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.pfe.HomepageActivity;
 import com.example.pfe.JSONParser;
+import com.example.pfe.MyReminderService;
 import com.example.pfe.R;
+import com.example.pfe.Reminder;
 import com.example.pfe.SharedPrefManager;
 import com.example.pfe.appointments.Appointment;
 import com.example.pfe.appointments.MyAppointmentsActivity;
@@ -63,11 +69,13 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.HashMap;
 
-public class DoctorAppointmentActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
+public class DoctorAppointmentActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener, AdapterView.OnItemSelectedListener {
     DrawerLayout drawerLayout;
+    NotificationManagerCompat notificationManager;
     NavigationView navigationView;
     Toolbar toolbar;
     EditText edDoctorName, edDate, edTime;
+    Spinner edOwner;
     ProgressDialog dialog;
     Button saveBtn;
     ImageButton topSaveBtn;
@@ -83,6 +91,9 @@ public class DoctorAppointmentActivity extends AppCompatActivity implements Navi
     TextView username, detail_email;
     TimePickerDialog.OnTimeSetListener setTimeListener;
     DatePickerDialog.OnDateSetListener setListener;
+    String owner;
+    ArrayList<Reminder> reminders;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -92,6 +103,24 @@ public class DoctorAppointmentActivity extends AppCompatActivity implements Navi
         setContentView(R.layout.activity_doctor_appointment);
         createNavbar();
         initView();
+        createSpinner();
+
+        Button btnScheduleNotification = findViewById(R.id.btn_schedule_notification);
+        btnScheduleNotification.setOnClickListener(v -> {
+            // set the desired notification time
+            Calendar calendar = Calendar.getInstance();
+            calendar.set(Calendar.HOUR_OF_DAY, 22);
+            calendar.set(Calendar.MINUTE, 29);
+
+            // create intent for ReminderService and add the notification time as an extra
+            Intent intent = new Intent(DoctorAppointmentActivity.this, MyReminderService.class);
+            intent.putExtra("notification_time", calendar.getTimeInMillis());
+
+            // start the ReminderService
+            startService(intent);
+        });
+
+
         edDate.setOnClickListener(v -> {
             int y = Calendar.getInstance().get(Calendar.YEAR) ;
             int m = Calendar.getInstance().get(Calendar.MONTH);
@@ -134,6 +163,42 @@ public class DoctorAppointmentActivity extends AppCompatActivity implements Navi
             edTime.setText(time);
         };
         saveBtn.setOnClickListener(v -> addApp());
+
+
+    }
+    public void createSpinner() {
+        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this, R.array.owner, android.R.layout.simple_spinner_item);
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        edOwner.setAdapter(adapter);
+        edOwner.setOnItemSelectedListener(this);
+        edOwner.setPrompt("Relationship");
+    }
+
+    @Override
+    public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+        switch (position) {
+            case 0:
+                owner="";
+                break;
+            case 1:
+                owner = "user";
+                break;
+            case 2:
+                owner = SharedPrefManager.getInstance(getApplicationContext()).getPatient1().getName() +
+                        SharedPrefManager.getInstance(getApplicationContext()).getPatient1().getAge()+
+                        SharedPrefManager.getInstance(getApplicationContext()).getPatient1().getRelationship();
+                break;
+            case 3:
+                owner = SharedPrefManager.getInstance(getApplicationContext()).getPatient2().getName() +
+                        SharedPrefManager.getInstance(getApplicationContext()).getPatient2().getAge()+
+                        SharedPrefManager.getInstance(getApplicationContext()).getPatient2().getRelationship();
+                break;
+        }
+    }
+
+    @Override
+    public void onNothingSelected(AdapterView<?> parent) {
+
     }
     public void logout(View view) {
         SharedPrefManager.getInstance(getApplicationContext()).logout();
@@ -261,12 +326,14 @@ public class DoctorAppointmentActivity extends AppCompatActivity implements Navi
         edDoctorName=findViewById(R.id.DocName);
         edTime=findViewById(R.id.edTime);
         saveBtn=findViewById(R.id.saveBtn);
+        edOwner=findViewById(R.id.owner);
+        owner="";
     }
     void addApp() {
         String a_name = edDoctorName.getText().toString();
         String a_date = edDate.getText().toString();
         String a_time = edTime.getText().toString();
-        if (a_name.isEmpty() || a_date.isEmpty() || a_time.isEmpty()) {
+        if (a_name.isEmpty() || a_date.isEmpty() || a_time.isEmpty()|| owner=="") {
             Toast.makeText(getApplicationContext().getApplicationContext(), "All fields required!", Toast.LENGTH_LONG).show();
         }
         new Add().execute();
@@ -289,7 +356,7 @@ public class DoctorAppointmentActivity extends AppCompatActivity implements Navi
             map.put("app_date", edDate.getText().toString());
             map.put("app_time", edTime.getText().toString());
             map.put("app_type", "Doctor");
-            map.put("owner_type", "user");
+            map.put("owner_type", owner);
             map.put("owner_id", SharedPrefManager.getInstance(getApplicationContext()).getUser().getEmail());
             try {
                 Class.forName("com.mysql.jdbc.Driver");
@@ -308,7 +375,8 @@ public class DoctorAppointmentActivity extends AppCompatActivity implements Navi
                 appointments.add(new Appointment(edDoctorName.getText().toString(),
                         edDate.getText().toString(),
                         edTime.getText().toString(),
-                        "Doctor"));
+                        "Doctor",
+                        owner));
                 SharedPrefManager.saveAppointmentList(appointments);
             } catch (ClassNotFoundException | SQLException e) {
                 e.printStackTrace();
@@ -326,6 +394,7 @@ public class DoctorAppointmentActivity extends AppCompatActivity implements Navi
 
             if (success == 1) {
                 Toast.makeText(DoctorAppointmentActivity.this, "Added successfully", Toast.LENGTH_LONG).show();
+
                 startActivity(new Intent(DoctorAppointmentActivity.this, MyAppointmentsActivity.class));
             } else {
                 Toast.makeText(DoctorAppointmentActivity.this, "Error adding appointment!", Toast.LENGTH_LONG).show();

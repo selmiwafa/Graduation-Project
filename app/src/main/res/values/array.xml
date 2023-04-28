@@ -14,4 +14,10 @@
         <item>Father</item>
         <item>Mother</item>
     </string-array>
+    <string-array name="owner">
+        <item>-- Select Owner --</item>
+        <item>User</item>
+        <item>Patient 1</item>
+        <item>Patient 2</item>
+    </string-array>
 </resources>

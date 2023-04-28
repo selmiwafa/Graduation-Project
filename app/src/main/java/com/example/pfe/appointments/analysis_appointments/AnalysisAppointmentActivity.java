@@ -14,9 +14,12 @@ import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.WindowManager;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -63,7 +66,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.HashMap;
 
-public class AnalysisAppointmentActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener{
+public class AnalysisAppointmentActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener, AdapterView.OnItemSelectedListener{
     DrawerLayout drawerLayout;
     NavigationView navigationView;
     Toolbar toolbar;
@@ -79,7 +82,8 @@ public class AnalysisAppointmentActivity extends AppCompatActivity implements Na
     int success;
     private RecyclerView mRecyclerView;
     private AlertDialog Userdialog;
-
+    Spinner edOwner;
+    String owner;
     TextView username, detail_email;
     TimePickerDialog.OnTimeSetListener setTimeListener;
     DatePickerDialog.OnDateSetListener setListener;
@@ -92,6 +96,7 @@ public class AnalysisAppointmentActivity extends AppCompatActivity implements Na
         setContentView(R.layout.activity_analysis_appointment);
         createNavbar();
         initView();
+        createSpinner();
         edDate.setOnClickListener(v -> {
             int y = Calendar.getInstance().get(Calendar.YEAR) ;
             int m = Calendar.getInstance().get(Calendar.MONTH);
@@ -134,6 +139,39 @@ public class AnalysisAppointmentActivity extends AppCompatActivity implements Na
             edTime.setText(time);
         };
         saveBtn.setOnClickListener(v -> addApp());
+    }
+    public void createSpinner() {
+        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this, R.array.owner, android.R.layout.simple_spinner_item);
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        edOwner.setAdapter(adapter);
+        edOwner.setOnItemSelectedListener(this);
+        edOwner.setPrompt("Relationship");
+    }
+    @Override
+    public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+        switch (position) {
+            case 0:
+                owner="";
+                break;
+            case 1:
+                owner = "user";
+                break;
+            case 2:
+                owner = SharedPrefManager.getInstance(getApplicationContext()).getPatient1().getName() +
+                        SharedPrefManager.getInstance(getApplicationContext()).getPatient1().getAge()+
+                        SharedPrefManager.getInstance(getApplicationContext()).getPatient1().getRelationship();
+                break;
+            case 3:
+                owner = SharedPrefManager.getInstance(getApplicationContext()).getPatient2().getName() +
+                        SharedPrefManager.getInstance(getApplicationContext()).getPatient2().getAge()+
+                        SharedPrefManager.getInstance(getApplicationContext()).getPatient2().getRelationship();
+                break;
+        }
+    }
+
+    @Override
+    public void onNothingSelected(AdapterView<?> parent) {
+
     }
     public void logout(View view) {
         SharedPrefManager.getInstance(getApplicationContext()).logout();
@@ -260,12 +298,14 @@ public class AnalysisAppointmentActivity extends AppCompatActivity implements Na
         edDoctorName=findViewById(R.id.DocName);
         edTime=findViewById(R.id.edTime);
         saveBtn=findViewById(R.id.saveBtn);
+        edOwner=findViewById(R.id.owner);
+        owner="";
     }
     void addApp() {
         String a_name = edDoctorName.getText().toString();
         String a_date = edDate.getText().toString();
         String a_time = edTime.getText().toString();
-        if (a_name.isEmpty() || a_date.isEmpty() || a_time.isEmpty()) {
+        if (a_name.isEmpty() || a_date.isEmpty() || a_time.isEmpty()|| owner=="") {
             Toast.makeText(getApplicationContext().getApplicationContext(), "All fields required!", Toast.LENGTH_LONG).show();
         }
         new AnalysisAppointmentActivity.Add().execute();
@@ -288,7 +328,7 @@ public class AnalysisAppointmentActivity extends AppCompatActivity implements Na
             map.put("app_date", edDate.getText().toString());
             map.put("app_time", edTime.getText().toString());
             map.put("app_type", "Analysis");
-            map.put("owner_type", "user");
+            map.put("owner_type", owner);
             map.put("owner_id", SharedPrefManager.getInstance(getApplicationContext()).getUser().getEmail());
             try {
                 Class.forName("com.mysql.jdbc.Driver");
@@ -307,7 +347,8 @@ public class AnalysisAppointmentActivity extends AppCompatActivity implements Na
                 appointments.add(new Appointment(edDoctorName.getText().toString(),
                         edDate.getText().toString(),
                         edTime.getText().toString(),
-                        "Analysis"));
+                        "Analysis",
+                        owner));
                 SharedPrefManager.saveAppointmentList(appointments);
             } catch (ClassNotFoundException | SQLException e) {
                 e.printStackTrace();

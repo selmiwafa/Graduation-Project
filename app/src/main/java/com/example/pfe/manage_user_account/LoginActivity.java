@@ -24,6 +24,8 @@ import com.example.pfe.donations.Donation;
 import com.example.pfe.manage_analyses.Analysis;
 import com.example.pfe.manage_medicine.Medicine;
 import com.example.pfe.manage_patient_account.Patient;
+import com.example.pfe.manage_prescriptions.PresMedicine;
+import com.example.pfe.manage_prescriptions.Prescription;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -34,6 +36,7 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.HashSet;
 
 public class LoginActivity extends AppCompatActivity {
     private EditText edEmailLogin;
@@ -159,11 +162,11 @@ public class LoginActivity extends AppCompatActivity {
                             Analysis analysis = new Analysis(
                                     jsonObject2.getString("analysis_name"),
                                     jsonObject2.getString("analysis_date"),
-                                    jsonObject2.getString("result")
-                            );
+                                    jsonObject2.getString("result"),
+                                    jsonObject2.getString("owner")
+                                    );
                             analysisArrayList.add(analysis);
                         }
-
                         int number4 = object.getInt("number_donations");
                         ArrayList<Donation> donations = new ArrayList<>();
                         JSONArray donationJson = object.getJSONArray("donations");
@@ -186,10 +189,70 @@ public class LoginActivity extends AppCompatActivity {
                                     jsonObject4.getString("app_name"),
                                     jsonObject4.getString("app_date"),
                                     jsonObject4.getString("app_time"),
-                                    jsonObject4.getString("app_type"));
+                                    jsonObject4.getString("app_type"),
+                                    jsonObject4.getString("owner")
+                            );
                             appointments.add(appointment);
                         }
 
+                        int number6 = object.getInt("number_prescriptions");
+                        ArrayList<Prescription> prescriptions = new ArrayList<>();
+                        JSONArray prescriptionJson = object.getJSONArray("prescriptions");
+
+                        HashSet<String> uniquePresIds = new HashSet<>();
+                        HashSet<String> uniqueBarcodes = new HashSet<>();
+
+                        for (int i = 0; i < number6; i++) {
+                            JSONObject jsonObject4 = prescriptionJson.getJSONObject(i);
+                            String presId = jsonObject4.getString("pres_name");
+                            ArrayList<PresMedicine> presMedicines = new ArrayList<>();
+
+                            for (int j = 0; j < number6; j++) {
+                                JSONObject presMed = prescriptionJson.getJSONObject(j);
+                                if (presMed.getString("pres_name").equals(presId)) {
+                                    String barcode = presMed.getString("barcode");
+
+                                    // Check if barcode has already been added
+                                    if (uniqueBarcodes.contains(barcode)) {
+                                        continue;  // Skip this PresMedicine object
+                                    } else {
+                                        uniqueBarcodes.add(barcode);  // Add new barcode to set
+                                    }
+
+                                    PresMedicine presMedecine = new PresMedicine(
+                                            barcode,
+                                            Integer.parseInt(presMed.getString("dose")),
+                                            Integer.parseInt(presMed.getString("frequency")),
+                                            Integer.parseInt(presMed.getString("period")),
+                                            Integer.parseInt(presMed.getString("times_per_week")),
+                                            presMed.getString("other_details")
+                                    );
+                                    presMedicines.add(presMedecine);
+                                }
+                            }
+
+                            // Check if prescription ID has already been added
+                            if (uniquePresIds.contains(presId)) {
+                                continue;  // Skip this Prescription object
+                            } else {
+                                uniquePresIds.add(presId);  // Add new prescription ID to set
+                            }
+
+                            Prescription prescription = new Prescription(
+                                    presId,
+                                    jsonObject4.getString("start_date"),
+                                    jsonObject4.getString("end_date"),
+                                    jsonObject4.getString("owner"),
+                                    presMedicines
+                            );
+
+                            prescriptions.add(prescription);
+                        }
+
+
+
+
+                        SharedPrefManager.savePrescriptionList(prescriptions);
                         SharedPrefManager.saveAppointmentList(appointments);
                         SharedPrefManager.saveDonationList(donations);
                         SharedPrefManager.saveAnalysisList(analysisArrayList);

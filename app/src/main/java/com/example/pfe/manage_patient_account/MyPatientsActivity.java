@@ -25,11 +25,13 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 
+import com.example.pfe.HomepageActivity;
+import com.example.pfe.JSONParser;
+import com.example.pfe.R;
+import com.example.pfe.SharedPrefManager;
 import com.example.pfe.appointments.MyAppointmentsActivity;
 import com.example.pfe.appointments.analysis_appointments.AnalysisAppointmentActivity;
 import com.example.pfe.appointments.doctor_appointments.DoctorAppointmentActivity;
-import com.example.pfe.HomepageActivity;
-import com.example.pfe.JSONParser;
 import com.example.pfe.diet.DietActivity;
 import com.example.pfe.donations.MyDonationsActivity;
 import com.example.pfe.donations.ProposeDonationActivity;
@@ -39,16 +41,13 @@ import com.example.pfe.localisation.LocatePharmaciesActivity;
 import com.example.pfe.manage_analyses.AddAnalysisActivity;
 import com.example.pfe.manage_analyses.MyAnalysesActivity;
 import com.example.pfe.manage_medicine.AddMedicineActivity;
+import com.example.pfe.manage_medicine.BarcodeActivity;
+import com.example.pfe.manage_medicine.InventoryActivity;
 import com.example.pfe.manage_prescriptions.AddPrescriptionActivity;
 import com.example.pfe.manage_prescriptions.MyPrescriptionsActivity;
 import com.example.pfe.manage_user_account.ManageAccountActivity;
-import com.example.pfe.R;
-import com.example.pfe.SharedPrefManager;
-import com.example.pfe.manage_medicine.BarcodeActivity;
-import com.example.pfe.manage_medicine.InventoryActivity;
 import com.google.android.material.navigation.NavigationView;
 
-import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -89,7 +88,6 @@ public class MyPatientsActivity extends AppCompatActivity implements NavigationV
         setContentView(R.layout.activity_my_patients);
         createNavbar();
 
-        new Show().execute();
         addBtn = findViewById(R.id.addBtn);
         addBtn.setVisibility(View.VISIBLE);
 
@@ -338,81 +336,5 @@ public class MyPatientsActivity extends AppCompatActivity implements NavigationV
                 Toast.makeText(MyPatientsActivity.this, "Error deleting!", Toast.LENGTH_LONG).show();
             }
         }
-    }
-    @SuppressLint("StaticFieldLeak")
-    class Show extends AsyncTask<String, String, String> {
-        @Override
-        protected void onPreExecute() {
-            super.onPreExecute();
-            dialog2 = new ProgressDialog(MyPatientsActivity.this);
-            dialog2.setMessage("Please wait");
-            dialog2.show();
-        }
-
-        @Override
-        protected String doInBackground(String... strings) {
-
-            HashMap<String, String> map = new HashMap<>();
-            map.put("user", SharedPrefManager.getInstance(getApplicationContext()).getUser().getEmail());
-            try {
-                Class.forName("com.mysql.jdbc.Driver");
-                Connection connection = DriverManager.getConnection(url, user, password);
-                //JSONObject object = parser.makeHttpRequest("http://192.168.1.16/healthbuddy/patient/selectPatient.php", "GET", map);
-                JSONObject object = parser.makeHttpRequest("http://192.168.43.205/healthbuddy/patient/selectPatient.php", "GET", map);
-                success = object.getInt("success");
-                message = object.getString("message");
-                while (success == 1) {
-                    number = object.getInt("number");
-                    if (number == 1) {
-                        SharedPrefManager.getInstance(getApplicationContext()).setKeyNumberPatients(1);
-                        JSONArray patientsJson = object.getJSONArray("patients");
-                        JSONObject patientJson = patientsJson.getJSONObject(0);
-                        Patient patient = new Patient(
-                                patientJson.getString("patient_name"),
-                                patientJson.getInt("patient_age"),
-                                patientJson.getString("relationship")
-                        );
-                        SharedPrefManager.getInstance(getApplicationContext()).addPatient1(patient);
-                    } else if (number >= 2) {
-                        SharedPrefManager.getInstance(getApplicationContext()).setKeyNumberPatients(2);
-                        JSONArray patientsJson = object.getJSONArray("patients");
-                        JSONObject patient1Json = patientsJson.getJSONObject(0);
-                        Patient patient1 = new Patient(
-                                patient1Json.getString("patient_name"),
-                                patient1Json.getInt("patient_age"),
-                                patient1Json.getString("relationship")
-                        );
-                        JSONObject patient2Json = patientsJson.getJSONObject(1);
-                        Patient patient2 = new Patient(
-                                patient2Json.getString("patient_name"),
-                                patient2Json.getInt("patient_age"),
-                                patient2Json.getString("relationship")
-                        );
-                        SharedPrefManager.getInstance(getApplicationContext()).addPatient1(patient1);
-                        SharedPrefManager.getInstance(getApplicationContext()).addPatient2(patient2);
-                    }
-                    break;
-                }
-                connection.close();
-            } catch (ClassNotFoundException | SQLException e) {
-                e.printStackTrace();
-            } catch (JSONException ex) {
-                throw new RuntimeException(ex);
-            }
-            return null;
-        }
-
-
-        @Override
-        protected void onPostExecute(String s) {
-            super.onPostExecute(s);
-            dialog2.cancel();
-            if (success == 1) {
-                Toast.makeText(MyPatientsActivity.this, "Patients refreshed", Toast.LENGTH_LONG).show();
-            } else {
-                Toast.makeText(MyPatientsActivity.this, message, Toast.LENGTH_LONG).show();
-            }
-        }
-
     }
 }

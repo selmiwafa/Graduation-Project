@@ -41,6 +41,7 @@ public class AppointmentAdapter extends RecyclerView.Adapter<AppointmentAdapter.
     String user = "root";
     String password = "";
     int success, number;
+    String  owner;
     ProgressDialog dialog;
 
     public AppointmentAdapter(Context context, List<Appointment> appointments)
@@ -59,7 +60,7 @@ public class AppointmentAdapter extends RecyclerView.Adapter<AppointmentAdapter.
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         Appointment appointment = appointments.get(position);
-
+        owner =appointment.getOwner();
         id = appointment.getId();
 
         holder.edDate.setText(appointment.getDate());
@@ -157,7 +158,8 @@ public class AppointmentAdapter extends RecyclerView.Adapter<AppointmentAdapter.
         @Override
         protected String doInBackground(String... strings) {
             HashMap<String, String> map = new HashMap<>();
-            map.put("user", SharedPrefManager.getInstance(mContext).getUser().getEmail());
+            map.put("owner_type", owner);
+            map.put("owner_id", SharedPrefManager.getInstance(mContext).getUser().getEmail());
             map.put("app_id", id);
             try {
                 Class.forName("com.mysql.jdbc.Driver");

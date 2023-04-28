@@ -92,6 +92,14 @@ tools:context=".manage_analyses.AddAnalysisActivity">
             android:layout_marginStart="40dp"
             android:layout_marginEnd="40dp"
             android:background="#696969" />
+        <Spinner
+            android:id="@+id/owner"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_marginStart="30dp"
+            android:layout_marginTop="30dp"
+            android:layout_marginEnd="30dp"
+            android:padding="15dp" />
 
         <EditText
             android:id="@+id/edAnalysisResult"

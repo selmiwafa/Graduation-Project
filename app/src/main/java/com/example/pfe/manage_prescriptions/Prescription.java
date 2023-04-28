@@ -3,13 +3,22 @@ package com.example.pfe.manage_prescriptions;
 import java.util.ArrayList;
 
 public class Prescription {
-    private String id,name, start, end;
+    private String id,name, start, end, owner;
     private ArrayList<PresMedicine> medicineArrayList;
-    public Prescription (String name, String start, String end){
+    public Prescription (String name, String start, String end, String owner){
         this.id=name+start;
         this.name=name;
         this.start=start;
         this.end=end;
+        this.owner=owner;
+    }
+    public Prescription (String name, String start, String end, String owner, ArrayList<PresMedicine> medicineArrayList){
+        this.id=name+start;
+        this.name=name;
+        this.start=start;
+        this.end=end;
+        this.owner=owner;
+        this.medicineArrayList=medicineArrayList;
     }
 
     public String getName() {
@@ -50,5 +59,13 @@ public class Prescription {
 
     public void setId(String id) {
         this.id = id;
+    }
+
+    public String getOwner() {
+        return owner;
+    }
+
+    public void setOwner(String owner) {
+        this.owner = owner;
     }
 }

@@ -40,7 +40,7 @@
         android:layout_width="280dp"
         android:layout_height="wrap_content"
         android:layout_below="@+id/logo"
-        android:text="Select medicine to add to donate"
+        android:text="Select medicine to donate"
         android:layout_centerHorizontal="true"
         android:textSize="25sp"
         android:gravity="center"

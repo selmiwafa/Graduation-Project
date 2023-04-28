@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="500dp">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:padding="25dp"
+        android:layout_marginTop="60dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Prescription name: "
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/pres_nameValue"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Start date: "
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/start_dateValue"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="End date: "
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/end_dateValue"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Prescription medicine : "
+            android:textStyle="bold"
+            android:layout_marginBottom="15dp"/>
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/med_details_list"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            tools:ignore="MissingConstraints" />
+
+    </LinearLayout>
+</RelativeLayout>

@@ -87,16 +87,90 @@
                     android:textStyle="normal" />
 
             </RelativeLayout>
-        </RelativeLayout>
-        <RelativeLayout
-            android:id="@+id/layout2"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/layoutcard1"
-            android:layout_marginStart="25dp"
-            android:layout_marginEnd="25dp">
 
         </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/layout_appointments"
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:layout_below="@id/layoutcard1"
+            android:layout_marginStart="25dp"
+            android:layout_marginEnd="25dp"
+            android:layout_marginBottom="10dp"
+            android:layout_marginTop="20dp"
+            android:onClick="OpenAppointments1">
+            <RelativeLayout
+                android:id="@+id/apps"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:background="@drawable/button_signin_background">
+                <TextView
+                    android:id="@+id/appointments"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Appointments"
+                    android:textColor="@color/appwhite"
+                    android:textSize="20sp"
+                    android:textStyle="bold" />
+            </RelativeLayout>
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/layout_prescriptions"
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:layout_below="@id/layout_appointments"
+            android:layout_marginStart="25dp"
+            android:layout_marginEnd="25dp"
+            android:layout_marginBottom="10dp"
+            android:layout_marginTop="10dp"
+            android:onClick="OpenPrescriptions1">
+            <RelativeLayout
+                android:id="@+id/pres"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:background="@drawable/button_login_background">
+                <TextView
+                    android:id="@+id/prescriptions"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Prescriptions"
+                    android:textColor="@color/appwhite"
+                    android:textSize="20sp"
+                    android:textStyle="bold" />
+            </RelativeLayout>
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/layout_analyses"
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:layout_below="@id/layout_prescriptions"
+            android:layout_marginStart="25dp"
+            android:layout_marginEnd="25dp"
+            android:layout_marginBottom="10dp"
+            android:layout_marginTop="10dp"
+            android:onClick="OpenAnalyses1">
+            <RelativeLayout
+                android:id="@+id/ana"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:background="@drawable/manage_buttons_bg">
+                <TextView
+                    android:id="@+id/analyses"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Analyses"
+                    android:textColor="@color/appwhite"
+                    android:textSize="20sp"
+                    android:textStyle="bold" />
+            </RelativeLayout>
+        </RelativeLayout>
+
     </RelativeLayout>
 
 

@@ -2,9 +2,12 @@ package com.example.pfe;
 
 import static com.example.pfe.R.layout.user_details;
 
+import android.annotation.SuppressLint;
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.Drawable;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
@@ -28,28 +31,55 @@ import com.bumptech.glide.load.engine.GlideException;
 import com.bumptech.glide.load.resource.gif.GifDrawable;
 import com.bumptech.glide.request.RequestListener;
 import com.bumptech.glide.request.target.Target;
+import com.example.pfe.appointments.Appointment;
 import com.example.pfe.appointments.MyAppointmentsActivity;
 import com.example.pfe.appointments.analysis_appointments.AnalysisAppointmentActivity;
 import com.example.pfe.appointments.doctor_appointments.DoctorAppointmentActivity;
 import com.example.pfe.diet.DietActivity;
+import com.example.pfe.donations.Donation;
 import com.example.pfe.donations.MyDonationsActivity;
 import com.example.pfe.donations.ProposeDonationActivity;
 import com.example.pfe.donations.RequestDonationActivity;
 import com.example.pfe.localisation.LocateDoctorsActivity;
 import com.example.pfe.localisation.LocatePharmaciesActivity;
 import com.example.pfe.manage_analyses.AddAnalysisActivity;
+import com.example.pfe.manage_analyses.Analysis;
 import com.example.pfe.manage_analyses.MyAnalysesActivity;
 import com.example.pfe.manage_medicine.AddMedicineActivity;
 import com.example.pfe.manage_medicine.BarcodeActivity;
 import com.example.pfe.manage_medicine.InventoryActivity;
+import com.example.pfe.manage_medicine.Medicine;
 import com.example.pfe.manage_patient_account.MyPatientsActivity;
+import com.example.pfe.manage_patient_account.Patient;
 import com.example.pfe.manage_prescriptions.AddPrescriptionActivity;
 import com.example.pfe.manage_prescriptions.MyPrescriptionsActivity;
+import com.example.pfe.manage_prescriptions.PresMedicine;
+import com.example.pfe.manage_prescriptions.Prescription;
 import com.example.pfe.manage_user_account.ManageAccountActivity;
+import com.example.pfe.manage_user_account.User;
 import com.google.android.material.navigation.NavigationView;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.HashSet;
 
 public class HomepageActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
     private AlertDialog dialog;
+    ProgressDialog dialogg;
+    JSONParser parser = new JSONParser();
+    int success, number;
+    String message;
+    String url = "jdbc:mysql://192.168.43.205:3306/healthbuddy";
+    //String url = "jdbc:mysql://192.168.1.16:3306/healthbuddy";
+    String user = "root";
+    String password = "";
     TextView username, detail_email;
     DrawerLayout drawerLayout;
     NavigationView navigationView;
@@ -62,7 +92,7 @@ public class HomepageActivity extends AppCompatActivity implements NavigationVie
         getWindow().setStatusBarColor(Color.TRANSPARENT);
         setContentView(R.layout.activity_home_page);
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE);
-
+        new Log().execute();
         createNavbar();
         ImageView imageView = findViewById(R.id.gif_imageview);
 
@@ -94,6 +124,7 @@ public class HomepageActivity extends AppCompatActivity implements NavigationVie
     public void logout(View view) {
         SharedPrefManager.getInstance(getApplicationContext()).logout();
     }
+
 
     public void OpenManageAccount(View view) {
         startActivity(new Intent(HomepageActivity.this, ManageAccountActivity.class));
@@ -222,5 +253,202 @@ public class HomepageActivity extends AppCompatActivity implements NavigationVie
         navigationView.setCheckedItem(R.id.home);
         return true;
     }
+    @SuppressLint("StaticFieldLeak")
+    class Log extends AsyncTask<String, String, String> {
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+        }
 
+        @Override
+        protected String doInBackground(String... strings) {
+            number = 0;
+            HashMap<String, String> map = new HashMap<>();
+            map.put("email", SharedPrefManager.getInstance(getApplicationContext()).getUser().getEmail());
+            map.put("password", SharedPrefManager.getInstance(getApplicationContext()).getUser().getPassword());
+            try {
+                Class.forName("com.mysql.jdbc.Driver");
+                Connection connection = DriverManager.getConnection(url, user, password);
+                //JSONObject object = parser.makeHttpRequest("http://192.168.1.16/healthbuddy/user/log.php", "GET", map);
+                JSONObject object = parser.makeHttpRequest("http://192.168.43.205/healthbuddy/user/log.php", "GET", map);
+                success = object.getInt("success");
+                message = object.getString("message");
+                number = object.getInt("number_patients");
+                while (success == 1) {
+                    JSONArray userJson = object.getJSONArray("user");
+                    JSONObject jsonObject = userJson.getJSONObject(0);
+                    User user = new User(
+                            jsonObject.getString("email"),
+                            jsonObject.getString("name"),
+                            jsonObject.getString("birthdate"),
+                            jsonObject.getString("password"),
+                            jsonObject.getString("adress"),
+                            jsonObject.getString("number")
+                    );
+                    SharedPrefManager.getInstance(getApplicationContext()).userLogin(user);
+                    if (number == 1) {
+                        SharedPrefManager.getInstance(getApplicationContext()).setKeyNumberPatients(1);
+                        JSONArray patientsJson = object.getJSONArray("patients");
+                        JSONObject patientJson = patientsJson.getJSONObject(0);
+                        Patient patient = new Patient(
+                                patientJson.getString("patient_name"),
+                                patientJson.getInt("patient_age"),
+                                patientJson.getString("relationship")
+                        );
+                        SharedPrefManager.getInstance(getApplicationContext()).addPatient1(patient);
+                    } else if (number >= 2) {
+                        SharedPrefManager.getInstance(getApplicationContext()).setKeyNumberPatients(2);
+                        JSONArray patientsJson = object.getJSONArray("patients");
+                        JSONObject patient1Json = patientsJson.getJSONObject(0);
+                        Patient patient1 = new Patient(
+                                patient1Json.getString("patient_name"),
+                                patient1Json.getInt("patient_age"),
+                                patient1Json.getString("relationship")
+                        );
+                        JSONObject patient2Json = patientsJson.getJSONObject(1);
+                        Patient patient2 = new Patient(
+                                patient2Json.getString("patient_name"),
+                                patient2Json.getInt("patient_age"),
+                                patient2Json.getString("relationship")
+                        );
+                        int number2 = object.getInt("number_medicine");
+                        ArrayList<Medicine> medicineList = new ArrayList<>();
+                        JSONArray medicineJson = object.getJSONArray("medicine");
+                        for (int i = 0; i < number2; i++) {
+                            JSONObject jsonObject2 = medicineJson.getJSONObject(i);
+                            Medicine medicine = new Medicine(
+                                    jsonObject2.getString("barcode"),
+                                    jsonObject2.getString("med_name"),
+                                    jsonObject2.getInt("quantity"),
+                                    jsonObject2.getString("description"),
+                                    jsonObject2.getString("exp_date")
+                            );
+                            medicineList.add(medicine);
+                        }
+                        int number3 = object.getInt("number_analyses");
+                        ArrayList<Analysis> analysisArrayList = new ArrayList<>();
+                        JSONArray analysisJson = object.getJSONArray("user_analyses");
+                        for (int i = 0; i < number3; i++) {
+                            JSONObject jsonObject2 = analysisJson.getJSONObject(i);
+                            Analysis analysis = new Analysis(
+                                    jsonObject2.getString("analysis_name"),
+                                    jsonObject2.getString("analysis_date"),
+                                    jsonObject2.getString("result"),
+                                    jsonObject2.getString("owner")
+                            );
+                            analysisArrayList.add(analysis);
+                        }
+
+                        int number4 = object.getInt("number_donations");
+                        ArrayList<Donation> donations = new ArrayList<>();
+                        JSONArray donationJson = object.getJSONArray("donations");
+                        for (int i = 0; i < number4; i++) {
+                            JSONObject jsonObject3 = donationJson.getJSONObject(i);
+                            Donation donation = new Donation(
+                                    jsonObject3.getString("id"),
+                                    jsonObject3.getString("barcode"),
+                                    Integer.parseInt(jsonObject3.getString("quantity")),
+                                    jsonObject3.getString("date"));
+                            donations.add(donation);
+                        }
+
+                        int number5 = object.getInt("number_apps");
+                        ArrayList<Appointment> appointments = new ArrayList<>();
+                        JSONArray appointmentJson = object.getJSONArray("appointments");
+                        for (int i = 0; i < number5; i++) {
+                            JSONObject jsonObject4 = appointmentJson.getJSONObject(i);
+                            Appointment appointment = new Appointment(
+                                    jsonObject4.getString("app_name"),
+                                    jsonObject4.getString("app_date"),
+                                    jsonObject4.getString("app_time"),
+                                    jsonObject4.getString("app_type"),
+                                    jsonObject4.getString("owner")
+                            );
+                            appointments.add(appointment);
+                        }
+
+                        int number6 = object.getInt("number_prescriptions");
+                        ArrayList<Prescription> prescriptions = new ArrayList<>();
+                        JSONArray prescriptionJson = object.getJSONArray("prescriptions");
+
+                        HashSet<String> uniquePresIds = new HashSet<>();
+
+                        for (int i = 0; i < number6; i++) {
+                            JSONObject jsonObject4 = prescriptionJson.getJSONObject(i);
+                            String presId = jsonObject4.getString("pres_name");
+                            ArrayList<PresMedicine> presMedicines = new ArrayList<>();
+                            HashSet<String> uniqueBarcodes = new HashSet<>();
+
+                            for (int j = 0; j < number6; j++) {
+                                JSONObject presMed = prescriptionJson.getJSONObject(j);
+                                if (presMed.getString("pres_name").equals(presId)) {
+                                    String barcode = presMed.getString("barcode");
+                                    String med_name = presMed.getString("med_name");
+                                    // Check if barcode has already been added
+                                    if (uniqueBarcodes.contains(barcode)) {
+                                        continue;  // Skip this PresMedicine object
+                                    } else {
+                                        uniqueBarcodes.add(barcode);  // Add new barcode to set
+                                    }
+
+                                    PresMedicine presMedecine = new PresMedicine(
+                                            barcode,
+                                            med_name,
+                                            Integer.parseInt(presMed.getString("dose")),
+                                            Integer.parseInt(presMed.getString("frequency")),
+                                            Integer.parseInt(presMed.getString("period")),
+                                            Integer.parseInt(presMed.getString("times_per_week")),
+                                            presMed.getString("other_details")
+                                    );
+                                    presMedicines.add(presMedecine);
+                                }
+                            }
+
+                            // Check if prescription ID has already been added
+                            if (uniquePresIds.contains(presId)) {
+                                continue;  // Skip this Prescription object
+                            } else {
+                                uniquePresIds.add(presId);  // Add new prescription ID to set
+                            }
+
+                            Prescription prescription = new Prescription(
+                                    presId,
+                                    jsonObject4.getString("start_date"),
+                                    jsonObject4.getString("end_date"),
+                                    jsonObject4.getString("owner"),
+                                    presMedicines
+                            );
+
+                            prescriptions.add(prescription);
+                        }
+
+
+
+
+                        SharedPrefManager.savePrescriptionList(prescriptions);
+                        SharedPrefManager.saveAppointmentList(appointments);
+                        SharedPrefManager.saveDonationList(donations);
+                        SharedPrefManager.saveAnalysisList(analysisArrayList);
+                        SharedPrefManager.saveMedicineList(medicineList);
+                        SharedPrefManager.getInstance(getApplicationContext()).addPatient1(patient1);
+                        SharedPrefManager.getInstance(getApplicationContext()).addPatient2(patient2);
+                    }
+                    break;
+                }
+                connection.close();
+            } catch (ClassNotFoundException | SQLException e) {
+                e.printStackTrace();
+            } catch (JSONException ex) {
+                throw new RuntimeException(ex);
+            }
+            return null;
+        }
+
+
+        @Override
+        protected void onPostExecute(String s) {
+            super.onPostExecute(s);
+        }
+
+    }
 }

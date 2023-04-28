@@ -23,7 +23,21 @@ public class PresMedicine {
         this.tpw=tpw;
         this.other=other;
     }
-
+    public PresMedicine (
+            String barcode,
+            int dose,
+            int frequency,
+            int period,
+            int tpw,
+            String other
+    ) {
+        this.barcode=barcode;
+        this.dose=dose;
+        this.frequency=frequency;
+        this.period=period;
+        this.tpw=tpw;
+        this.other=other;
+    }
 
     public String getMed_name() {
         return med_name;

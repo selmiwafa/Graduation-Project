@@ -1,0 +1,82 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="horizontal"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:padding="5dp">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="horizontal"
+        android:background="@drawable/medicine_item_bg">
+
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:layout_gravity="center"
+            android:orientation="vertical"
+            android:layout_marginStart="16dp">
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+                <TextView
+                    android:id="@+id/pres_label"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Prescription : "
+                    android:textStyle="bold"
+                    android:textSize="18sp"
+                    android:textColor="@android:color/black"/>
+                <TextView
+                    android:id="@+id/pres_name"
+                    android:layout_marginStart="10dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Prescription Name"
+                    android:textSize="18sp"
+                    android:textColor="@android:color/black"/>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+                <TextView
+                    android:id="@+id/pres_start"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="1/1/2000"
+                    android:layout_marginStart="10dp"
+                    android:textSize="15sp"/>
+                <TextView
+                    android:id="@+id/hiphen"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="-"
+                    android:layout_marginStart="10dp"
+                    android:textSize="15sp"/>
+                <TextView
+                    android:id="@+id/pres_end"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="1/1/2000"
+                    android:layout_marginStart="10dp"
+                    android:textSize="15sp"/>
+            </LinearLayout>
+
+
+
+
+        </LinearLayout>
+        <ImageButton
+            android:background="@android:color/transparent"
+            android:src="@drawable/trash"
+            android:id="@+id/DeleteBtn"
+            android:layout_gravity="center"
+            android:layout_width="40dp"
+            android:layout_height="40dp"/>
+
+    </LinearLayout>
+</LinearLayout>

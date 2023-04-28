@@ -136,7 +136,8 @@ public class UpdateAnalysisActivity extends AppCompatActivity {
                 ArrayList<Analysis> analysisArrayList = SharedPrefManager.getInstance(UpdateAnalysisActivity.this).getAnalysisList();
                 analysisArrayList.add(new Analysis(edAnalysisName.getText().toString(),
                         edAnalysisDate.getText().toString(),
-                        edResult.getText().toString()));
+                        edResult.getText().toString(),
+                        "user"));
                 SharedPrefManager.saveAnalysisList(analysisArrayList);
                 connection.close();
             } catch (ClassNotFoundException | SQLException e) {

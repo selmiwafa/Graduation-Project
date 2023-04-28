@@ -45,7 +45,9 @@ public class SharedPrefManager {
 
     private static final String SUMMARY_LIST_KEY = "summaryarray";
     private static final String APPOINTMENT_LIST_KEY = "appointmentarray";
-    private static final String PRES_ID = "presid",PRES_NAME = "presname",PRES_START = "start",PRES_END = "end";
+    private static final String PRESCRIPTION_LIST_KEY = "prescriptionarray";
+    private static final String REMINDER_LIST_KEY = "reminderarray";
+    private static final String PRES_ID = "presid",PRES_NAME = "presname",PRES_START = "start",PRES_END = "end", PRES_OWNER="owner";
 
     @SuppressLint("StaticFieldLeak")
     private static SharedPrefManager mInstance;
@@ -62,6 +64,39 @@ public class SharedPrefManager {
         }
         return mInstance;
     }
+    public static void saveReminderList(ArrayList<Reminder> reminders){
+        SharedPreferences sharedPreferences = mCtx.getSharedPreferences(SHARED_PREF_NAME, Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        Gson gson = new Gson();
+        String json = gson.toJson(reminders);
+        editor.putString(REMINDER_LIST_KEY, json);
+        editor.apply();
+    }
+    public ArrayList<Reminder> getReminderList() {
+        SharedPreferences sharedPreferences = mCtx.getSharedPreferences(SHARED_PREF_NAME, Context.MODE_PRIVATE);
+        Gson gson = new Gson();
+        String json = sharedPreferences.getString(REMINDER_LIST_KEY, "");
+        Type type = new TypeToken<ArrayList<Reminder>>() {}.getType();
+        return gson.fromJson(json, type);
+    }
+    public void deleteReminderItem(int id) {
+        ArrayList<Reminder> reminders = getReminderList();
+        for (int i = 0; i < reminders.size(); i++) {
+            Reminder reminder = reminders.get(i);
+            if (reminder.getId() == (id)) {
+                reminders.remove(i);
+                saveReminderList(reminders);
+                return;
+            }
+        }
+    }
+    public void deleteReminders() {
+        SharedPreferences sharedPreferences = mCtx.getSharedPreferences(SHARED_PREF_NAME, Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.remove(REMINDER_LIST_KEY);
+        editor.apply();
+    }
+
     public static void saveSummaryList(ArrayList<PresMedicine> medicine){
         SharedPreferences sharedPreferences = mCtx.getSharedPreferences(SHARED_PREF_NAME, Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPreferences.edit();
@@ -94,6 +129,34 @@ public class SharedPrefManager {
         editor.remove(SUMMARY_LIST_KEY);
         editor.apply();
     }
+
+    public static void savePrescriptionList(ArrayList<Prescription> prescriptions) {
+        SharedPreferences sharedPreferences = mCtx.getSharedPreferences(SHARED_PREF_NAME, Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        Gson gson = new Gson();
+        String json = gson.toJson(prescriptions);
+        editor.putString(PRESCRIPTION_LIST_KEY, json);
+        editor.apply();
+    }
+    public void deletePrescription(String id) {
+        ArrayList<Prescription> prescriptions = getPrescriptionList();
+        for (int i = 0; i < prescriptions.size(); i++) {
+            Prescription prescription = prescriptions.get(i);
+            if (prescription.getId().equals(id)) {
+                prescriptions.remove(i);
+                savePrescriptionList(prescriptions);
+                return;
+            }
+        }
+    }
+    public ArrayList<Prescription> getPrescriptionList() {
+        SharedPreferences sharedPreferences = mCtx.getSharedPreferences(SHARED_PREF_NAME, Context.MODE_PRIVATE);
+        Gson gson = new Gson();
+        String json = sharedPreferences.getString(PRESCRIPTION_LIST_KEY, "");
+        Type type = new TypeToken<ArrayList<Prescription>>() {}.getType();
+        return gson.fromJson(json, type);
+    }
+
     public static void saveAppointmentList(ArrayList<Appointment> appointments) {
         SharedPreferences sharedPreferences = mCtx.getSharedPreferences(SHARED_PREF_NAME, Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPreferences.edit();
@@ -120,13 +183,14 @@ public class SharedPrefManager {
         Type type = new TypeToken<ArrayList<Appointment>>() {}.getType();
         return gson.fromJson(json, type);
     }
-    public void setCurrentPres(String id, String name, String start, String end){
+    public void setCurrentPres(String id, String name, String start, String end, String owner){
         SharedPreferences sharedPreferences = mCtx.getSharedPreferences(SHARED_PREF_NAME, Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPreferences.edit();
         editor.putString(PRES_ID, id);
         editor.putString(PRES_NAME, name);
         editor.putString(PRES_START, start);
         editor.putString(PRES_END, end);
+        editor.putString(PRES_OWNER, owner);
         editor.apply();
     }
     public Prescription getCurrentPres () {
@@ -134,7 +198,8 @@ public class SharedPrefManager {
         return new Prescription(
                 sharedPreferences.getString(PRES_NAME, null),
                 sharedPreferences.getString(PRES_START, null),
-                sharedPreferences.getString(PRES_END, null));
+                sharedPreferences.getString(PRES_END, null),
+                sharedPreferences.getString(PRES_OWNER, null));
     }
     public void deleteCurrentPres() {
         SharedPreferences sharedPreferences = mCtx.getSharedPreferences(SHARED_PREF_NAME, Context.MODE_PRIVATE);
@@ -143,6 +208,7 @@ public class SharedPrefManager {
         editor.remove(PRES_NAME);
         editor.remove(PRES_START);
         editor.remove(PRES_END);
+        editor.remove(PRES_OWNER);
         editor.apply();
     }
     public static void saveAnalysisList(ArrayList<Analysis> analysis) {

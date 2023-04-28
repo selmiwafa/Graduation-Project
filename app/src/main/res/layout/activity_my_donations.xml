@@ -45,10 +45,19 @@ android:fitsSystemWindows="true">
         android:clickable="true"
         android:onClick="createUserDialog"
         android:contentDescription="@string/user_image" />
-
+    <TextView
+        android:id="@+id/mydonations"
+        android:layout_width="280dp"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/logo"
+        android:text="My donations :"
+        android:layout_centerHorizontal="true"
+        android:textSize="25sp"
+        android:gravity="center"
+        android:layout_marginTop="30dp" />
     <androidx.recyclerview.widget.RecyclerView
         android:layout_marginTop="60dp"
-        android:layout_below="@id/logo"
+        android:layout_below="@id/mydonations"
         android:id="@+id/my_donations_list"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

@@ -78,6 +78,29 @@
                 android:layout_marginStart="40dp"
                 android:layout_marginEnd="40dp"
                 android:background="#696969" />
+            <Spinner
+                android:id="@+id/owner"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:layout_marginStart="30dp"
+                android:layout_marginTop="30dp"
+                android:layout_marginEnd="30dp"
+                android:padding="15dp"
+                android:layout_below="@+id/DocName" />
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginTop="1dp"
+                android:layout_marginStart="40dp"
+                android:layout_marginEnd="40dp"
+                android:background="@android:color/black"
+                android:layout_below="@+id/owner" />
+            <Button
+                android:id="@+id/btn_schedule_notification"
+                android:layout_width="50dp"
+                android:layout_height="30dp"
+                android:text="Hey"/>
 
             <EditText
                 android:id="@+id/edDate"

@@ -11,6 +11,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.pfe.R;
 import com.example.pfe.SharedPrefManager;
+import com.example.pfe.manage_patient_account.appointments.PatientAppointmentsActivity;
 
 public class Patient2Activity extends AppCompatActivity {
 
@@ -27,6 +28,17 @@ public class Patient2Activity extends AppCompatActivity {
         relationship.setText(String.valueOf(SharedPrefManager.getInstance(getApplicationContext()).getPatient2().getRelationship()));
     }
 
+    /*public void OpenAnalyses2(View view) {
+        startActivity(new Intent(Patient2Activity.this, PatientAnalyses.class));
+    }
+    public void OpenPrescriptions2(View view) {
+        startActivity(new Intent(Patient2Activity.this, PatientPrescriptions.class));
+    }*/
+    public void OpenAppointments2(View view) {
+        Intent intent = new Intent(Patient2Activity.this, PatientAppointmentsActivity.class);
+        intent.putExtra("patient_num",2);
+        startActivity(intent);
+    }
     public void OpenMypatients(View view) {
         startActivity(new Intent(Patient2Activity.this, MyPatientsActivity.class));
     }

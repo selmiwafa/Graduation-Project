@@ -7,7 +7,10 @@ import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.view.View;
 import android.view.WindowManager;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.EditText;
+import android.widget.Spinner;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -17,9 +20,10 @@ import com.example.pfe.SharedPrefManager;
 
 import java.util.Calendar;
 
-public class AddPrescriptionActivity extends AppCompatActivity {
+public class AddPrescriptionActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
     EditText edStartDate, edEndDate, edPresName;
-    String id;
+    Spinner edOwner;
+    String owner;
     DatePickerDialog.OnDateSetListener setListener, setListener2;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -28,6 +32,9 @@ public class AddPrescriptionActivity extends AppCompatActivity {
         getWindow().setStatusBarColor(Color.TRANSPARENT);
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE);
         setContentView(R.layout.activity_add_prescription);
+        edOwner=findViewById(R.id.owner);
+        owner="";
+        createSpinner();
 
         edStartDate = findViewById(R.id.edStartDate);
         edStartDate.setOnClickListener(v -> pickDate());
@@ -52,21 +59,56 @@ public class AddPrescriptionActivity extends AppCompatActivity {
             edEndDate.setText("");
         }
     }
-    public void back(View view){
-        this.finish();
+    public void back (View view) {
+        finish();
     }
     public void next(View view){
-        if (edPresName.getText().toString().isEmpty() ||
-                edStartDate.getText().toString().isEmpty()) {
+        if (edPresName.getText().toString().isEmpty() || edStartDate.getText().toString().isEmpty()|| owner=="") {
             Toast.makeText(this, "Fill all required fields!", Toast.LENGTH_SHORT).show();
         } else
         {
-            SharedPrefManager.getInstance(getApplicationContext()).setCurrentPres(edPresName.getText().toString()+edStartDate.getText().toString(),edPresName.getText().toString(),edStartDate.getText().toString(),edEndDate.getText().toString());
+            SharedPrefManager.getInstance(getApplicationContext()).setCurrentPres(
+                edPresName.getText().toString()+ edStartDate.getText().toString(),
+                    edPresName.getText().toString(),
+                    edStartDate.getText().toString(),edEndDate.getText().toString(),
+                    owner);
             Intent intent = new Intent(AddPrescriptionActivity.this, SummaryListActivity.class);
             startActivity(intent);
 
 
         }
+    }
+    public void createSpinner() {
+        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this, R.array.owner, android.R.layout.simple_spinner_item);
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        edOwner.setAdapter(adapter);
+        edOwner.setOnItemSelectedListener(this);
+        edOwner.setPrompt("Relationship");
+    }
+    @Override
+    public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+        switch (position) {
+            case 0:
+                owner="";
+                break;
+            case 1:
+                owner = "user";
+                break;
+            case 2:
+                owner = SharedPrefManager.getInstance(getApplicationContext()).getPatient1().getName() +
+                        SharedPrefManager.getInstance(getApplicationContext()).getPatient1().getAge()+
+                        SharedPrefManager.getInstance(getApplicationContext()).getPatient1().getRelationship();
+                break;
+            case 3:
+                owner = SharedPrefManager.getInstance(getApplicationContext()).getPatient2().getName() +
+                        SharedPrefManager.getInstance(getApplicationContext()).getPatient2().getAge()+
+                        SharedPrefManager.getInstance(getApplicationContext()).getPatient2().getRelationship();
+                break;
+        }
+    }
+    @Override
+    public void onNothingSelected(AdapterView<?> parent) {
+
     }
     public void pickDate(){
         int y = Calendar.getInstance().get(Calendar.YEAR) ;

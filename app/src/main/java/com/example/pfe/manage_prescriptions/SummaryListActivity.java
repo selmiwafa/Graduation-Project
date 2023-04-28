@@ -29,19 +29,17 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Objects;
 
 public class SummaryListActivity extends AppCompatActivity {
-
     ProgressDialog dialog;
     JSONParser parser = new JSONParser();
     String url = "jdbc:mysql://192.168.43.205:3306/healthbuddy";
-    //String url = "jdbc:mysql://192.168.1.16:3306/healthbuddy";
     String user = "root";
     String password = "";
     int success;
     TextView edPres_name, start_date, end_date;
     ArrayList<Medicine> medicineList;
-    private RecyclerView mRecyclerView;
     SummaryAdapter adapter;
     LinearLayoutManager linearlayoutmanager;
     Prescription prescription;
@@ -58,7 +56,7 @@ public class SummaryListActivity extends AppCompatActivity {
 
         summaryList = SharedPrefManager.getInstance(getApplicationContext()).getSummaryList();
 
-        mRecyclerView = findViewById(R.id.listSummaryMedicine);
+        RecyclerView mRecyclerView = findViewById(R.id.listSummaryMedicine);
 
 
         medicineList = SharedPrefManager.getInstance(getApplicationContext()).getMedicineList();
@@ -81,7 +79,9 @@ public class SummaryListActivity extends AppCompatActivity {
         end_date.setText(prescription.getEnd());
 
     }
-
+    public void back (View view) {
+        finish();
+    }
     public void save(View view) {
         new Add().execute();
     }
@@ -109,7 +109,11 @@ public class SummaryListActivity extends AppCompatActivity {
             map.put("pres_start", prescription.getStart());
             map.put("pres_end", prescription.getEnd());
             map.put("owner_id", SharedPrefManager.getInstance(getApplicationContext()).getUser().getEmail());
-            map.put("owner_type", "user");
+            if (Objects.equals(SharedPrefManager.getInstance(getApplicationContext()).getCurrentPres().getOwner(), "user")) {
+                map.put("owner_type", "user");
+            } else {
+                map.put("owner_type", SharedPrefManager.getInstance(getApplicationContext()).getCurrentPres().getOwner());
+            }
 
             Gson gson = new Gson();
             String summaryListJson = gson.toJson(summaryList);

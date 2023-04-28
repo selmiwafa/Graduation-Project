@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".manage_patient_account.appointments.PatientAppointmentsActivity"
+    android:id="@+id/drawerlayout"
+    tools:openDrawer="start"
+    android:fitsSystemWindows="true">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@android:color/white"
+        android:layout_marginTop="40dp">
+
+        <ImageButton
+            android:id="@+id/back"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:src="@drawable/backarrow"
+            android:layout_alignParentStart="true"
+            android:background="@android:color/transparent"
+            android:layout_marginStart="15dp"
+            android:layout_marginTop="12dp"
+            android:elevation="0dp"
+            android:clickable="true"
+            android:onClick="back" />
+
+        <ImageView
+            android:id="@+id/logo"
+            android:layout_width="180dp"
+            android:layout_height="40dp"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="12dp"
+            android:src="@drawable/hbtext"
+            android:contentDescription="@string/logo" />
+
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/userImg"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:src="@drawable/user_image"
+            android:layout_alignParentEnd="true"
+            android:layout_marginEnd="15dp"
+            android:layout_marginTop="12dp"
+            android:elevation="0dp"
+            android:clickable="true"
+            android:onClick="createUserDialog"
+            android:contentDescription="@string/user_image" />
+        <TextView
+            android:id="@+id/Text"
+            android:layout_width="280dp"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/logo"
+            android:text="Appointments :"
+            android:layout_centerHorizontal="true"
+            android:textSize="25sp"
+            android:gravity="center"
+            android:layout_marginTop="30dp" />
+        <androidx.recyclerview.widget.RecyclerView
+            android:layout_marginTop="60dp"
+            android:layout_below="@id/Text"
+            android:id="@+id/patient_appointments_list"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            tools:ignore="MissingConstraints" />
+    </RelativeLayout>
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

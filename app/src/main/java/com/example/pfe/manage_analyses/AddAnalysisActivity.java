@@ -10,9 +10,12 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.View;
 import android.view.WindowManager;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.Spinner;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -31,7 +34,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.HashMap;
 
-public class AddAnalysisActivity extends AppCompatActivity {
+public class AddAnalysisActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener  {
     EditText edAnalysisName, edAnalysisDate, edResult;
     ProgressDialog dialog;
     Button saveBtn;
@@ -42,6 +45,8 @@ public class AddAnalysisActivity extends AppCompatActivity {
     String user = "root";
     String password = "";
     int success;
+    Spinner edOwner;
+    String owner;
     DatePickerDialog.OnDateSetListener setListener;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,6 +57,8 @@ public class AddAnalysisActivity extends AppCompatActivity {
         setContentView(R.layout.activity_add_analysis);
 
         initView();
+        createSpinner();
+
         edAnalysisDate.setOnClickListener(v -> {
             int y = Calendar.getInstance().get(Calendar.YEAR) ;
             int m = Calendar.getInstance().get(Calendar.MONTH);
@@ -83,6 +90,40 @@ public class AddAnalysisActivity extends AppCompatActivity {
         edResult=findViewById(R.id.edAnalysisResult);
         saveBtn=findViewById(R.id.saveBtn);
         topSaveBtn=findViewById(R.id.topSaveBtn);
+        edOwner=findViewById(R.id.owner);
+        owner="";
+    }
+    public void createSpinner() {
+        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this, R.array.owner, android.R.layout.simple_spinner_item);
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        edOwner.setAdapter(adapter);
+        edOwner.setOnItemSelectedListener(this);
+        edOwner.setPrompt("Relationship");
+    }
+    @Override
+    public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+        switch (position) {
+            case 0:
+                owner="";
+                break;
+            case 1:
+                owner = "user";
+                break;
+            case 2:
+                owner = SharedPrefManager.getInstance(getApplicationContext()).getPatient1().getName() +
+                        SharedPrefManager.getInstance(getApplicationContext()).getPatient1().getAge()+
+                        SharedPrefManager.getInstance(getApplicationContext()).getPatient1().getRelationship();
+                break;
+            case 3:
+                owner = SharedPrefManager.getInstance(getApplicationContext()).getPatient2().getName() +
+                        SharedPrefManager.getInstance(getApplicationContext()).getPatient2().getAge()+
+                        SharedPrefManager.getInstance(getApplicationContext()).getPatient2().getRelationship();
+                break;
+        }
+    }
+    @Override
+    public void onNothingSelected(AdapterView<?> parent) {
+
     }
     void addAnalysis() {
         String a_name = edAnalysisName.getText().toString();
@@ -111,7 +152,8 @@ public class AddAnalysisActivity extends AppCompatActivity {
             map.put("analysis_name", edAnalysisName.getText().toString());
             map.put("analysis_date", edAnalysisDate.getText().toString());
             map.put("result", edResult.getText().toString());
-            map.put("user", SharedPrefManager.getInstance(getApplicationContext()).getUser().getEmail());
+            map.put("owner_type", owner);
+            map.put("owner_id", SharedPrefManager.getInstance(getApplicationContext()).getUser().getEmail());
             try {
                 Class.forName("com.mysql.jdbc.Driver");
                 Connection connection = DriverManager.getConnection(url, user, password);
@@ -122,7 +164,8 @@ public class AddAnalysisActivity extends AppCompatActivity {
                 ArrayList<Analysis> analysisArrayList = SharedPrefManager.getInstance(getApplicationContext()).getAnalysisList();
                 analysisArrayList.add(new Analysis(edAnalysisName.getText().toString(),
                         edAnalysisDate.getText().toString(),
-                        edResult.getText().toString()));
+                        edResult.getText().toString(),
+                        "user"));
                 SharedPrefManager.saveAnalysisList(analysisArrayList);
             } catch (ClassNotFoundException | SQLException e) {
                 e.printStackTrace();
