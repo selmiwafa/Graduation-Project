@@ -19,6 +19,7 @@ import com.example.pfe.JSONParser;
 import com.example.pfe.R;
 import com.example.pfe.SharedPrefManager;
 import com.example.pfe.manage_medicine.Medicine;
+import com.example.pfe.manage_patient_account.MyPatientsActivity;
 import com.google.gson.Gson;
 
 import org.json.JSONException;
@@ -140,10 +141,20 @@ public class SummaryListActivity extends AppCompatActivity {
             super.onPostExecute(s);
             dialog.cancel();
             if (success == 1) {
+                String owner;
+                if (Objects.equals(SharedPrefManager.getInstance(getApplicationContext()).getCurrentPres().getOwner(), "user")) {
+                    owner = "user";
+                } else {
+                    owner = "patient";
+                }
                 SharedPrefManager.getInstance(getApplicationContext()).deleteSummary();
                 SharedPrefManager.getInstance(getApplicationContext()).deleteCurrentPres();
                 Toast.makeText(SummaryListActivity.this, "Added successfully", Toast.LENGTH_LONG).show();
-                startActivity(new Intent(SummaryListActivity.this, MyPrescriptionsActivity.class));
+                if (owner.equals("user")) {
+                    startActivity(new Intent(SummaryListActivity.this, MyPrescriptionsActivity.class));
+                } else {
+                    startActivity(new Intent(SummaryListActivity.this, MyPatientsActivity.class));
+                }
             } else {
                 Toast.makeText(SummaryListActivity.this, "Error adding prescription!", Toast.LENGTH_LONG).show();
             }

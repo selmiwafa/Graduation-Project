@@ -21,6 +21,7 @@ import com.example.pfe.R;
 import com.example.pfe.SharedPrefManager;
 import com.example.pfe.appointments.Appointment;
 import com.example.pfe.donations.Donation;
+import com.example.pfe.donations.DonationRequest;
 import com.example.pfe.manage_analyses.Analysis;
 import com.example.pfe.manage_medicine.Medicine;
 import com.example.pfe.manage_patient_account.Patient;
@@ -75,7 +76,7 @@ public class LoginActivity extends AppCompatActivity {
         } else if (!isValidEmail(email)) {
             Toast.makeText(getApplicationContext().getApplicationContext(), "Invalid e-mail format!", Toast.LENGTH_LONG).show();
         } else {
-            new LoginActivity.Log().execute();
+            new Log().execute();
         }
     }
 
@@ -248,6 +249,18 @@ public class LoginActivity extends AppCompatActivity {
 
                             prescriptions.add(prescription);
                         }
+                        int number = object.getInt("number_requests");
+                        ArrayList<DonationRequest> requests = new ArrayList<>();
+                        JSONArray requestJson = object.getJSONArray("requests");
+                        for (int i = 0; i < number; i++) {
+                            JSONObject jsonObject7 = requestJson.getJSONObject(i);
+                            DonationRequest donation = new DonationRequest(
+                                    jsonObject7.getString("id"),
+                                    jsonObject7.getString("barcode"),
+                                    Integer.parseInt(jsonObject7.getString("quantity")),
+                                    jsonObject7.getString("date"));
+                            requests.add(donation);
+                        }
 
 
 
@@ -255,6 +268,7 @@ public class LoginActivity extends AppCompatActivity {
                         SharedPrefManager.savePrescriptionList(prescriptions);
                         SharedPrefManager.saveAppointmentList(appointments);
                         SharedPrefManager.saveDonationList(donations);
+                        SharedPrefManager.saveRequestList(requests);
                         SharedPrefManager.saveAnalysisList(analysisArrayList);
                         SharedPrefManager.saveMedicineList(medicineList);
                         SharedPrefManager.getInstance(getApplicationContext()).addPatient1(patient1);
@@ -278,7 +292,8 @@ public class LoginActivity extends AppCompatActivity {
             dialog.cancel();
             if (success == 1) {
                 Toast.makeText(LoginActivity.this, "Login successful", Toast.LENGTH_LONG).show();
-                startActivity(new Intent(LoginActivity.this, HomepageActivity.class));
+                Intent i = new Intent(LoginActivity.this, HomepageActivity.class);
+                startActivity(i);
             } else {
                 Toast.makeText(LoginActivity.this, message, Toast.LENGTH_LONG).show();
                 restartActivity(LoginActivity.this);
@@ -286,6 +301,7 @@ public class LoginActivity extends AppCompatActivity {
         }
 
     }
+
 
     private void initView() {
         edEmailLogin = findViewById(R.id.edEmailLogin);

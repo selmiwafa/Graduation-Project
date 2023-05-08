@@ -18,7 +18,6 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ImageButton;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -30,7 +29,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
-import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.pfe.HomepageActivity;
 import com.example.pfe.JSONParser;
@@ -66,21 +64,18 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.HashMap;
 
-public class AnalysisAppointmentActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener, AdapterView.OnItemSelectedListener{
+public class AnalysisAppointmentActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener, AdapterView.OnItemSelectedListener {
     DrawerLayout drawerLayout;
     NavigationView navigationView;
     Toolbar toolbar;
     EditText edDoctorName, edDate, edTime;
     ProgressDialog dialog;
     Button saveBtn;
-    ImageButton topSaveBtn;
     JSONParser parser = new JSONParser();
     String url = "jdbc:mysql://192.168.43.205:3306/healthbuddy";
-    //String url = "jdbc:mysql://192.168.1.16:3306/healthbuddy";
     String user = "root";
     String password = "";
     int success;
-    private RecyclerView mRecyclerView;
     private AlertDialog Userdialog;
     Spinner edOwner;
     String owner;
@@ -94,8 +89,9 @@ public class AnalysisAppointmentActivity extends AppCompatActivity implements Na
         getWindow().setStatusBarColor(Color.TRANSPARENT);
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE);
         setContentView(R.layout.activity_analysis_appointment);
-        createNavbar();
         initView();
+        createNavbar();
+
         createSpinner();
         edDate.setOnClickListener(v -> {
             int y = Calendar.getInstance().get(Calendar.YEAR) ;
@@ -196,7 +192,7 @@ public class AnalysisAppointmentActivity extends AppCompatActivity implements Na
         email.setText(String.valueOf(SharedPrefManager.getInstance(getApplicationContext()).getUser().getEmail()));
     }
     public void cancel(View view) {
-        dialog.dismiss();
+        Userdialog.dismiss();
     }
     @Override
     public void onBackPressed() {

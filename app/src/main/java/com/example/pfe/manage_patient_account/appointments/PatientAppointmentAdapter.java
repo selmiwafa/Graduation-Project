@@ -20,6 +20,7 @@ import com.example.pfe.JSONParser;
 import com.example.pfe.R;
 import com.example.pfe.SharedPrefManager;
 import com.example.pfe.appointments.Appointment;
+import com.example.pfe.manage_patient_account.MyPatientsActivity;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -42,7 +43,7 @@ public class PatientAppointmentAdapter extends RecyclerView.Adapter<PatientAppoi
     String password = "";
     int success;
     ProgressDialog dialog;
-
+    String  owner;
     public PatientAppointmentAdapter(Context context, List<Appointment> appointments)
     {
         this.appointments = appointments;
@@ -59,7 +60,7 @@ public class PatientAppointmentAdapter extends RecyclerView.Adapter<PatientAppoi
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         Appointment appointment = appointments.get(position);
-
+        owner =appointment.getOwner();
         id = appointment.getId();
 
         holder.edDate.setText(appointment.getDate());
@@ -157,12 +158,12 @@ public class PatientAppointmentAdapter extends RecyclerView.Adapter<PatientAppoi
         @Override
         protected String doInBackground(String... strings) {
             HashMap<String, String> map = new HashMap<>();
-            map.put("user", SharedPrefManager.getInstance(mContext).getUser().getEmail());
+            map.put("owner_type", owner);
+            map.put("owner_id", SharedPrefManager.getInstance(mContext).getUser().getEmail());
             map.put("app_id", id);
             try {
                 Class.forName("com.mysql.jdbc.Driver");
                 Connection connection = DriverManager.getConnection(url, user, password);
-                //JSONObject object = parser.makeHttpRequest("http://192.168.1.16/healthbuddy/medicine/deleteMedicine.php", "GET", map);
                 JSONObject object = parser.makeHttpRequest("http://192.168.43.205/healthbuddy/Appointment/deleteAppointment.php", "GET", map);
                 success = object.getInt("success");
                 connection.close();
@@ -180,7 +181,7 @@ public class PatientAppointmentAdapter extends RecyclerView.Adapter<PatientAppoi
             if (success == 1) {
                 Toast.makeText(mContext, "deleted successfully", Toast.LENGTH_LONG).show();
                 notifyDataSetChanged();
-                Intent intent = new Intent(mContext, PatientAppointmentsActivity.class);
+                Intent intent = new Intent(mContext, MyPatientsActivity.class);
                 intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                 mContext.startActivity(intent);
             } else {

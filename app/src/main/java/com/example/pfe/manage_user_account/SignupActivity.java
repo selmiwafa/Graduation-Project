@@ -19,6 +19,8 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.pfe.JSONParser;
 import com.example.pfe.R;
+import com.parse.ParseUser;
+import com.parse.SignUpCallback;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -102,8 +104,27 @@ public class SignupActivity extends AppCompatActivity {
         } else if (confirmPassword(password, confirmPassword)) {
             Toast.makeText(getApplicationContext().getApplicationContext(), "Confirm Password doesn't match password!!", Toast.LENGTH_LONG).show();
         } else {
-            new Add().execute();
+            loginUser(email,password);
         }
+    }
+    private void loginUser(String userName, String password) {
+        // calling a method to login a user.
+        ParseUser user = new ParseUser();
+        user.setUsername(userName);
+        user.setEmail(userName);
+        user.setPassword(password);
+        // after login checking if the user is null or not.
+        user.signUpInBackground((SignUpCallback) e -> {
+            if (e == null) {
+                ParseUser.logOut();
+                Toast.makeText(SignupActivity.this, "Sign up sucessful! Please verify mail and login!", Toast.LENGTH_LONG).show();
+                new Add().execute();
+                }
+            else
+            {
+                Toast.makeText(SignupActivity.this, "Can't create your account", Toast.LENGTH_LONG).show();
+            }
+        });
     }
 
     @SuppressLint("StaticFieldLeak")
@@ -140,9 +161,7 @@ public class SignupActivity extends AppCompatActivity {
                 JSONObject object = parser.makeHttpRequest("http://192.168.43.205/healthbuddy/user/add.php", "GET", map);
                 success = object.getInt("success");
                 connection.close();
-            } catch (ClassNotFoundException e) {
-                e.printStackTrace();
-            } catch (SQLException e) {
+            } catch (ClassNotFoundException | SQLException e) {
                 e.printStackTrace();
             } catch (JSONException e) {
                 throw new RuntimeException(e);
@@ -155,9 +174,7 @@ public class SignupActivity extends AppCompatActivity {
         protected void onPostExecute(String s) {
             super.onPostExecute(s);
             dialog.cancel();
-
             if (success == 1) {
-                Toast.makeText(SignupActivity.this, "Sign up successfull", Toast.LENGTH_LONG).show();
                 //startActivity(new Intent(SignupActivity.this, VerifyActivity.class));
                 startActivity(new Intent(SignupActivity.this, LoginActivity.class));
             } else {

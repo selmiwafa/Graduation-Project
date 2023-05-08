@@ -11,7 +11,9 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.pfe.R;
 import com.example.pfe.SharedPrefManager;
+import com.example.pfe.manage_patient_account.analysis.PatientAnalysisActivity;
 import com.example.pfe.manage_patient_account.appointments.PatientAppointmentsActivity;
+import com.example.pfe.manage_patient_account.prescriptions.PatientPrescriptionActivity;
 
 public class Patient1Activity extends AppCompatActivity {
     int patient = 1;
@@ -31,12 +33,16 @@ public class Patient1Activity extends AppCompatActivity {
     public void OpenMypatients(View view) {
         finish();
     }
-   /* public void OpenAnalyses(View view) {
-        startActivity(new Intent(Patient1Activity.this, PatientAnalyses.class));
+    public void OpenAnalyses1(View view) {
+        Intent intent = new Intent(Patient1Activity.this, PatientAnalysisActivity.class);
+        intent.putExtra("patient_num",1);
+        startActivity(intent);
     }
-    public void OpenPrescriptions(View view) {
-        startActivity(new Intent(Patient1Activity.this, PatientPrescriptions.class));
-    }*/
+    public void OpenPrescriptions1(View view) {
+        Intent intent = new Intent(Patient1Activity.this, PatientPrescriptionActivity.class);
+        intent.putExtra("patient_num",1);
+        startActivity(intent);
+    }
     public void OpenAppointments1(View view) {
         Intent intent = new Intent(Patient1Activity.this, PatientAppointmentsActivity.class);
         intent.putExtra("patient_num",1);

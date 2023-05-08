@@ -85,8 +85,7 @@
                 android:layout_marginStart="30dp"
                 android:layout_marginTop="30dp"
                 android:layout_marginEnd="30dp"
-                android:padding="15dp"
-                android:layout_below="@+id/DocName" />
+                android:padding="15dp"/>
 
             <RelativeLayout
                 android:layout_width="match_parent"
@@ -94,13 +93,17 @@
                 android:layout_marginTop="1dp"
                 android:layout_marginStart="40dp"
                 android:layout_marginEnd="40dp"
-                android:background="@android:color/black"
-                android:layout_below="@+id/owner" />
-            <Button
-                android:id="@+id/btn_schedule_notification"
-                android:layout_width="50dp"
-                android:layout_height="30dp"
-                android:text="Hey"/>
+                android:background="@android:color/black" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/selectedDateTime"
+                android:layout_marginTop="30dp"
+                android:textAlignment="center"
+                android:textColor="@android:color/black"
+                android:text="yyyy-MM-dd hh:mm a"
+                android:textSize="28dp"/>
 
             <EditText
                 android:id="@+id/edDate"
@@ -113,7 +116,7 @@
                 android:background="@android:color/transparent"
                 android:drawableEnd="@drawable/calendar"
                 android:drawableTint="#696969"
-                android:hint= "Date *"
+                android:hint= "@string/date_time"
                 android:focusableInTouchMode="true"
                 android:cursorVisible="false"
                 android:focusable="false"
@@ -122,26 +125,7 @@
                 android:textColorHint="#696969"
                 android:textStyle="bold"
                 tools:ignore="VisualLintTextFieldSize" />
-            <EditText
-                android:id="@+id/edTime"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="30dp"
-                android:layout_marginTop="30dp"
-                android:layout_marginEnd="30dp"
-                android:autofillHints=""
-                android:background="@android:color/transparent"
-                android:drawableEnd="@drawable/clock"
-                android:drawableTint="#696969"
-                android:hint= "Time *"
-                android:focusableInTouchMode="true"
-                android:cursorVisible="false"
-                android:focusable="false"
-                android:padding="15dp"
-                android:textColor="#191919"
-                android:textColorHint="#696969"
-                android:textStyle="bold"
-                tools:ignore="VisualLintTextFieldSize" />
+
             <RelativeLayout
                 android:layout_width="wrap_content"
                 android:layout_height="1dp"

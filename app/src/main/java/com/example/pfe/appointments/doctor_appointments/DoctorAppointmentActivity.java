@@ -3,12 +3,14 @@ package com.example.pfe.appointments.doctor_appointments;
 import static com.example.pfe.R.layout.user_details;
 
 import android.annotation.SuppressLint;
-import android.app.DatePickerDialog;
+import android.app.AlarmManager;
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
+import android.app.PendingIntent;
 import android.app.ProgressDialog;
-import android.app.TimePickerDialog;
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
-import android.graphics.drawable.ColorDrawable;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.MenuItem;
@@ -18,7 +20,6 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ImageButton;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -28,14 +29,12 @@ import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
-import androidx.core.app.NotificationManagerCompat;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
-import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.pfe.AlarmReceiver;
 import com.example.pfe.HomepageActivity;
 import com.example.pfe.JSONParser;
-import com.example.pfe.MyReminderService;
 import com.example.pfe.R;
 import com.example.pfe.Reminder;
 import com.example.pfe.SharedPrefManager;
@@ -57,7 +56,10 @@ import com.example.pfe.manage_patient_account.MyPatientsActivity;
 import com.example.pfe.manage_prescriptions.AddPrescriptionActivity;
 import com.example.pfe.manage_prescriptions.MyPrescriptionsActivity;
 import com.example.pfe.manage_user_account.ManageAccountActivity;
+import com.google.android.material.datepicker.MaterialDatePicker;
 import com.google.android.material.navigation.NavigationView;
+import com.google.android.material.timepicker.MaterialTimePicker;
+import com.google.android.material.timepicker.TimeFormat;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -65,35 +67,32 @@ import org.json.JSONObject;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.HashMap;
+import java.util.Locale;
 
 public class DoctorAppointmentActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener, AdapterView.OnItemSelectedListener {
     DrawerLayout drawerLayout;
-    NotificationManagerCompat notificationManager;
     NavigationView navigationView;
     Toolbar toolbar;
     EditText edDoctorName, edDate, edTime;
     Spinner edOwner;
     ProgressDialog dialog;
     Button saveBtn;
-    ImageButton topSaveBtn;
+    private AlertDialog userDialog;
     JSONParser parser = new JSONParser();
     String url = "jdbc:mysql://192.168.43.205:3306/healthbuddy";
-    //String url = "jdbc:mysql://192.168.1.16:3306/healthbuddy";
     String user = "root";
     String password = "";
     int success;
-    private RecyclerView mRecyclerView;
-    private AlertDialog Userdialog;
-
-    TextView username, detail_email;
-    TimePickerDialog.OnTimeSetListener setTimeListener;
-    DatePickerDialog.OnDateSetListener setListener;
-    String owner;
+    TextView username, detail_email, selectedDateTime;
+    String owner, date, time;
     ArrayList<Reminder> reminders;
-
+    Calendar calendar;
+    AlarmManager alarmManager;
+    PendingIntent pendingIntent;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -104,67 +103,9 @@ public class DoctorAppointmentActivity extends AppCompatActivity implements Navi
         createNavbar();
         initView();
         createSpinner();
-
-        Button btnScheduleNotification = findViewById(R.id.btn_schedule_notification);
-        btnScheduleNotification.setOnClickListener(v -> {
-            // set the desired notification time
-            Calendar calendar = Calendar.getInstance();
-            calendar.set(Calendar.HOUR_OF_DAY, 22);
-            calendar.set(Calendar.MINUTE, 29);
-
-            // create intent for ReminderService and add the notification time as an extra
-            Intent intent = new Intent(DoctorAppointmentActivity.this, MyReminderService.class);
-            intent.putExtra("notification_time", calendar.getTimeInMillis());
-
-            // start the ReminderService
-            startService(intent);
-        });
-
-
-        edDate.setOnClickListener(v -> {
-            int y = Calendar.getInstance().get(Calendar.YEAR) ;
-            int m = Calendar.getInstance().get(Calendar.MONTH);
-            int d = Calendar.getInstance().get(Calendar.DAY_OF_MONTH);
-            DatePickerDialog datePickerDialog = new DatePickerDialog(
-                    DoctorAppointmentActivity.this
-                    , android.R.style.Theme_Holo_Light_Dialog_MinWidth
-                    , setListener, y, m, d);
-            datePickerDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-            datePickerDialog.show();
-        });
-        setListener = (view, year, month, day) -> {
-            String date = day + "/" + month + "/" + year;
-            edDate.setText(date);
-            int y = (Calendar.getInstance().get(Calendar.YEAR));
-            int m = Calendar.getInstance().get(Calendar.MONTH);
-            int d = Calendar.getInstance().get(Calendar.DAY_OF_MONTH);
-            if (year < y && month < m && day < d) {
-                Toast.makeText(DoctorAppointmentActivity.this, "Already passed!", Toast.LENGTH_LONG).show();
-                edDate.setText("");
-            }
-        };
-        edTime.setOnClickListener(v -> {
-            int hour = Calendar.getInstance().get(Calendar.HOUR_OF_DAY);
-            int minute = Calendar.getInstance().get(Calendar.MINUTE);
-            TimePickerDialog timePickerDialog = new TimePickerDialog(
-                    DoctorAppointmentActivity.this,
-                    android.R.style.Theme_Holo_Light_Dialog_MinWidth,
-                    setTimeListener,
-                    hour,
-                    minute,
-                    false
-            );
-            timePickerDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-            timePickerDialog.show();
-        });
-
-        setTimeListener = (view, hourOfDay, minute) -> {
-            String time = String.format("%02d:%02d", hourOfDay, minute);
-            edTime.setText(time);
-        };
+        createNotificationChannel();
+        edDate.setOnClickListener(v -> showDateTimePicker());
         saveBtn.setOnClickListener(v -> addApp());
-
-
     }
     public void createSpinner() {
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this, R.array.owner, android.R.layout.simple_spinner_item);
@@ -200,6 +141,7 @@ public class DoctorAppointmentActivity extends AppCompatActivity implements Navi
     public void onNothingSelected(AdapterView<?> parent) {
 
     }
+
     public void logout(View view) {
         SharedPrefManager.getInstance(getApplicationContext()).logout();
     }
@@ -211,19 +153,18 @@ public class DoctorAppointmentActivity extends AppCompatActivity implements Navi
         AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(this);
         final View contactPopupView = getLayoutInflater().inflate(user_details, null);
         dialogBuilder.setView(contactPopupView);
-        Userdialog = dialogBuilder.create();
-        Userdialog.show();
-        username = Userdialog.findViewById(R.id.username);
-        detail_email = Userdialog.findViewById(R.id.detail_email);
+        userDialog = dialogBuilder.create();
+        userDialog.show();
+        username = userDialog.findViewById(R.id.username);
+        detail_email = userDialog.findViewById(R.id.detail_email);
         showInfo(username, detail_email);
-
     }
     public void showInfo(TextView username, TextView email) {
         username.setText(String.valueOf(SharedPrefManager.getInstance(getApplicationContext()).getUser().getName()));
         email.setText(String.valueOf(SharedPrefManager.getInstance(getApplicationContext()).getUser().getEmail()));
     }
     public void cancel(View view) {
-        dialog.dismiss();
+        userDialog.dismiss();
     }
     @Override
     public void onBackPressed() {
@@ -327,15 +268,76 @@ public class DoctorAppointmentActivity extends AppCompatActivity implements Navi
         edTime=findViewById(R.id.edTime);
         saveBtn=findViewById(R.id.saveBtn);
         edOwner=findViewById(R.id.owner);
+        selectedDateTime = findViewById(R.id.selectedDateTime);
         owner="";
+    }
+
+    private void setAlarm() {
+
+        alarmManager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
+        Intent intent = new Intent(this,AlarmReceiver.class);
+        pendingIntent = PendingIntent.getBroadcast(this,0,intent,0);
+        alarmManager.setRepeating(AlarmManager.RTC_WAKEUP,calendar.getTimeInMillis(),
+                AlarmManager.INTERVAL_DAY,pendingIntent);
+        Toast.makeText(this, "Alarm set Successfully", Toast.LENGTH_SHORT).show();
+
+    }
+
+    private void showDateTimePicker() {
+        calendar = Calendar.getInstance();
+
+        MaterialDatePicker.Builder<Long> dateBuilder = MaterialDatePicker.Builder.datePicker();
+        dateBuilder.setTitleText("Select Date");
+        dateBuilder.setSelection(MaterialDatePicker.todayInUtcMilliseconds());
+        MaterialDatePicker<Long> datePicker = dateBuilder.build();
+
+        datePicker.show(getSupportFragmentManager(), "datePicker");
+
+        datePicker.addOnPositiveButtonClickListener(selectedDate -> {
+            calendar.setTimeInMillis(selectedDate);
+
+            MaterialTimePicker.Builder timeBuilder = new MaterialTimePicker.Builder()
+                    .setTimeFormat(TimeFormat.CLOCK_12H)
+                    .setHour(12)
+                    .setMinute(0)
+                    .setTitleText("Select Time");
+
+            MaterialTimePicker timePicker = timeBuilder.build();
+            timePicker.show(getSupportFragmentManager(), "timePicker");
+
+            timePicker.addOnPositiveButtonClickListener(v -> {
+                calendar.set(Calendar.HOUR_OF_DAY, timePicker.getHour());
+                calendar.set(Calendar.MINUTE, timePicker.getMinute());
+                calendar.set(Calendar.SECOND, 0);
+                calendar.set(Calendar.MILLISECOND, 0);
+
+                SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd hh:mm a", Locale.getDefault());
+                selectedDateTime.setText(sdf.format(calendar.getTime()));
+
+                SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
+                date = df.format(calendar.getTime());
+
+                SimpleDateFormat tf = new SimpleDateFormat("hh:mm a", Locale.getDefault());
+                time = tf.format(calendar.getTime());
+            });
+        });
+    }
+    private void createNotificationChannel() {
+            CharSequence name = "Doctor appointment";
+            String description = "You have an appointment now with your doctor " + edDoctorName.getText().toString() ;
+            int importance = NotificationManager.IMPORTANCE_HIGH;
+            NotificationChannel channel = new NotificationChannel("foxandroid",name,importance);
+            channel.setDescription(description);
+
+            NotificationManager notificationManager = getSystemService(NotificationManager.class);
+            notificationManager.createNotificationChannel(channel);
     }
     void addApp() {
         String a_name = edDoctorName.getText().toString();
-        String a_date = edDate.getText().toString();
-        String a_time = edTime.getText().toString();
-        if (a_name.isEmpty() || a_date.isEmpty() || a_time.isEmpty()|| owner=="") {
+        if (a_name.isEmpty() || time.isEmpty() || date.isEmpty() || owner.equals("")) {
             Toast.makeText(getApplicationContext().getApplicationContext(), "All fields required!", Toast.LENGTH_LONG).show();
         }
+        setAlarm();
         new Add().execute();
     }
     @SuppressLint("StaticFieldLeak")
@@ -353,15 +355,14 @@ public class DoctorAppointmentActivity extends AppCompatActivity implements Navi
             HashMap<String, String> map = new HashMap<>();
             map.put("app_id", edDoctorName.getText().toString()+edDate.getText().toString());
             map.put("app_name", edDoctorName.getText().toString());
-            map.put("app_date", edDate.getText().toString());
-            map.put("app_time", edTime.getText().toString());
+            map.put("app_date", date);
+            map.put("app_time", time);
             map.put("app_type", "Doctor");
             map.put("owner_type", owner);
             map.put("owner_id", SharedPrefManager.getInstance(getApplicationContext()).getUser().getEmail());
             try {
                 Class.forName("com.mysql.jdbc.Driver");
                 Connection connection = DriverManager.getConnection(url, user, password);
-                //JSONObject object = parser.makeHttpRequest("http://192.168.1.16/healthbuddy/analysis/addAnalysis.php", "GET", map);
                 JSONObject object = parser.makeHttpRequest("http://192.168.43.205/healthbuddy/appointment/addAppointment.php", "GET", map);
                 success = object.getInt("success");
                 connection.close();

@@ -1,4 +1,4 @@
-package com.example.pfe.appointments;
+package com.example.pfe.manage_patient_account.analysis;
 
 import android.annotation.SuppressLint;
 import android.app.AlertDialog;
@@ -19,6 +19,8 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.pfe.JSONParser;
 import com.example.pfe.R;
 import com.example.pfe.SharedPrefManager;
+import com.example.pfe.manage_analyses.Analysis;
+import com.example.pfe.manage_patient_account.MyPatientsActivity;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -29,70 +31,65 @@ import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.List;
 
-public class AppointmentAdapter extends RecyclerView.Adapter<AppointmentAdapter.ViewHolder>{
-    private final List<Appointment> appointments;
+public class PatientAnalysisAdapter extends RecyclerView.Adapter<PatientAnalysisAdapter.ViewHolder>{
+    private final List<Analysis> analyses;
     private OnItemClickListener mListener;
     Context mContext;
     int itemPosition;
-    String  id;
+    String name, owner;
     JSONParser parser = new JSONParser();
     String url = "jdbc:mysql://192.168.43.205:3306/healthbuddy";
-    //String url = "jdbc:mysql://192.168.1.16:3306/healthbuddy";
     String user = "root";
     String password = "";
     int success;
-    String  owner;
     ProgressDialog dialog;
 
-    public AppointmentAdapter(Context context, List<Appointment> appointments)
+    public PatientAnalysisAdapter(Context context, List<Analysis> analyses)
     {
-        this.appointments = appointments;
+        this.analyses = analyses;
         mContext = context;
     }
 
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.appointment_item, parent, false);
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.analysis_item, parent, false);
         return new ViewHolder(view);
     }
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        Appointment appointment = appointments.get(position);
-        owner =appointment.getOwner();
-        id = appointment.getId();
+        Analysis analysis = analyses.get(position);
 
-        holder.edDate.setText(appointment.getDate());
-        holder.edName.setText(appointment.getName());
-        holder.edTime.setText(appointment.getTime());
-        holder.edType.setText(appointment.getCategory()+" :");
+        name = analysis.getAnalysis_name();
+        owner = analysis.getOwner();
+        holder.edDate.setText(analysis.getAnalysis_date());
+        holder.edName.setText(analysis.getAnalysis_name());
 
-        holder.deleteBtn.setOnClickListener(v -> {
+
+        holder.DeleteBtn.setOnClickListener(v -> {
             itemPosition = holder.getAdapterPosition();
             new Delete().execute();
-            deleteItem(appointment);
+            deleteItem(analysis);
         });
         holder.itemView.setOnClickListener(v -> {
             if (mListener != null) {
-                mListener.onItemClick(appointment);
+                mListener.onItemClick(analysis);
 
                 AlertDialog.Builder builder = new AlertDialog.Builder(mContext);
                 LayoutInflater inflater = LayoutInflater.from(mContext);
-                View dialogView = inflater.inflate(R.layout.appointement_info, null);
+                View dialogView = inflater.inflate(R.layout.analysis_info, null);
 
-                TextView dateTv = dialogView.findViewById(R.id.app_dateValue);
-                TextView nameTv = dialogView.findViewById(R.id.app_nameValue);
-                TextView typeTv = dialogView.findViewById(R.id.app_typeValue);
-                TextView timeTv = dialogView.findViewById(R.id.app_timeValue);
+                TextView nameTv = dialogView.findViewById(R.id.analysisNameValueTextView);
+                TextView dateTv = dialogView.findViewById(R.id.AnalysisDateValueTextView);
+                TextView resultTv = dialogView.findViewById(R.id.ResultValueTextView);
 
-                dateTv.setText(appointment.getDate());
-                nameTv.setText(appointment.getName());
-                typeTv.setText(appointment.getCategory()+" :");
-                timeTv.setText(appointment.getTime());
+                dateTv.setText(analysis.getAnalysis_date());
+                nameTv.setText(analysis.getAnalysis_name());
+                resultTv.setText(analysis.getResult());
 
                 builder.setView(dialogView)
-                        .setTitle("Appointment Information")
+                        .setTitle("Analysis Information")
                         .setPositiveButton("OK", (dialog, which) -> {dialog.dismiss();})
                         .setIcon(R.drawable.help);
 
@@ -102,19 +99,19 @@ public class AppointmentAdapter extends RecyclerView.Adapter<AppointmentAdapter.
         });
     }
     public interface OnItemClickListener {
-        void onItemClick(Appointment appointment);
+        void onItemClick(Analysis analysis);
     }
-    public void deleteItem(Appointment appointment) {
-        if (appointments != null){
-            appointments.remove(appointment);
-            SharedPrefManager.getInstance(mContext).deleteAppointment(id);
+    public void deleteItem(Analysis analysis) {
+        if (analyses != null){
+            analyses.remove(analysis);
+            SharedPrefManager.getInstance(mContext).deleteAnalysis(name);
             notifyDataSetChanged();
         }
     }
     @Override
     public int getItemCount() {
-        if (appointments != null) {
-            return appointments.size();
+        if (analyses != null) {
+            return analyses.size();
         }
         else {
             return 0;
@@ -125,21 +122,19 @@ public class AppointmentAdapter extends RecyclerView.Adapter<AppointmentAdapter.
     }
     public class ViewHolder extends RecyclerView.ViewHolder {
         private final TextView edDate;
-        private final TextView edName, edTime, edType;
-        private final ImageButton deleteBtn;
+        private final TextView edName;
+        private final ImageButton DeleteBtn;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
-            edName = itemView.findViewById(R.id.app_name);
-            edDate = itemView.findViewById(R.id.app_date);
-            edTime = itemView.findViewById(R.id.app_time);
-            edType = itemView.findViewById(R.id.app_type);
-            deleteBtn = itemView.findViewById(R.id.DeleteBtn);
+            edName = itemView.findViewById(R.id.analysisName);
+            edDate = itemView.findViewById(R.id.analysisDate);
+            DeleteBtn = itemView.findViewById(R.id.deleteBtn);
             itemView.setOnClickListener(v -> {
                 if (mListener != null) {
                     int position = getAdapterPosition();
                     if (position != RecyclerView.NO_POSITION) {
-                        mListener.onItemClick(appointments.get(position));
+                        mListener.onItemClick(analyses.get(position));
                     }
                 }
             });
@@ -160,12 +155,11 @@ public class AppointmentAdapter extends RecyclerView.Adapter<AppointmentAdapter.
             HashMap<String, String> map = new HashMap<>();
             map.put("owner_type", owner);
             map.put("owner_id", SharedPrefManager.getInstance(mContext).getUser().getEmail());
-            map.put("app_id", id);
+            map.put("analysis_name", name);
             try {
                 Class.forName("com.mysql.jdbc.Driver");
                 Connection connection = DriverManager.getConnection(url, user, password);
-                //JSONObject object = parser.makeHttpRequest("http://192.168.1.16/healthbuddy/medicine/deleteMedicine.php", "GET", map);
-                JSONObject object = parser.makeHttpRequest("http://192.168.43.205/healthbuddy/Appointment/deleteAppointment.php", "GET", map);
+                JSONObject object = parser.makeHttpRequest("http://192.168.43.205/healthbuddy/Analysis/deleteAnalysis.php", "GET", map);
                 success = object.getInt("success");
                 connection.close();
             } catch (ClassNotFoundException | SQLException e) {
@@ -182,7 +176,7 @@ public class AppointmentAdapter extends RecyclerView.Adapter<AppointmentAdapter.
             if (success == 1) {
                 Toast.makeText(mContext, "deleted successfully", Toast.LENGTH_LONG).show();
                 notifyDataSetChanged();
-                Intent intent = new Intent(mContext, MyAppointmentsActivity.class);
+                Intent intent = new Intent(mContext, MyPatientsActivity.class);
                 intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                 mContext.startActivity(intent);
             } else {
@@ -191,4 +185,3 @@ public class AppointmentAdapter extends RecyclerView.Adapter<AppointmentAdapter.
         }
     }
 }
-

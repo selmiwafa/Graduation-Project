@@ -37,7 +37,6 @@ public class MyDonationsAdapter extends RecyclerView.Adapter<MyDonationsAdapter.
     String barcode, id;
     JSONParser parser = new JSONParser();
     String url = "jdbc:mysql://192.168.43.205:3306/healthbuddy";
-    //String url = "jdbc:mysql://192.168.1.16:3306/healthbuddy";
     String user = "root";
     String password = "";
     int success, number;
@@ -78,7 +77,7 @@ public class MyDonationsAdapter extends RecyclerView.Adapter<MyDonationsAdapter.
                 LayoutInflater inflater = LayoutInflater.from(mContext);
                 View dialogView = inflater.inflate(R.layout.donation_info, null);
 
-                TextView barcodeTv = dialogView.findViewById(R.id.barcodeValueTextView);
+                TextView barcodeTv = dialogView.findViewById(R.id.presBarcodeValueTextView);
                 TextView idTv = dialogView.findViewById(R.id.idValue);
                 TextView quantityTv = dialogView.findViewById(R.id.quantityValue);
                 TextView dateTv = dialogView.findViewById(R.id.dateValue);
@@ -122,14 +121,16 @@ public class MyDonationsAdapter extends RecyclerView.Adapter<MyDonationsAdapter.
     }
     public class ViewHolder extends RecyclerView.ViewHolder {
         private final TextView edDate;
-        private final TextView edBarcode;
+        private final TextView edBarcode, edType;
         private final ImageButton deleteBtn;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             edDate = itemView.findViewById(R.id.donation_date);
             edBarcode = itemView.findViewById(R.id.presBarcode);
+            edType = itemView.findViewById(R.id.donation_type);
             deleteBtn = itemView.findViewById(R.id.DeleteBtn);
+
             itemView.setOnClickListener(v -> {
                 if (mListener != null) {
                     int position = getAdapterPosition();

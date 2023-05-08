@@ -37,18 +37,6 @@
             android:src="@drawable/hbtext"
             android:contentDescription="@string/logo" />
 
-        <de.hdodenhof.circleimageview.CircleImageView
-            android:id="@+id/userImg"
-            android:layout_width="30dp"
-            android:layout_height="30dp"
-            android:src="@drawable/user_image"
-            android:layout_alignParentEnd="true"
-            android:layout_marginEnd="15dp"
-            android:layout_marginTop="12dp"
-            android:elevation="0dp"
-            android:clickable="true"
-            android:onClick="createUserDialog"
-            android:contentDescription="@string/user_image" />
         <TextView
             android:id="@+id/Text"
             android:layout_width="280dp"

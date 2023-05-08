@@ -32,15 +32,13 @@ import java.util.List;
 public class AnalysisAdapter extends RecyclerView.Adapter<AnalysisAdapter.ViewHolder> {
     private final List<Analysis> analysisList;
     int itemPosition;
-    Analysis pos;
     JSONParser parser = new JSONParser();
     private AnalysisAdapter.OnItemClickListener mListener;
     String url = "jdbc:mysql://192.168.43.205:3306/healthbuddy";
-    //String url = "jdbc:mysql://192.168.1.16:3306/healthbuddy";
     String user = "root";
     String password = "";
-    String name;
-    int success, number;
+    String name, owner;
+    int success;
     Context mContext;
     ProgressDialog dialog;
     public AnalysisAdapter(Context context, List<Analysis> analysisList)
@@ -59,7 +57,7 @@ public class AnalysisAdapter extends RecyclerView.Adapter<AnalysisAdapter.ViewHo
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         Analysis analysis = analysisList.get(position);
-
+        owner = analysis.getOwner();
         name = analysis.getAnalysis_name();
         holder.analysisName.setText(analysis.getAnalysis_name());
         holder.analysisDate.setText(analysis.getAnalysis_date());
@@ -162,7 +160,8 @@ public class AnalysisAdapter extends RecyclerView.Adapter<AnalysisAdapter.ViewHo
             HashMap<String, String> map = new HashMap<>();
 
             map.put("analysis_name", name);
-            map.put("user", SharedPrefManager.getInstance(mContext).getUser().getEmail());
+            map.put("owner_id", SharedPrefManager.getInstance(mContext).getUser().getEmail());
+            map.put("owner_type", owner);
 
             try {
                 Class.forName("com.mysql.jdbc.Driver");

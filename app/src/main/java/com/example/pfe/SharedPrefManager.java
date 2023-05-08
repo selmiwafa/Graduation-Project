@@ -7,6 +7,7 @@ import android.content.SharedPreferences;
 
 import com.example.pfe.appointments.Appointment;
 import com.example.pfe.donations.Donation;
+import com.example.pfe.donations.DonationRequest;
 import com.example.pfe.manage_analyses.Analysis;
 import com.example.pfe.manage_medicine.Medicine;
 import com.example.pfe.manage_patient_account.Patient;
@@ -14,11 +15,13 @@ import com.example.pfe.manage_prescriptions.PresMedicine;
 import com.example.pfe.manage_prescriptions.Prescription;
 import com.example.pfe.manage_user_account.LoginActivity;
 import com.example.pfe.manage_user_account.User;
+import com.example.pfe.news.News;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
 import java.lang.reflect.Type;
 import java.util.ArrayList;
+import java.util.Calendar;
 
 
 public class SharedPrefManager {
@@ -41,8 +44,8 @@ public class SharedPrefManager {
     private static final int KEY_NUMBER_PATIENTS = 0;
     private static final String ANALYSIS_LIST_KEY = "analysisarray";
     private static final String DONATION_LIST_KEY = "donationarray";
-    private static final String MEDICINE_LIST_KEY = "medicinearray";
-
+    private static final String MEDICINE_LIST_KEY = "medicinearray", REQUEST_LIST_KEY="requestarray";
+    private static final String NEWS_LIST_KEY = "newsarray";
     private static final String SUMMARY_LIST_KEY = "summaryarray";
     private static final String APPOINTMENT_LIST_KEY = "appointmentarray";
     private static final String PRESCRIPTION_LIST_KEY = "prescriptionarray";
@@ -79,6 +82,19 @@ public class SharedPrefManager {
         Type type = new TypeToken<ArrayList<Reminder>>() {}.getType();
         return gson.fromJson(json, type);
     }
+    public ArrayList<Reminder> getNowReminderList(Calendar date) {
+        SharedPreferences sharedPreferences = mCtx.getSharedPreferences(SHARED_PREF_NAME, Context.MODE_PRIVATE);
+        Gson gson = new Gson();
+        String json = sharedPreferences.getString(REMINDER_LIST_KEY, "");
+        Type type = new TypeToken<ArrayList<Reminder>>() {}.getType();
+        ArrayList<Reminder> a = gson.fromJson(json, type);
+        for (Reminder reminder : a) {
+            if (reminder.getDueDate() != date) {
+                a.remove(reminder);
+            }
+        }
+        return a;
+    }
     public void deleteReminderItem(int id) {
         ArrayList<Reminder> reminders = getReminderList();
         for (int i = 0; i < reminders.size(); i++) {
@@ -96,7 +112,21 @@ public class SharedPrefManager {
         editor.remove(REMINDER_LIST_KEY);
         editor.apply();
     }
-
+    public static void saveNews(ArrayList<News> news){
+        SharedPreferences sharedPreferences = mCtx.getSharedPreferences(SHARED_PREF_NAME, Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        Gson gson = new Gson();
+        String json = gson.toJson(news);
+        editor.putString(NEWS_LIST_KEY, json);
+        editor.apply();
+    }
+    public ArrayList<News> getNews() {
+        SharedPreferences sharedPreferences = mCtx.getSharedPreferences(SHARED_PREF_NAME, Context.MODE_PRIVATE);
+        Gson gson = new Gson();
+        String json = sharedPreferences.getString(NEWS_LIST_KEY, "");
+        Type type = new TypeToken<ArrayList<News>>() {}.getType();
+        return gson.fromJson(json, type);
+    }
     public static void saveSummaryList(ArrayList<PresMedicine> medicine){
         SharedPreferences sharedPreferences = mCtx.getSharedPreferences(SHARED_PREF_NAME, Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPreferences.edit();
@@ -265,6 +295,33 @@ public class SharedPrefManager {
             }
         }
     }
+    public static void saveRequestList(ArrayList<DonationRequest> donations) {
+        SharedPreferences sharedPreferences = mCtx.getSharedPreferences(SHARED_PREF_NAME, Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        Gson gson = new Gson();
+        String json = gson.toJson(donations);
+        editor.putString(REQUEST_LIST_KEY, json);
+        editor.apply();
+    }
+
+    public ArrayList<DonationRequest> getRequestList() {
+        SharedPreferences sharedPreferences = mCtx.getSharedPreferences(SHARED_PREF_NAME, Context.MODE_PRIVATE);
+        Gson gson = new Gson();
+        String json = sharedPreferences.getString(REQUEST_LIST_KEY, "");
+        Type type = new TypeToken<ArrayList<DonationRequest>>() {}.getType();
+        return gson.fromJson(json, type);
+    }
+    public void deleteRequest(String id) {
+        ArrayList<DonationRequest> donations = getRequestList();
+        for (int i = 0; i < donations.size(); i++) {
+            DonationRequest donation = donations.get(i);
+            if (donation.getId().equals(id)) {
+                donations.remove(i);
+                saveRequestList(donations);
+                return;
+            }
+        }
+    }
     public static void saveDonationList(ArrayList<Donation> donations) {
         SharedPreferences sharedPreferences = mCtx.getSharedPreferences(SHARED_PREF_NAME, Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPreferences.edit();
@@ -273,6 +330,7 @@ public class SharedPrefManager {
         editor.putString(DONATION_LIST_KEY, json);
         editor.apply();
     }
+
     public ArrayList<Medicine> getMedicineList() {
         SharedPreferences sharedPreferences = mCtx.getSharedPreferences(SHARED_PREF_NAME, Context.MODE_PRIVATE);
         Gson gson = new Gson();

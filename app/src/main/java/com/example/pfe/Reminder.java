@@ -1,18 +1,23 @@
 package com.example.pfe;
 
-import java.util.Date;
+import java.util.Calendar;
 
 public class Reminder {
     private int id;
     private String text;
-    private Date dueDate;
+    private Calendar dueDate;
     private boolean shown;
 
-    public Reminder(int id, String text, Date dueDate, boolean shown) {
+    public Reminder(int id, String text, Calendar dueDate, boolean shown) {
         this.id = id;
         this.text = text;
         this.dueDate = dueDate;
         this.shown = shown;
+    }
+    public Reminder(int id, String text, Calendar dueDate) {
+        this.id = id;
+        this.text = text;
+        this.dueDate = dueDate;
     }
 
     public int getId() {
@@ -31,11 +36,11 @@ public class Reminder {
         this.text = text;
     }
 
-    public Date getDueDate() {
+    public Calendar getDueDate() {
         return dueDate;
     }
 
-    public void setDueDate(Date dueDate) {
+    public void setDueDate(Calendar dueDate) {
         this.dueDate = dueDate;
     }
 

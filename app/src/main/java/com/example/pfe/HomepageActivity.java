@@ -23,6 +23,9 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
+import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.DataSource;
@@ -37,9 +40,12 @@ import com.example.pfe.appointments.analysis_appointments.AnalysisAppointmentAct
 import com.example.pfe.appointments.doctor_appointments.DoctorAppointmentActivity;
 import com.example.pfe.diet.DietActivity;
 import com.example.pfe.donations.Donation;
+import com.example.pfe.donations.DonationRequest;
 import com.example.pfe.donations.MyDonationsActivity;
 import com.example.pfe.donations.ProposeDonationActivity;
 import com.example.pfe.donations.RequestDonationActivity;
+import com.example.pfe.links.Card;
+import com.example.pfe.links.CardAdapter;
 import com.example.pfe.localisation.LocateDoctorsActivity;
 import com.example.pfe.localisation.LocatePharmaciesActivity;
 import com.example.pfe.manage_analyses.AddAnalysisActivity;
@@ -57,6 +63,8 @@ import com.example.pfe.manage_prescriptions.PresMedicine;
 import com.example.pfe.manage_prescriptions.Prescription;
 import com.example.pfe.manage_user_account.ManageAccountActivity;
 import com.example.pfe.manage_user_account.User;
+import com.example.pfe.news.News;
+import com.example.pfe.news.NewsAdapter;
 import com.google.android.material.navigation.NavigationView;
 
 import org.json.JSONArray;
@@ -66,6 +74,8 @@ import org.json.JSONObject;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -84,7 +94,6 @@ public class HomepageActivity extends AppCompatActivity implements NavigationVie
     DrawerLayout drawerLayout;
     NavigationView navigationView;
     Toolbar toolbar;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -92,7 +101,9 @@ public class HomepageActivity extends AppCompatActivity implements NavigationVie
         getWindow().setStatusBarColor(Color.TRANSPARENT);
         setContentView(R.layout.activity_home_page);
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE);
-        new Log().execute();
+
+        new Login().execute();
+
         createNavbar();
         ImageView imageView = findViewById(R.id.gif_imageview);
 
@@ -119,7 +130,41 @@ public class HomepageActivity extends AppCompatActivity implements NavigationVie
         TextView userTv = findViewById(R.id.nameTv);
         userTv.setText(SharedPrefManager.getInstance(getApplicationContext()).getUser().getName());
 
+        RecyclerView mRecyclerView;
+        mRecyclerView = findViewById(R.id.news_list);
+        LinearLayoutManager linearlayoutmanager = new LinearLayoutManager(HomepageActivity.this);
+        mRecyclerView.setLayoutManager(linearlayoutmanager);
+
+        ArrayList<News> news = SharedPrefManager.getInstance(getApplicationContext()).getNews();
+        NewsAdapter adapter = new NewsAdapter(HomepageActivity.this, news);
+        mRecyclerView.setAdapter(adapter);
+
+
+
+        RecyclerView myRecyclerView = findViewById(R.id.recycler_view);
+        myRecyclerView.setLayoutManager(new GridLayoutManager(this, 2));
+
+        // Initialize card data
+        ArrayList mCardList = new ArrayList<>();
+        mCardList.add(new Card("My patients", MyPatientsActivity.class));
+
+        mCardList.add(new Card("My Prescriptions", MyPrescriptionsActivity.class));
+
+        mCardList.add(new Card("Inventory", InventoryActivity.class));
+        mCardList.add(new Card("My Analyses", MyAnalysesActivity.class));
+        mCardList.add(new Card("Nearby doctors", LocateDoctorsActivity.class));
+        mCardList.add(new Card("Nearby pharmacies", LocatePharmaciesActivity.class));
+
+        // add more cards here
+
+        // Initialize adapter
+        CardAdapter mCardAdapter = new CardAdapter(mCardList);
+        mRecyclerView.setAdapter(mCardAdapter);
+
+
+
     }
+
 
     public void logout(View view) {
         SharedPrefManager.getInstance(getApplicationContext()).logout();
@@ -254,7 +299,7 @@ public class HomepageActivity extends AppCompatActivity implements NavigationVie
         return true;
     }
     @SuppressLint("StaticFieldLeak")
-    class Log extends AsyncTask<String, String, String> {
+    class Login extends AsyncTask<String, String, String> {
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
@@ -422,12 +467,40 @@ public class HomepageActivity extends AppCompatActivity implements NavigationVie
                             prescriptions.add(prescription);
                         }
 
+                        int number = object.getInt("number_requests");
+                        ArrayList<DonationRequest> requests = new ArrayList<>();
+                        JSONArray requestJson = object.getJSONArray("requests");
+                        for (int i = 0; i < number; i++) {
+                            JSONObject jsonObject7 = requestJson.getJSONObject(i);
+                            DonationRequest donation = new DonationRequest(
+                                    jsonObject7.getString("id"),
+                                    jsonObject7.getString("barcode"),
+                                    Integer.parseInt(jsonObject7.getString("quantity")),
+                                    jsonObject7.getString("date"));
+                            requests.add(donation);
+                        }
 
+                        int number8 = object.getInt("number_news");
+                        ArrayList<News> news = new ArrayList<>();
+                        JSONArray newsJson = object.getJSONArray("news");
+                        for (int i = 0; i < number8; i++) {
+                            JSONObject jsonObject6 = newsJson.getJSONObject(i);
+                            String dateStr = jsonObject6.getString("date");
+                            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+                            News news1 = new News(
+                                    jsonObject6.getInt("id"),
+                                    jsonObject6.getString("title"),
+                                    jsonObject6.getString("content"),
+                                    sdf.parse(dateStr)
+                            );
+                            news.add(news1);
+                        }
 
-
+                        SharedPrefManager.saveNews(news);
                         SharedPrefManager.savePrescriptionList(prescriptions);
                         SharedPrefManager.saveAppointmentList(appointments);
                         SharedPrefManager.saveDonationList(donations);
+                        SharedPrefManager.saveRequestList(requests);
                         SharedPrefManager.saveAnalysisList(analysisArrayList);
                         SharedPrefManager.saveMedicineList(medicineList);
                         SharedPrefManager.getInstance(getApplicationContext()).addPatient1(patient1);
@@ -438,7 +511,7 @@ public class HomepageActivity extends AppCompatActivity implements NavigationVie
                 connection.close();
             } catch (ClassNotFoundException | SQLException e) {
                 e.printStackTrace();
-            } catch (JSONException ex) {
+            } catch (JSONException | ParseException ex) {
                 throw new RuntimeException(ex);
             }
             return null;
