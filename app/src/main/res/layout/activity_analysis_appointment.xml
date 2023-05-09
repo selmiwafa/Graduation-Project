@@ -95,6 +95,16 @@ android:fitsSystemWindows="true">
             android:layout_marginEnd="40dp"
             android:background="@android:color/black" />
 
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/selectedDateTime"
+            android:layout_marginTop="30dp"
+            android:textAlignment="center"
+            android:textColor="@android:color/black"
+            android:text="yyyy-MM-dd hh:mm a"
+            android:textSize="28dp"/>
+
         <EditText
             android:id="@+id/edDate"
             android:layout_width="match_parent"
@@ -106,7 +116,7 @@ android:fitsSystemWindows="true">
             android:background="@android:color/transparent"
             android:drawableEnd="@drawable/calendar"
             android:drawableTint="#696969"
-            android:hint= "Date *"
+            android:hint= "@string/date_time"
             android:focusableInTouchMode="true"
             android:cursorVisible="false"
             android:focusable="false"
@@ -115,32 +125,6 @@ android:fitsSystemWindows="true">
             android:textColorHint="#696969"
             android:textStyle="bold"
             tools:ignore="VisualLintTextFieldSize" />
-        <EditText
-            android:id="@+id/edTime"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="30dp"
-            android:layout_marginTop="30dp"
-            android:layout_marginEnd="30dp"
-            android:autofillHints=""
-            android:background="@android:color/transparent"
-            android:drawableEnd="@drawable/clock"
-            android:drawableTint="#696969"
-            android:hint= "Time *"
-            android:focusableInTouchMode="true"
-            android:cursorVisible="false"
-            android:focusable="false"
-            android:padding="15dp"
-            android:textColor="#191919"
-            android:textColorHint="#696969"
-            android:textStyle="bold"
-            tools:ignore="VisualLintTextFieldSize" />
-        <RelativeLayout
-            android:layout_width="wrap_content"
-            android:layout_height="1dp"
-            android:layout_marginStart="40dp"
-            android:layout_marginEnd="40dp"
-            android:background="#696969" />
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

@@ -187,7 +187,7 @@
         <meta-data
             android:name="com.parse.CLIENT_KEY"
             android:value="@string/back4app_client_key" />
-        <receiver android:name=".AlarmReceiver"/>
+        <receiver android:name=".appointments.AppointmentAlarmReceiver"/>
     </application>
 
 </manifest>

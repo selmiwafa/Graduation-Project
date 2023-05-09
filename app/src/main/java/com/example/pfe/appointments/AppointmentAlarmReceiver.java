@@ -1,4 +1,4 @@
-package com.example.pfe;
+package com.example.pfe.appointments;
 
 import android.annotation.SuppressLint;
 import android.app.PendingIntent;
@@ -8,9 +8,11 @@ import android.content.Intent;
 
 import androidx.core.app.NotificationCompat;
 import androidx.core.app.NotificationManagerCompat;
+
+import com.example.pfe.R;
 import com.example.pfe.appointments.MyAppointmentsActivity;
 
-public class    AlarmReceiver extends BroadcastReceiver {
+public class AppointmentAlarmReceiver extends BroadcastReceiver {
     @SuppressLint("MissingPermission")
     @Override
     public void onReceive(Context context, Intent intent) {
@@ -19,10 +21,10 @@ public class    AlarmReceiver extends BroadcastReceiver {
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
         PendingIntent pendingIntent = PendingIntent.getActivity(context,0,i,0);
 
-        NotificationCompat.Builder builder = new NotificationCompat.Builder(context,"foxandroid")
-                .setSmallIcon(R.drawable.ic_launcher_background)
-                .setContentTitle("Foxandroid Alarm Manager")
-                .setContentText("Subscribe for android related content")
+        NotificationCompat.Builder builder = new NotificationCompat.Builder(context,"appointment")
+                .setSmallIcon(R.drawable.check_circle)
+                .setContentTitle("You have an appointment")
+                .setContentText("Check out your appointments list!")
                 .setAutoCancel(true)
                 .setDefaults(NotificationCompat.DEFAULT_ALL)
                 .setPriority(NotificationCompat.PRIORITY_HIGH)

@@ -32,11 +32,10 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 
-import com.example.pfe.AlarmReceiver;
+import com.example.pfe.appointments.AppointmentAlarmReceiver;
 import com.example.pfe.HomepageActivity;
 import com.example.pfe.JSONParser;
 import com.example.pfe.R;
-import com.example.pfe.Reminder;
 import com.example.pfe.SharedPrefManager;
 import com.example.pfe.appointments.Appointment;
 import com.example.pfe.appointments.MyAppointmentsActivity;
@@ -89,7 +88,6 @@ public class DoctorAppointmentActivity extends AppCompatActivity implements Navi
     int success;
     TextView username, detail_email, selectedDateTime;
     String owner, date, time;
-    ArrayList<Reminder> reminders;
     Calendar calendar;
     AlarmManager alarmManager;
     PendingIntent pendingIntent;
@@ -265,7 +263,6 @@ public class DoctorAppointmentActivity extends AppCompatActivity implements Navi
     public void initView(){
         edDate = findViewById(R.id.edDate);
         edDoctorName=findViewById(R.id.DocName);
-        edTime=findViewById(R.id.edTime);
         saveBtn=findViewById(R.id.saveBtn);
         edOwner=findViewById(R.id.owner);
         selectedDateTime = findViewById(R.id.selectedDateTime);
@@ -275,7 +272,7 @@ public class DoctorAppointmentActivity extends AppCompatActivity implements Navi
     private void setAlarm() {
 
         alarmManager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
-        Intent intent = new Intent(this,AlarmReceiver.class);
+        Intent intent = new Intent(this, AppointmentAlarmReceiver.class);
         pendingIntent = PendingIntent.getBroadcast(this,0,intent,0);
         alarmManager.setRepeating(AlarmManager.RTC_WAKEUP,calendar.getTimeInMillis(),
                 AlarmManager.INTERVAL_DAY,pendingIntent);
@@ -311,22 +308,32 @@ public class DoctorAppointmentActivity extends AppCompatActivity implements Navi
                 calendar.set(Calendar.SECOND, 0);
                 calendar.set(Calendar.MILLISECOND, 0);
 
-                SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd hh:mm a", Locale.getDefault());
-                selectedDateTime.setText(sdf.format(calendar.getTime()));
+                // Check if selected date and time is before the current time
+                Calendar now = Calendar.getInstance();
+                if (calendar.before(now)) {
+                    selectedDateTime.setText("yyyy-MM-dd hh:mm a");
+                    date = "";
+                    time = "";
+                    Toast.makeText(this, "Please select a date and time after the current time", Toast.LENGTH_SHORT).show();
+                } else {
+                    SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd hh:mm a", Locale.getDefault());
+                    selectedDateTime.setText(sdf.format(calendar.getTime()));
 
-                SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
-                date = df.format(calendar.getTime());
+                    SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
+                    date = df.format(calendar.getTime());
 
-                SimpleDateFormat tf = new SimpleDateFormat("hh:mm a", Locale.getDefault());
-                time = tf.format(calendar.getTime());
+                    SimpleDateFormat tf = new SimpleDateFormat("hh:mm a", Locale.getDefault());
+                    time = tf.format(calendar.getTime());
+                }
             });
         });
     }
+
     private void createNotificationChannel() {
             CharSequence name = "Doctor appointment";
             String description = "You have an appointment now with your doctor " + edDoctorName.getText().toString() ;
             int importance = NotificationManager.IMPORTANCE_HIGH;
-            NotificationChannel channel = new NotificationChannel("foxandroid",name,importance);
+            NotificationChannel channel = new NotificationChannel("appointment",name,importance);
             channel.setDescription(description);
 
             NotificationManager notificationManager = getSystemService(NotificationManager.class);
@@ -353,7 +360,7 @@ public class DoctorAppointmentActivity extends AppCompatActivity implements Navi
         @Override
         protected String doInBackground(String... strings) {
             HashMap<String, String> map = new HashMap<>();
-            map.put("app_id", edDoctorName.getText().toString()+edDate.getText().toString());
+            map.put("app_id", edDoctorName.getText().toString()+date);
             map.put("app_name", edDoctorName.getText().toString());
             map.put("app_date", date);
             map.put("app_time", time);
@@ -374,8 +381,8 @@ public class DoctorAppointmentActivity extends AppCompatActivity implements Navi
                     appointments = SharedPrefManager.getInstance(getApplicationContext()).getAppointmentList();
                 }
                 appointments.add(new Appointment(edDoctorName.getText().toString(),
-                        edDate.getText().toString(),
-                        edTime.getText().toString(),
+                        date,
+                        time,
                         "Doctor",
                         owner));
                 SharedPrefManager.saveAppointmentList(appointments);
