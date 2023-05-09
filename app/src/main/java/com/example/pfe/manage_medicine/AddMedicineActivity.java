@@ -42,7 +42,6 @@ public class AddMedicineActivity extends AppCompatActivity {
     ImageButton topSaveBtn;
     JSONParser parser = new JSONParser();
     String url = "jdbc:mysql://192.168.43.205:3306/healthbuddy";
-    //String url = "jdbc:mysql://192.168.1.16:3306/healthbuddy";
     String user = "root";
     String password = "";
     int success;
@@ -78,7 +77,7 @@ public class AddMedicineActivity extends AppCompatActivity {
             int y = (Calendar.getInstance().get(Calendar.YEAR));
             int m = Calendar.getInstance().get(Calendar.MONTH);
             int d = Calendar.getInstance().get(Calendar.DAY_OF_MONTH);
-            if (year <= y && month <= m && day <= d) {
+            if (year < y && month < m && day < d) {
                 Toast.makeText(AddMedicineActivity.this, "Medicine Expired! Throw it away!", Toast.LENGTH_LONG).show();
                 edExpDate.setText("");
             }

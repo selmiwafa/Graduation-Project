@@ -7,11 +7,21 @@
     app:cardElevation="4dp"
     app:cardUseCompatPadding="true">
 
-    <TextView
-        android:layout_height="60dp"
-        android:layout_width="wrap_content"
-        android:id="@+id/title_text_view"
-        android:textSize="22sp"
-        android:textStyle="bold"/>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:gravity="center"
+        android:padding="16dp">
+
+        <TextView
+            android:id="@+id/title_text_view"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:textSize="22sp"
+            android:textStyle="bold"/>
+
+    </LinearLayout>
 
 </androidx.cardview.widget.CardView>

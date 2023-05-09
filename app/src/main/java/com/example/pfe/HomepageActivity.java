@@ -3,7 +3,12 @@ package com.example.pfe;
 import static com.example.pfe.R.layout.user_details;
 
 import android.annotation.SuppressLint;
+import android.app.AlarmManager;
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
+import android.app.PendingIntent;
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.Drawable;
@@ -77,6 +82,8 @@ import java.sql.SQLException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.HashSet;
 
@@ -87,13 +94,15 @@ public class HomepageActivity extends AppCompatActivity implements NavigationVie
     int success, number;
     String message;
     String url = "jdbc:mysql://192.168.43.205:3306/healthbuddy";
-    //String url = "jdbc:mysql://192.168.1.16:3306/healthbuddy";
     String user = "root";
     String password = "";
     TextView username, detail_email;
     DrawerLayout drawerLayout;
     NavigationView navigationView;
     Toolbar toolbar;
+
+    AlarmManager alarmManager;
+    PendingIntent pendingIntent;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -101,12 +110,26 @@ public class HomepageActivity extends AppCompatActivity implements NavigationVie
         getWindow().setStatusBarColor(Color.TRANSPARENT);
         setContentView(R.layout.activity_home_page);
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE);
-
+        createNotificationChannel();
         new Login().execute();
 
         createNavbar();
+        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+        for (Medicine m : SharedPrefManager.getInstance(getApplicationContext()).getMedicineList()) {
+            try {
+                Date date = sdf.parse(m.getExp_date());
+                Calendar calendar = Calendar.getInstance();
+                calendar.setTime(date);
+                calendar.set(Calendar.HOUR_OF_DAY, 3);
+                calendar.set(Calendar.MINUTE, 0);
+                calendar.set(Calendar.SECOND, 0);
+                calendar.set(Calendar.MILLISECOND, 0);
+                setAlarm(calendar);
+            } catch (ParseException e) {
+                throw new RuntimeException(e);
+            }
+        }
         ImageView imageView = findViewById(R.id.gif_imageview);
-
         Glide.with(this)
                 .load(R.raw.hello)
                 .diskCacheStrategy(DiskCacheStrategy.DATA)
@@ -129,23 +152,19 @@ public class HomepageActivity extends AppCompatActivity implements NavigationVie
                 .into(imageView);
         TextView userTv = findViewById(R.id.nameTv);
         userTv.setText(SharedPrefManager.getInstance(getApplicationContext()).getUser().getName());
-
-        RecyclerView mRecyclerView;
-        mRecyclerView = findViewById(R.id.news_list);
-        LinearLayoutManager linearlayoutmanager = new LinearLayoutManager(HomepageActivity.this);
-        mRecyclerView.setLayoutManager(linearlayoutmanager);
-
         ArrayList<News> news = SharedPrefManager.getInstance(getApplicationContext()).getNews();
         NewsAdapter adapter = new NewsAdapter(HomepageActivity.this, news);
+        RecyclerView mRecyclerView;
+        mRecyclerView = findViewById(R.id.news_list);
         mRecyclerView.setAdapter(adapter);
-
-
+        LinearLayoutManager linearlayoutmanager = new LinearLayoutManager(HomepageActivity.this);
+        mRecyclerView.setLayoutManager(linearlayoutmanager);
 
         RecyclerView myRecyclerView = findViewById(R.id.recycler_view);
         myRecyclerView.setLayoutManager(new GridLayoutManager(this, 2));
 
         // Initialize card data
-        ArrayList mCardList = new ArrayList<>();
+        ArrayList<Card> mCardList = new ArrayList<>();
         mCardList.add(new Card("My patients", MyPatientsActivity.class));
 
         mCardList.add(new Card("My Prescriptions", MyPrescriptionsActivity.class));
@@ -155,13 +174,9 @@ public class HomepageActivity extends AppCompatActivity implements NavigationVie
         mCardList.add(new Card("Nearby doctors", LocateDoctorsActivity.class));
         mCardList.add(new Card("Nearby pharmacies", LocatePharmaciesActivity.class));
 
-        // add more cards here
-
         // Initialize adapter
         CardAdapter mCardAdapter = new CardAdapter(mCardList);
         mRecyclerView.setAdapter(mCardAdapter);
-
-
 
     }
 
@@ -297,6 +312,23 @@ public class HomepageActivity extends AppCompatActivity implements NavigationVie
         drawerLayout.closeDrawer(GravityCompat.START);
         navigationView.setCheckedItem(R.id.home);
         return true;
+    }
+    private void createNotificationChannel() {
+        CharSequence name = "Medicine expiration";
+        String description = "Check out your medicine inventory and delete the expired products! " ;
+        int importance = NotificationManager.IMPORTANCE_HIGH;
+        NotificationChannel channel = new NotificationChannel("expiration",name,importance);
+        channel.setDescription(description);
+
+        NotificationManager notificationManager = getSystemService(NotificationManager.class);
+        notificationManager.createNotificationChannel(channel);
+    }
+    private void setAlarm(Calendar calendar) {
+        alarmManager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
+        Intent intent = new Intent(this, MedicineAlarmReceiver.class);
+        pendingIntent = PendingIntent.getBroadcast(this,0,intent,0);
+        alarmManager.setRepeating(AlarmManager.RTC_WAKEUP,calendar.getTimeInMillis(),
+                AlarmManager.INTERVAL_DAY,pendingIntent);
     }
     @SuppressLint("StaticFieldLeak")
     class Login extends AsyncTask<String, String, String> {
