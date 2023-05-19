@@ -12,7 +12,7 @@
 <h3 align="center">HealthBuddy</h3>
 
   <p align="center">
-    This is  a  Kotlin/Java android application to manage the user's home pharmacy.
+    This is  a Java android application to manage the user's home pharmacy.
   </p>
 </div>
 
