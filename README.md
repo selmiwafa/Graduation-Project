@@ -14,7 +14,7 @@
   <p align="center">
     This is  a Java android application to manage the user's home pharmacy.
   </p>
-    <img src="Images/banner.png" alt="Logo" width="900" height="300">
+    <img src="Images/banner.png" alt="Logo" width="1200" height="600">
 </div>
 
 
