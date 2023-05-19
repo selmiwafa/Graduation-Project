@@ -5,7 +5,7 @@
 <!-- LOGO -->
 <br />
 <div align="center">
-  <a href="https://github.com/github_username/repo_name">
+  <a >
     <img src="Images/HealthBuddy.png" alt="Logo" width="300" height="300">
   </a>
 
@@ -14,6 +14,7 @@
   <p align="center">
     This is  a Java android application to manage the user's home pharmacy.
   </p>
+    <img src="Images/banner.png" alt="Logo" width="300" height="300">
 </div>
 
 
